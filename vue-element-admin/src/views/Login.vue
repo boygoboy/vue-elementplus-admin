@@ -1,13 +1,69 @@
 <template>
-  
+  <div class="login-box">
+    <div class="login-form">
+     <h1 class="title">后台通用管理系统</h1>
+    <el-form ref="refForm" :model="loginForm" :rules="formRules">
+     <el-form-item>
+    <el-input v-model="loginForm.username" 
+    type="text" clearable
+    :prefix-icon="UserFilled"></el-input>
+     </el-form-item>
+     <el-form-item>
+    <el-input v-model="loginForm.password" clearable
+    type="password" :prefix-icon="Lock"
+    ></el-input>
+     </el-form-item>
+         <el-form-item>
+        <div class="action-btn">
+       <el-button type="primary" @click="handleLogin('refForm')" style="width:50%;margin-right:10px;">登录</el-button>
+       <el-button style="width:50%;margin-left:10px;">注册</el-button>
+        </div>
+    </el-form-item>
+    </el-form>
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
+<script setup>
+import { reactive, ref } from 'vue'
+import { UserFilled,Lock } from '@element-plus/icons-vue'
 
+const formRules={
+    username:[{required:true,message:'请输入用户名',trigger:'blur'}],
+    password:[{required:true,message:'请输入密码',trigger:'blur'}]
 }
+const refForm=ref()
+
+const loginForm=reactive({
+      username:'',
+      password:''
+})
+
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.login-box{
+ height: 100vh;
+ width: 100vw;
+ overflow: hidden;
+ .login-form{
+     .title{
+     margin-bottom: 30px;
+     font-size: 28px;
+     text-align: center;
+ }
+   margin: 300px auto;
+    width: 500px;
+    padding: 30px 50px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 3px #cdc9cb4d;
+ }
+}
+</style>
+<style scoped>
+.action-btn{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 </style>
