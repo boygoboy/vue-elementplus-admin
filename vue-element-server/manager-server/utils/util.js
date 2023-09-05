@@ -7,6 +7,7 @@ const CODE={
     USER_LOGIN_ERROR:30001, //用户未登录
     BUSINESS_ERROR:40001,// 业务请求失败
     AUTH_ERROR:401,   //认证失败或TOKEN过期
+    SERVICE_ERROR:500, //服务器内部错误
 }
 
 module.exports={
@@ -35,5 +36,5 @@ module.exports={
           code,msg
         }
       },
-
+     CODE
 }

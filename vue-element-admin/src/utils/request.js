@@ -38,7 +38,7 @@ function request(options){
    if(options.method.toLowerCase()=='get'){
     options.params=options.data
    }
-   if(config.env=='prod'){
+   if(config.env=='production'){
       service.defaults.baseURL=config.baseApi
    }else{
       service.defaults.baseURL=config.mock?config.mockApi:config.baseApi

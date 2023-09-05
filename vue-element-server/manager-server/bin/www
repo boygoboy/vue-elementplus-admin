@@ -6,6 +6,7 @@
 const db = require('../db/db');
 const dotenv = require("dotenv")
 dotenv.config()
+const log4j=require('../utils/log4j.js')
 db(()=>{
   var app = require('../app');
   var debug = require('debug')('demo:server');
@@ -90,6 +91,7 @@ db(()=>{
       ? 'pipe ' + addr
       : 'port ' + addr.port;
     debug('Listening on ' + bind);
+    log4j.info('Listening on ' + bind)
   }
   
 })

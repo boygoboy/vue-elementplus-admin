@@ -50,7 +50,7 @@ const handleLogin=(formRef)=>{
     if(valid){
     let res= await api.handleLogin(loginForm)
      console.log(res)
-     store.commit('saveUserInfo',res)
+     store.commit('user/saveUserInfo',res)
      router.push('/home')
     }
   })

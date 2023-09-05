@@ -6,9 +6,16 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const log4j=require('./utils/log4j.js')
+const router=require('koa-router')()
 
-const index = require('./routes/index')
-const users = require('./routes/users')
+const checkTokenMiddleWare=require('./middlewares/checkToken.js')
+const users = require('./routes/user/index.js')
+const md5=require('md5')
+const {createFirstUser} = require("./logic/user")
+createFirstUser({
+  userName:process.env.ADMIN_NAME || 'admin',
+  userPwd: process.env.ADMIN_PASSWORD?md5(process.env.ADMIN_PASSWORD):md5('123456'),
+})
 
 // error handler
 onerror(app)
@@ -24,6 +31,7 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
+app.use(checkTokenMiddleWare)
 
 // logger
 app.use(async (ctx, next) => {
@@ -31,9 +39,11 @@ app.use(async (ctx, next) => {
   log4j.info('log output')
 })
 
+router.prefix("/api")
+
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+router.use(users.routes(),users.allowedMethods())
+app.use(router.routes(), router.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

@@ -1,9 +1,9 @@
 
 
-const env=import.meta.env.MODE  || 'prod'
+const env=import.meta.env.MODE  || 'production'
 
 const EnvConfig={
-    dev:{
+    development:{
         baseApi:'/api',
         mockApi:'/'
     },
@@ -11,7 +11,7 @@ const EnvConfig={
         baseApi:'/',
         mockApi:'/'
     },
-    prod:{
+    production:{
         baseApi:'/',
         mockApi:'/'
     }
