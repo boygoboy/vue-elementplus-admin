@@ -3,19 +3,19 @@
     <div class="login-form">
      <h1 class="title">后台通用管理系统</h1>
     <el-form ref="refForm" :model="loginForm" :rules="formRules">
-     <el-form-item>
+     <el-form-item prop="username">
     <el-input v-model="loginForm.username" 
     type="text" clearable
     :prefix-icon="UserFilled"></el-input>
      </el-form-item>
-     <el-form-item>
+     <el-form-item prop="password">
     <el-input v-model="loginForm.password" clearable
     type="password" :prefix-icon="Lock"
     ></el-input>
      </el-form-item>
          <el-form-item>
         <div class="action-btn">
-       <el-button type="primary" @click="handleLogin('refForm')" style="width:50%;margin-right:10px;">登录</el-button>
+       <el-button type="primary" @click="handleLogin(refForm)" style="width:50%;margin-right:10px;">登录</el-button>
        <el-button style="width:50%;margin-left:10px;">注册</el-button>
         </div>
     </el-form-item>
@@ -26,7 +26,13 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { UserFilled,Lock } from '@element-plus/icons-vue'
+import api from '@/api/login'
+
+const store=useStore()
+const router=useRouter()
 
 const formRules={
     username:[{required:true,message:'请输入用户名',trigger:'blur'}],
@@ -38,6 +44,17 @@ const loginForm=reactive({
       username:'',
       password:''
 })
+
+const handleLogin=(formRef)=>{
+  formRef.validate(async(valid)=>{
+    if(valid){
+    let res= await api.handleLogin(loginForm)
+     console.log(res)
+     store.commit('saveUserInfo',res)
+     router.push('/home')
+    }
+  })
+}
 
 </script>
 

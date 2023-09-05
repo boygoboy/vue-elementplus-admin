@@ -1,8 +1,15 @@
 import storage from '../../utils/storage.js'
 
-const state={}
+const state={
+    userInfo:storage.getItem('userInfo')||{}
+}
 const getters={}
-const mutations={}
+const mutations={
+    saveUserInfo(state,userInfo){
+       state.userInfo=userInfo
+       storage.setItem("userInfo",userInfo)
+    }
+}
 const actions={}
 
 export default{

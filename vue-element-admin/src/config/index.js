@@ -4,7 +4,7 @@ const env=import.meta.env.MODE  || 'prod'
 
 const EnvConfig={
     dev:{
-        baseApi:'/',
+        baseApi:'/api',
         mockApi:'/'
     },
     test:{
@@ -19,7 +19,7 @@ const EnvConfig={
 
 export default{
      env,
-     mock:true,
+     mock:false,
      namespace:'manager',
      ...EnvConfig[env]
 }
