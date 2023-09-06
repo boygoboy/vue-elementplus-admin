@@ -5,7 +5,7 @@ const env=import.meta.env.MODE  || 'production'
 const EnvConfig={
     development:{
         baseApi:'/api',
-        mockApi:'/'
+        mockApi:'/mockapi'
     },
     test:{
         baseApi:'/',

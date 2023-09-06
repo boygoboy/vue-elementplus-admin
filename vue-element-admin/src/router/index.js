@@ -16,7 +16,7 @@ const routes=[
                 name:'home',
                 path:'/home',
                 meta:{
-                    title:'首页'
+                    title:'总览'
                 },
                 component:()=>import('@/views/home.vue')
             }

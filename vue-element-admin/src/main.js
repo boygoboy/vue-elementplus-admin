@@ -4,13 +4,14 @@ import router from './router'
 import request  from './utils/request.js'
 import storage from './utils/storage.js'
 import store from "./store";
-import * as ELIcons from '@element-plus/icons-vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 const app=createApp(App)
 
-for (let iconName in ELIcons) {
-    app.component(iconName, ELIcons[iconName])
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
 }
 
 app.config.globalProperties.$request=request

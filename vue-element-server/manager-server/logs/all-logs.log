@@ -1033,3 +1033,131 @@
 [2023-09-05T15:53:37.182] [INFO] info - 这是token校验路由中间件
 [2023-09-05T15:53:37.182] [INFO] info - e10adc3949ba59abbe56e057f20f883e
 [2023-09-05T15:53:37.186] [INFO] info - log output
+[2023-09-05T19:12:51.829] [INFO] info - 连接数据库成功！
+[2023-09-05T19:12:51.833] [INFO] info - Listening on port 3001
+[2023-09-05T19:13:24.809] [INFO] info - 连接数据库成功！
+[2023-09-05T19:13:24.812] [INFO] info - Listening on port 3001
+[2023-09-05T19:18:07.491] [INFO] info - {
+  request: {
+    method: 'POST',
+    url: '/api/users/login',
+    header: {
+      cookie: 'PPA_CI=71f9dd91953119fe93055281c6ea0aeb',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      'accept-encoding': 'gzip, deflate, br',
+      referer: 'http://127.0.0.1:8080/',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      origin: 'http://127.0.0.1:8080',
+      'sec-ch-ua-platform': '"Windows"',
+      accept: 'application/json, text/plain, */*',
+      'content-type': 'application/json',
+      'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+      authorization: 'Bearer',
+      'sec-ch-ua-mobile': '?0',
+      dnt: '1',
+      'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+      'content-length': '40',
+      connection: 'close',
+      host: '127.0.0.1:3001'
+    }
+  },
+  response: {
+    status: 404,
+    message: 'Not Found',
+    header: [Object: null prototype] {}
+  },
+  app: { subdomainOffset: 2, proxy: false, env: 'development' },
+  originalUrl: '/api/users/login',
+  req: '<original node req>',
+  res: '<original node res>',
+  socket: '<original node socket>'
+}
+[2023-09-05T19:18:07.500] [INFO] info - 这是token校验路由中间件
+[2023-09-05T19:18:07.503] [INFO] info - e10adc3949ba59abbe56e057f20f883e
+[2023-09-05T19:18:07.517] [INFO] info - log output
+[2023-09-05T19:32:32.600] [INFO] info - {
+  request: {
+    method: 'POST',
+    url: '/api/users/login',
+    header: {
+      cookie: 'PPA_CI=71f9dd91953119fe93055281c6ea0aeb',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      'accept-encoding': 'gzip, deflate, br',
+      referer: 'http://127.0.0.1:8080/',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      origin: 'http://127.0.0.1:8080',
+      'sec-ch-ua-platform': '"Windows"',
+      accept: 'application/json, text/plain, */*',
+      'content-type': 'application/json',
+      'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+      authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyNGE5MzMwMDVkZDVhMmU5NTNjNjEyYiIsImRlcHRJZCI6WyI2NDk5Mjg1Yzg1NTE0MjYyYjYxZWUyNTEiXSwic3RhdGUiOjEsInJvbGUiOjAsInJvbGVMaXN0IjpbIjYwOTc4MWI0NWNjZDE4MzA4NGY4ZWEzZCJdLCJ1c2VySWQiOjEwMDAwMDIsInVzZXJOYW1lIjoiYWRtaW4iLCJ1c2VyRW1haWwiOiJhZG1pbkBpbW9vYy5jb20ifSwiaWF0IjoxNjkzOTEyNzg3LCJleHAiOjE2OTM5MTYzODd9.JrhNK589ENAhzgzMhr_GBR7E3tjcq4mcPiPEQif4v1w',
+      'sec-ch-ua-mobile': '?0',
+      dnt: '1',
+      'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+      'cache-control': 'no-cache',
+      pragma: 'no-cache',
+      'content-length': '40',
+      connection: 'close',
+      host: '127.0.0.1:3001'
+    }
+  },
+  response: {
+    status: 404,
+    message: 'Not Found',
+    header: [Object: null prototype] {}
+  },
+  app: { subdomainOffset: 2, proxy: false, env: 'development' },
+  originalUrl: '/api/users/login',
+  req: '<original node req>',
+  res: '<original node res>',
+  socket: '<original node socket>'
+}
+[2023-09-05T19:32:32.606] [INFO] info - 这是token校验路由中间件
+[2023-09-05T19:32:32.607] [INFO] info - e10adc3949ba59abbe56e057f20f883e
+[2023-09-05T19:32:32.616] [INFO] info - log output
+[2023-09-06T22:31:05.426] [INFO] info - {
+  request: {
+    method: 'POST',
+    url: '/api/users/login',
+    header: {
+      cookie: 'PPA_CI=c5eecee0c6c2f7ca391d30d51894b031',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      'accept-encoding': 'gzip, deflate, br',
+      referer: 'http://127.0.0.1:8080/',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      origin: 'http://127.0.0.1:8080',
+      'sec-ch-ua-platform': '"Windows"',
+      accept: 'application/json, text/plain, */*',
+      'content-type': 'application/json',
+      'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+      authorization: 'Bearer',
+      'sec-ch-ua-mobile': '?0',
+      dnt: '1',
+      'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+      'cache-control': 'no-cache',
+      pragma: 'no-cache',
+      'content-length': '40',
+      connection: 'close',
+      host: '127.0.0.1:3001'
+    }
+  },
+  response: {
+    status: 404,
+    message: 'Not Found',
+    header: [Object: null prototype] {}
+  },
+  app: { subdomainOffset: 2, proxy: false, env: 'development' },
+  originalUrl: '/api/users/login',
+  req: '<original node req>',
+  res: '<original node res>',
+  socket: '<original node socket>'
+}
+[2023-09-06T22:31:05.433] [INFO] info - 这是token校验路由中间件
+[2023-09-06T22:31:05.434] [INFO] info - e10adc3949ba59abbe56e057f20f883e
+[2023-09-06T22:31:05.451] [INFO] info - log output

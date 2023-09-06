@@ -12,6 +12,13 @@ export default ({mode})=>{
         '@': resolve( __dirname, './src' )
       }
     },
+      // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData: `@import '@/assets/style/base.scss';`
+  //     }
+  //   }
+  // },
     server: {
       host:'localhost',
       port: 8080,
@@ -22,6 +29,14 @@ export default ({mode})=>{
           ws: true,
           pathRewrite: {
             ['^' + env.VITE_BASE_API]: '' // 代理的路径
+          }
+        },
+        [env.VITE_MOCK_API]:{
+          target:"http://api-manager.marsview.cc",
+          changeOrigin: true,
+          ws: true,
+          pathRewrite: {
+            ['^' + env.VITE_MOCK_API]: '' // 代理的路径
           }
         }
       }
