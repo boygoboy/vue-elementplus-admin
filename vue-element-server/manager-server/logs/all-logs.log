@@ -1161,3 +1161,15 @@
 [2023-09-06T22:31:05.433] [INFO] info - 这是token校验路由中间件
 [2023-09-06T22:31:05.434] [INFO] info - e10adc3949ba59abbe56e057f20f883e
 [2023-09-06T22:31:05.451] [INFO] info - log output
+[2023-09-09T18:00:03.449] [INFO] info - 连接数据库成功！
+[2023-09-09T18:00:03.452] [INFO] info - Listening on port 3001
+[2023-09-09T18:00:24.066] [INFO] info - e10adc3949ba59abbe56e057f20f883e
+[2023-09-09T18:00:24.081] [INFO] info - log output
+[2023-09-09T18:47:03.258] [INFO] info - 连接数据库成功！
+[2023-09-09T18:47:03.261] [INFO] info - Listening on port 3001
+[2023-09-09T18:47:37.942] [INFO] info - 连接数据库成功！
+[2023-09-09T18:47:37.945] [INFO] info - Listening on port 3001
+[2023-09-09T18:47:42.915] [INFO] info - e10adc3949ba59abbe56e057f20f883e
+[2023-09-09T18:47:42.926] [INFO] info - log output
+[2023-09-12T21:10:55.173] [INFO] info - 连接数据库成功！
+[2023-09-12T21:10:55.177] [INFO] info - Listening on port 3001

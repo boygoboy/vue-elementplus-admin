@@ -23,6 +23,25 @@ const routes=[
         ]
     },
     {
+        name:'系统管理',
+        path:'/system',
+        meta:{
+            title:'系统管理'
+        },
+        component:Layout,
+        redirect:'user',
+        children:[
+            {
+                name:'user',
+                path:'user',
+                meta:{
+                    title:'用户管理'
+                },
+                component:()=>import('@/views/system/user.vue')
+            }
+        ]
+    },
+    {
         name:'login',
         path:'/login',
         meta:{
