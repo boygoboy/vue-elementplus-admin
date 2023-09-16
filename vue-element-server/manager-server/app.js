@@ -5,16 +5,19 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const log4j=require('./utils/log4j.js')
-const router=require('koa-router')()
+const log4j = require('./utils/log4j.js')
+const router = require('koa-router')()
+const cors = require('@koa/cors');
+// 使用 CORS 中间件
+app.use(cors());
 
-const checkTokenMiddleWare=require('./middlewares/checkToken.js')
+const checkTokenMiddleWare = require('./middlewares/checkToken.js')
 const users = require('./routes/user/index.js')
-const md5=require('md5')
-const {createFirstUser} = require("./logic/user")
+const md5 = require('md5')
+const { createFirstUser } = require("./logic/user")
 createFirstUser({
-  userName:process.env.ADMIN_NAME || 'admin',
-  userPwd: process.env.ADMIN_PASSWORD?md5(process.env.ADMIN_PASSWORD):md5('123456'),
+  userName: process.env.ADMIN_NAME || 'admin',
+  userPwd: process.env.ADMIN_PASSWORD ? md5(process.env.ADMIN_PASSWORD) : md5('123456'),
 })
 
 // error handler
@@ -22,7 +25,7 @@ onerror(app)
 
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
@@ -42,7 +45,7 @@ app.use(async (ctx, next) => {
 router.prefix("/api")
 
 // routes
-router.use(users.routes(),users.allowedMethods())
+router.use(users.routes(), users.allowedMethods())
 app.use(router.routes(), router.allowedMethods())
 
 // error-handling
