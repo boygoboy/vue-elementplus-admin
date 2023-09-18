@@ -50,7 +50,32 @@ const createFirstUser = async (params) => {
 }
 
 const getUserList = async (ctx) => {
-
+  try {
+    const { userName, userEmail, state } = ctx.request.query;
+    let params = {}
+    if (userName) {
+      params.userName = userName
+    }
+    if (userEmail) {
+      params.userEmail = userEmail
+    }
+    if (state) {
+      params.state = state
+    }
+    const { page, skipIndex } = util.pager(ctx.request.query)
+    const query = User.find(params, { _id: 0, userPwd: 0 })
+    const list = await query.skip(skipIndex).limit(page.pageSize)
+    const total = await User.countDocuments(params)
+    console.log(list)
+    ctx.body = success({
+      page: {
+        ...page, total
+      },
+      list
+    })
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
 }
 
 module.exports = {

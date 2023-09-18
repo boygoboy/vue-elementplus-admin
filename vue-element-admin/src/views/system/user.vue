@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="search">查询</el-button>
         <el-button>重置</el-button>
       </el-form-item>
     </el-form>
@@ -105,8 +105,12 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import api from "@/api/system/user.js";
+
+onMounted(() => {
+  getUserList();
+});
 
 const searchForm = reactive({
   userName: "",
@@ -138,6 +142,8 @@ const getUserList = async () => {
     userName: searchForm.userName,
     userEmail: searchForm.userEmail,
     state: searchForm.state,
+    currentPage: pageObj.currentPage,
+    pageSize: pageObj.pageSize,
   };
   let result = await api.getUserList(query);
   this.tableData = result;
