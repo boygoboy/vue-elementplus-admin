@@ -28,7 +28,9 @@
     </el-form>
   </div>
   <div class="action-btn">
-    <el-button type="primary" style="margin-right: 10px">新增</el-button>
+    <el-button type="primary" style="margin-right: 10px" @click="addUser"
+      >新增</el-button
+    >
     <el-button type="danger">批量删除</el-button>
   </div>
   <div class="table-box">
@@ -102,10 +104,65 @@
       @current-change="handleCurrentChange"
     />
   </div>
+  <!--------------------------用户新增弹出开始------------------------------ -->
+  <el-dialog
+    v-model="dialogFormVisible"
+    :before-close="handleClose"
+    title="用户新增"
+    width="30%"
+    top="20vh"
+  >
+    <el-form
+      :model="addForm"
+      label-width="100px"
+      label-position="right"
+      style="width: 95%"
+      :rules="addFormRules"
+    >
+      <el-form-item label="用户名" prop="userName">
+        <el-input v-model="addForm.userName" placeholder="请输入用户名" />
+      </el-form-item>
+      <el-form-item label="邮箱" prop="userEmail">
+        <el-input v-model="addForm.userEmail" placeholder="请输入邮箱" />
+      </el-form-item>
+      <el-form-item label="手机号" prop="mobile">
+        <el-input v-model="addForm.mobile" placeholder="请输入手机号" />
+      </el-form-item>
+      <el-form-item label="系统角色" prop="roleList">
+        <el-select
+          style="width: 100%"
+          v-model="addForm.roleList"
+          multiple
+          collapse-tags
+          placeholder="请选择系统角色"
+        >
+          <el-option
+            v-for="item in roleOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="handleClose">取消</el-button>
+        <el-button
+          type="primary"
+          style="margin-left: 20px"
+          @click="submitAddUser"
+        >
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+  <!--------------------------用户新增弹窗结束--------------------------------->
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import api from "@/api/system/user.js";
 
 onMounted(() => {
@@ -117,7 +174,7 @@ const searchForm = reactive({
   userEmail: "",
   state: "",
 });
-const tableData = reactive([{}]);
+let tableData = ref([]);
 
 const setHeaderCellStyle = ({ row, column, rowIndex, columnIndex }) => {
   return {
@@ -145,9 +202,61 @@ const getUserList = async () => {
     currentPage: pageObj.currentPage,
     pageSize: pageObj.pageSize,
   };
-  let result = await api.getUserList(query);
-  this.tableData = result;
+  let { list, page } = await api.getUserList(query);
+  tableData.value = list;
 };
+
+const addUser = () => {
+  dialogFormVisible.value = true;
+};
+let dialogFormVisible = ref(false);
+const addForm = reactive({
+  userName: "",
+  userEmail: "",
+  mobile: "",
+  roleList: [],
+});
+const checkEmail = (rule, value, callback) => {
+  console.log("test");
+  if (!value) {
+    callback(new Error("请输入邮箱"));
+  } else {
+    const pattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    if (!pattern.test(value)) {
+      callback(new Error("请输入正确的邮箱"));
+    } else {
+      callback();
+    }
+  }
+};
+const checkMobile = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error("请输入手机号"));
+  } else {
+    const pattern = /^[1][3,4,5,7,8][0-9]{9}$/;
+    if (!pattern.test(value)) {
+      callback(new Error("请输入正确的手机号"));
+    } else {
+      callback();
+    }
+  }
+};
+const addFormRules = reactive({
+  userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+  userEmail: [
+    { required: true, message: "请输入邮箱", trigger: "blur" },
+    { validator: checkEmail, trigger: "blur" },
+  ],
+  mobile: [
+    { required: true, message: "请输入手机号", trigger: "blur" },
+    { validator: checkMobile, trigger: "blur" },
+  ],
+});
+let roleOptions = ref([]);
+const handleClose = () => {
+  dialogFormVisible.value = false;
+};
+const submitAddUser = () => {};
 </script>
 
 <style lang="scss" scoped>
