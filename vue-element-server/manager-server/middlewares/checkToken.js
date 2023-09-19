@@ -1,5 +1,6 @@
 const util = require('../utils/util.js');
 const jwt = require('jsonwebtoken');
+const User = require('../db/models/userSchema.js')
 
 const excludeRoutes = ['/api/users/login'];
 
@@ -23,7 +24,16 @@ module.exports = async (ctx, next) => {
       });
     });
 
-    ctx.request.userInfo = data;
+    ctx.request.userInfo = data.data;
+    if (!data.data.state) {
+      return ctx.body = util.fail('账号已被禁用', util.CODE.AUTH_ERROR);
+    }
+    const filterUser = await User.findOne({ userId: data.data.userId })
+    if (filterUser) {
+      if (!filterUser.state) {
+        return ctx.body = util.fail('账号已被禁用', util.CODE.AUTH_ERROR);
+      }
+    }
     await next();
   } catch (err) {
     ctx.body = util.fail('Token 认证失败', util.CODE.AUTH_ERROR);

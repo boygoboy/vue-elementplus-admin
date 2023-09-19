@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     "userEmail": String,
     "mobile": Number,
     "sex": Number,
-    "state": Number,
+    "state": Boolean,
     "role": Number,
     "roleList": [],
     "createTime": {

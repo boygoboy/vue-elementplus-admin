@@ -2,16 +2,22 @@
     padding: 15px 0px !important;
 }
 .el-button--primay.is-text{
-    color: #6b89e9 !important;
+    color: #7840ec !important;
 }
 .el-button.is-text:focus{
-    background-color: #fff !important;
+    background-color: #f5f7fa !important;
+}
+.el-button--info{
+    color: #9170c3 !important;
+}
+.el-button--info.is-text{
+    color: #9170c3 !important;
 }
 
 .el-dialog__header{
     height: 60px;
     line-height: 60px;
-    background: #f2f2f2 !important;
+    background: #f0e8fa !important;
     padding: 0px !important;
     margin: 0px !important;
     padding-left: 15px !important;
@@ -19,11 +25,21 @@
 .el-dialog__title{
     font-size: 18px !important;
     font-weight: 400 !important;
-    color: #2F4181 !important;
+    color: #9170c3 !important;
 }
 .el-dialog__body{
     padding-bottom: 0px !important;
 }
 .el-dialog__footer{
     text-align: center !important;
+}
+.el-dialog__headerbtn .el-dialog__close{
+    color: #9170c3 !important;
+}
+.el-menu-item.is-active{
+    background-color: #5d34b6 !important;
+}
+.el-menu-item:hover{
+    background-color: #5d34b6 !important;
+    color: #ffffff !important;
 }

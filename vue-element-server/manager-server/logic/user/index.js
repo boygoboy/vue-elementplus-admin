@@ -1,4 +1,5 @@
 const User = require('../../db/models/userSchema.js')
+const Counter = require('../../db/models/counterSchema.js')
 const util = require('../../utils/util.js')
 const { CODE, fail, success } = util
 const md5 = require('md5');
@@ -15,6 +16,9 @@ const handleLogin = async (ctx) => {
       userName: username,
       userPwd: md5(password)
     })
+    if (!res.state) {
+      return ctx.body = fail('账号已被禁用', CODE.AUTH_ERROR);
+    }
     if (res) {
       const data = res._doc
       let token = jwt.sign({
@@ -44,6 +48,7 @@ const createFirstUser = async (params) => {
   const user = await new User({
     userId: 0,
     role: 0,
+    state: true,
     ...params
   })
   await user.save();
@@ -66,7 +71,6 @@ const getUserList = async (ctx) => {
     const query = User.find(params, { _id: 0, userPwd: 0 })
     const list = await query.skip(skipIndex).limit(page.pageSize)
     const total = await User.countDocuments(params)
-    console.log(list)
     ctx.body = success({
       page: {
         ...page, total
@@ -78,6 +82,118 @@ const getUserList = async (ctx) => {
   }
 }
 
+const addUser = async (ctx) => {
+  try {
+    const { userName, userEmail, mobile, roleList, userPwd } = ctx.request.body
+    if (!userName || !userEmail || !mobile || !roleList || !userPwd) {
+      return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+    }
+    const filterUser = await User.findOne({ $or: [{ userName }, { userEmail }, { mobile }] })
+    if (filterUser) {
+      return ctx.body = fail('用户名、邮箱或者手机号已存在', CODE.BUSINESS_ERROR)
+    }
+    const findId = await Counter.findOne({ id: 'userId' })
+    if (!findId) {
+      await Counter.create({
+        "id": "userId",
+        "sequence_value": 1
+      })
+    }
+    const count = await Counter.findOneAndUpdate({ id: 'userId' }, { $inc: { sequence_value: 1 } }, { new: true })
+    const user = await new User({
+      userId: count.sequence_value,
+      userName,
+      userPwd: md5(userPwd),
+      userEmail,
+      mobile,
+      roleList,
+      role: 1,
+      state: true
+    })
+    user.save()
+    ctx.body = success()
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
+}
+
+const editUser = async (ctx) => {
+  try {
+    const { userId, userName, userEmail, mobile, roleList, userPwd } = ctx.request.body
+    if (!userId || !userName || !userEmail || !mobile || !roleList || !userPwd) {
+      return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+    }
+    const filterUser = await User.findOne({ userId })
+    if (!filterUser) {
+      return ctx.body = fail('用户不存在', CODE.BUSINESS_ERROR)
+    } else {
+      if (filterUser.role == 0) {
+        return ctx.body = fail('超级管理员不允许修改', CODE.BUSINESS_ERROR)
+      }
+    }
+    const query = { $or: [{ userName }, { userEmail }, { mobile }] };
+    const users = await User.find(query);
+    if (users.length > 1) {
+      return ctx.body = fail('用户名、邮箱或者手机号已存在', CODE.BUSINESS_ERROR)
+    }
+    const oneUser = await User.findOneAndUpdate({ userId }, { userPwd: md5(userPwd), userName, userEmail, mobile, roleList })
+    if (oneUser) {
+      return ctx.body = success()
+    } else {
+      return ctx.body = fail('编辑用户失败', CODE.BUSINESS_ERROR)
+    }
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
+}
+
+const deleteUser = async (ctx) => {
+  try {
+    const userIds = ctx.params.ids.split(',')
+    if (userIds.length == 0) {
+      return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+    }
+    const filterUser = await User.findOne({ role: 0 })
+    if (filterUser) {
+      if (userIds.includes(filterUser.userId)) {
+        return ctx.body = fail('超级管理员不允许删除', CODE.BUSINESS_ERROR)
+      } else {
+        const result = await User.deleteMany({ userId: { $in: userIds } })
+        return ctx.body = success('', `成功删除${result.deletedCount}条数据`)
+      }
+    }
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
+}
+
+const switchState = async (ctx) => {
+  try {
+    const { userId, state } = ctx.request.body
+    const actionUserId = ctx.request.userInfo.userId
+    if (userId == actionUserId) {
+      return ctx.body = fail('不能禁用自己', CODE.BUSINESS_ERROR)
+    }
+    if (userId != 0) {
+      if (!userId || !state) {
+        return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+      }
+    }
+    const filterUser = await User.findOne({ role: 0 })
+    if (filterUser) {
+      if (userId == filterUser.userId) {
+        return ctx.body = fail('超级管理员不允许修改', CODE.BUSINESS_ERROR)
+      }
+      await User.findOneAndUpdate({ userId }, { state })
+      ctx.body = success()
+    }
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
+}
+
+
 module.exports = {
-  handleLogin, createFirstUser, getUserList
+  handleLogin, createFirstUser, getUserList, addUser, editUser, deleteUser,
+  switchState
 }

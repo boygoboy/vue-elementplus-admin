@@ -23,7 +23,7 @@ service.interceptors.response.use((res) => {
     if (code == 200) {
         return data
     } else if (code == 401) {
-        ElMessage.error(TOKEN_INVALID)
+        ElMessage.error(msg || TOKEN_INVALID)
         //跳转登录
         setTimeout(() => { router.push('/login') }, 1500)
         return Promise.reject(TOKEN_INVALID)
