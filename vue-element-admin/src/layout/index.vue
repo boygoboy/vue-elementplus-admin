@@ -3,7 +3,7 @@
     <div :class="['nav-side', isCollapse ? 'fold' : 'expand']">
       <div class="logo">
         <img src="./../assets/logo.png" />
-        <span>baicai-admin</span>
+        <span style="white-space: nowrap">baicai-admin</span>
       </div>
       <el-menu
         style="width: 96%; border-right: none"

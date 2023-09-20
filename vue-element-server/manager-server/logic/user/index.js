@@ -1,13 +1,20 @@
 const User = require('../../db/models/userSchema.js')
 const Counter = require('../../db/models/counterSchema.js')
 const util = require('../../utils/util.js')
-const { CODE, fail, success } = util
+const {
+  CODE,
+  fail,
+  success
+} = util
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const log4j = require('../../utils/log4j.js')
 const handleLogin = async (ctx) => {
   try {
-    const { username, password } = ctx.request.body
+    const {
+      username,
+      password
+    } = ctx.request.body
     if (!username || !password) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }
@@ -56,7 +63,11 @@ const createFirstUser = async (params) => {
 
 const getUserList = async (ctx) => {
   try {
-    const { userName, userEmail, state } = ctx.request.query;
+    const {
+      userName,
+      userEmail,
+      state
+    } = ctx.request.query;
     let params = {}
     if (userName) {
       params.userName = userName
@@ -67,13 +78,20 @@ const getUserList = async (ctx) => {
     if (state) {
       params.state = state
     }
-    const { page, skipIndex } = util.pager(ctx.request.query)
-    const query = User.find(params, { _id: 0, userPwd: 0 })
+    const {
+      page,
+      skipIndex
+    } = util.pager(ctx.request.query)
+    const query = User.find(params, {
+      _id: 0,
+      userPwd: 0
+    })
     const list = await query.skip(skipIndex).limit(page.pageSize)
     const total = await User.countDocuments(params)
     ctx.body = success({
       page: {
-        ...page, total
+        ...page,
+        total
       },
       list
     })
@@ -84,22 +102,46 @@ const getUserList = async (ctx) => {
 
 const addUser = async (ctx) => {
   try {
-    const { userName, userEmail, mobile, roleList, userPwd } = ctx.request.body
+    const {
+      userName,
+      userEmail,
+      mobile,
+      roleList,
+      userPwd
+    } = ctx.request.body
     if (!userName || !userEmail || !mobile || !roleList || !userPwd) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }
-    const filterUser = await User.findOne({ $or: [{ userName }, { userEmail }, { mobile }] })
+    const filterUser = await User.findOne({
+      $or: [{
+        userName
+      }, {
+        userEmail
+      }, {
+        mobile
+      }]
+    })
     if (filterUser) {
       return ctx.body = fail('用户名、邮箱或者手机号已存在', CODE.BUSINESS_ERROR)
     }
-    const findId = await Counter.findOne({ id: 'userId' })
+    const findId = await Counter.findOne({
+      id: 'userId'
+    })
     if (!findId) {
       await Counter.create({
         "id": "userId",
         "sequence_value": 1
       })
     }
-    const count = await Counter.findOneAndUpdate({ id: 'userId' }, { $inc: { sequence_value: 1 } }, { new: true })
+    const count = await Counter.findOneAndUpdate({
+      id: 'userId'
+    }, {
+      $inc: {
+        sequence_value: 1
+      }
+    }, {
+      new: true
+    })
     const user = await new User({
       userId: count.sequence_value,
       userName,
@@ -119,11 +161,20 @@ const addUser = async (ctx) => {
 
 const editUser = async (ctx) => {
   try {
-    const { userId, userName, userEmail, mobile, roleList, userPwd } = ctx.request.body
+    const {
+      userId,
+      userName,
+      userEmail,
+      mobile,
+      roleList,
+      userPwd
+    } = ctx.request.body
     if (!userId || !userName || !userEmail || !mobile || !roleList || !userPwd) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }
-    const filterUser = await User.findOne({ userId })
+    const filterUser = await User.findOne({
+      userId
+    })
     if (!filterUser) {
       return ctx.body = fail('用户不存在', CODE.BUSINESS_ERROR)
     } else {
@@ -131,12 +182,28 @@ const editUser = async (ctx) => {
         return ctx.body = fail('超级管理员不允许修改', CODE.BUSINESS_ERROR)
       }
     }
-    const query = { $or: [{ userName }, { userEmail }, { mobile }] };
+    const query = {
+      $or: [{
+        userName
+      }, {
+        userEmail
+      }, {
+        mobile
+      }]
+    };
     const users = await User.find(query);
     if (users.length > 1) {
       return ctx.body = fail('用户名、邮箱或者手机号已存在', CODE.BUSINESS_ERROR)
     }
-    const oneUser = await User.findOneAndUpdate({ userId }, { userPwd: md5(userPwd), userName, userEmail, mobile, roleList })
+    const oneUser = await User.findOneAndUpdate({
+      userId
+    }, {
+      userPwd: md5(userPwd),
+      userName,
+      userEmail,
+      mobile,
+      roleList
+    })
     if (oneUser) {
       return ctx.body = success()
     } else {
@@ -153,12 +220,18 @@ const deleteUser = async (ctx) => {
     if (userIds.length == 0) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }
-    const filterUser = await User.findOne({ role: 0 })
+    const filterUser = await User.findOne({
+      role: 0
+    })
     if (filterUser) {
-      if (userIds.includes(filterUser.userId)) {
+      if (userIds.includes(filterUser.userId + '')) {
         return ctx.body = fail('超级管理员不允许删除', CODE.BUSINESS_ERROR)
       } else {
-        const result = await User.deleteMany({ userId: { $in: userIds } })
+        const result = await User.deleteMany({
+          userId: {
+            $in: userIds
+          }
+        })
         return ctx.body = success('', `成功删除${result.deletedCount}条数据`)
       }
     }
@@ -169,7 +242,10 @@ const deleteUser = async (ctx) => {
 
 const switchState = async (ctx) => {
   try {
-    const { userId, state } = ctx.request.body
+    const {
+      userId,
+      state
+    } = ctx.request.body
     const actionUserId = ctx.request.userInfo.userId
     if (userId == actionUserId) {
       return ctx.body = fail('不能禁用自己', CODE.BUSINESS_ERROR)
@@ -179,12 +255,18 @@ const switchState = async (ctx) => {
         return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
       }
     }
-    const filterUser = await User.findOne({ role: 0 })
+    const filterUser = await User.findOne({
+      role: 0
+    })
     if (filterUser) {
       if (userId == filterUser.userId) {
         return ctx.body = fail('超级管理员不允许修改', CODE.BUSINESS_ERROR)
       }
-      await User.findOneAndUpdate({ userId }, { state })
+      await User.findOneAndUpdate({
+        userId
+      }, {
+        state
+      })
       ctx.body = success()
     }
   } catch (error) {
@@ -194,6 +276,11 @@ const switchState = async (ctx) => {
 
 
 module.exports = {
-  handleLogin, createFirstUser, getUserList, addUser, editUser, deleteUser,
+  handleLogin,
+  createFirstUser,
+  getUserList,
+  addUser,
+  editUser,
+  deleteUser,
   switchState
 }

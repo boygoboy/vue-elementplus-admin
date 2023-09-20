@@ -26,6 +26,7 @@ export default {
     },
     // 删除用户
     deleteUsers(ids) {
+        console.log(ids)
         return request({
             url: `/users/delete/${ids}`,
             method: 'delete'

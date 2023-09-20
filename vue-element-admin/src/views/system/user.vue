@@ -31,7 +31,10 @@
     <el-button type="primary" style="margin-right: 10px" @click="addUser"
       >新增</el-button
     >
-    <el-button type="info" :disabled="!userIds.length" @click="deleteUser"
+    <el-button
+      type="info"
+      :disabled="!userIds.length"
+      @click="deleteUser(userIds)"
       >批量删除</el-button
     >
   </div>
@@ -94,7 +97,7 @@
           <el-button type="primay" text @click="editUser(scope.row)"
             >编辑</el-button
           >
-          <el-button type="danger" text @click="deleteUser(scope.row)"
+          <el-button type="danger" text @click="deleteUser([scope.row.userId])"
             >删除</el-button
           >
         </template>
@@ -218,16 +221,14 @@ const handleSelectionChange = (rows) => {
   userIds.value = [];
   userIds.value = rows.map((item) => item.userId);
 };
-const deleteUser = (row) => {
+const deleteUser = (ids) => {
+  console.log("Before ElMessageBox: ", userIds.value);
   ElMessageBox.confirm("此操作会删除用户, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",
   }).then(async () => {
-    if (row) {
-      userIds.value = [row.userId];
-    }
-    await api.deleteUsers(userIds.value);
+    await api.deleteUsers(ids.join(","));
     ElMessage.success({
       message: "删除用户成功!",
     });
