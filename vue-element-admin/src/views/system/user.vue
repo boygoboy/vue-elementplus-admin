@@ -97,6 +97,7 @@
           <el-button type="primay" text @click="editUser(scope.row)"
             >编辑</el-button
           >
+          <el-divider direction="vertical" />
           <el-button type="danger" text @click="deleteUser([scope.row.userId])"
             >删除</el-button
           >
@@ -175,7 +176,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="handleClose(addFormRef)" type="info">取消</el-button>
+        <el-button @click="handleClose" type="info">取消</el-button>
         <el-button
           type="primary"
           style="margin-left: 20px"
@@ -190,11 +191,12 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref } from "vue";
+import { reactive, onMounted, ref, getCurrentInstance } from "vue";
 import api from "@/api/system/user.js";
 import moment from "moment";
 import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
+let { proxy } = getCurrentInstance();
 onMounted(() => {
   getUserList();
 });
@@ -240,8 +242,14 @@ const pageObj = reactive({
   pageSize: 10,
   total: 0,
 });
-const handleSizeChange = (val) => {};
-const handleCurrentChange = (val) => {};
+const handleSizeChange = (val) => {
+  pageObj.pageSize = val;
+  getUserList();
+};
+const handleCurrentChange = (val) => {
+  pageObj.currentPage = val;
+  getUserList();
+};
 const getUserList = async () => {
   const query = {
     userName: searchForm.userName,
@@ -251,6 +259,7 @@ const getUserList = async () => {
     pageSize: pageObj.pageSize,
   };
   let { list, page } = await api.getUserList(query);
+  pageObj.total = page.total;
   tableData.value = list;
   tableData.value.forEach((item) => {
     item.createTime = moment(new Date(item.createTime)).format("YYYY-MM-DD");
@@ -348,9 +357,9 @@ const addFormRules = reactive({
   ],
 });
 let roleOptions = ref([]);
-const handleClose = (addFormRef) => {
+const handleClose = () => {
   dialogFormVisible.value = false;
-  addFormRef.resetFields();
+  proxy.$refs.addFormRef.resetFields();
 };
 const addFormRef = ref();
 const submitAddUser = (addFormRef) => {
