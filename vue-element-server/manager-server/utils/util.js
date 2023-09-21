@@ -10,6 +10,26 @@ const CODE = {
   SERVICE_ERROR: 500, //服务器内部错误
 }
 
+const getMenuTree = (rootlist, id, list) => {
+  rootlist.forEach(item => {
+    if (String(item.parentId.slice().pop()) == String(id)) {
+      console.log('111')
+      list.push(item._doc)
+    }
+  })
+  list.map(item => {
+    item.children = []
+    getMenuTree(rootlist, item._id, item.children)
+    if (item.children.length == 0) {
+      delete item.children
+    } else if (item.children.length > 0 && item.children[0].menuType == 2) {
+      item.action = item.children
+    }
+  })
+  return list
+}
+
+
 module.exports = {
 
   pager({ currentPage = 1, pageSize = 10 }) {
@@ -35,5 +55,6 @@ module.exports = {
       code, msg
     }
   },
-  CODE
+  CODE,
+  getMenuTree
 }

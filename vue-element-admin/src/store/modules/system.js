@@ -1,7 +1,13 @@
 import storage from '../../utils/storage.js'
 
-const state = {}
-const mutations = {}
+const state = {
+    isLoading: false
+}
+const mutations = {
+    SET_ISLOADING(state, isLoading) {
+        state.isLoading = isLoading
+    }
+}
 const actions = {}
 
 export default {

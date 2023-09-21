@@ -1,22 +1,20 @@
 import storage from '../../utils/storage.js'
 
-const state={
-    userInfo:storage.getItem('userInfo')||{}
+const state = {
+    userInfo: storage.getItem('userInfo') || {}
 }
-const getters={}
-const mutations={
-    saveUserInfo(state,userInfo){
-       state.userInfo=userInfo
-       console.log(userInfo)
-       storage.setItem("userInfo",userInfo)
+const mutations = {
+    saveUserInfo(state, userInfo) {
+        state.userInfo = userInfo
+        console.log(userInfo)
+        storage.setItem("userInfo", userInfo)
     }
 }
-const actions={}
+const actions = {}
 
-export default{
-    namespaced:true,
+export default {
+    namespaced: true,
     state,
-    getters,
     mutations,
     actions
 }

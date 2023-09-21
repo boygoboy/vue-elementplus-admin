@@ -22,8 +22,12 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="search">查询</el-button>
-        <el-button type="info" @click="reset">重置</el-button>
+        <el-button type="primary" @click="search" :loading="isLoading"
+          >查询</el-button
+        >
+        <el-button type="info" @click="reset" :loading="isLoading"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
@@ -32,6 +36,7 @@
       >新增</el-button
     >
     <el-button
+      :loading="isLoading"
       type="info"
       :disabled="!userIds.length"
       @click="deleteUser(userIds)"
@@ -178,6 +183,7 @@
       <span class="dialog-footer">
         <el-button @click="handleClose" type="info">取消</el-button>
         <el-button
+          :loading="isLoading"
           type="primary"
           style="margin-left: 20px"
           @click="submitAddUser(addFormRef)"
@@ -191,12 +197,15 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref, getCurrentInstance } from "vue";
+import { reactive, onMounted, ref, getCurrentInstance, computed } from "vue";
 import api from "@/api/system/user.js";
 import moment from "moment";
 import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
 let { proxy } = getCurrentInstance();
+import { useStore } from "vuex";
+const store = useStore();
+let isLoading = computed(() => store.getters.isLoading);
 onMounted(() => {
   getUserList();
 });
@@ -224,13 +233,14 @@ const handleSelectionChange = (rows) => {
   userIds.value = rows.map((item) => item.userId);
 };
 const deleteUser = (ids) => {
-  console.log("Before ElMessageBox: ", userIds.value);
   ElMessageBox.confirm("此操作会删除用户, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",
   }).then(async () => {
+    store.commit("system/SET_ISLOADING", true);
     await api.deleteUsers(ids.join(","));
+    store.commit("system/SET_ISLOADING", false);
     ElMessage.success({
       message: "删除用户成功!",
     });
@@ -258,7 +268,9 @@ const getUserList = async () => {
     currentPage: pageObj.currentPage,
     pageSize: pageObj.pageSize,
   };
+  store.commit("system/SET_ISLOADING", true);
   let { list, page } = await api.getUserList(query);
+  store.commit("system/SET_ISLOADING", false);
   pageObj.total = page.total;
   tableData.value = list;
   tableData.value.forEach((item) => {
@@ -374,12 +386,16 @@ const submitAddUser = (addFormRef) => {
       };
       if (addForm.userId) {
         data.userId = addForm.userId;
+        store.commit("system/SET_ISLOADING", true);
         await api.editUser(data);
+        store.commit("system/SET_ISLOADING", false);
         ElMessage.success("用户编辑成功");
         handleClose(addFormRef);
         search();
       } else {
+        store.commit("system/SET_ISLOADING", true);
         await api.addUser(data);
+        store.commit("system/SET_ISLOADING", false);
         ElMessage.success("用户新增成功");
         handleClose(addFormRef);
         search();

@@ -13,6 +13,7 @@ app.use(cors());
 
 const checkTokenMiddleWare = require('./middlewares/checkToken.js')
 const users = require('./routes/user/index.js')
+const menu = require('./routes/menu/index.js')
 const md5 = require('md5')
 const { createFirstUser } = require("./logic/user")
 createFirstUser({
@@ -46,6 +47,7 @@ router.prefix("/api")
 
 // routes
 router.use(users.routes(), users.allowedMethods())
+router.use(menu.routes(), menu.allowedMethods())
 app.use(router.routes(), router.allowedMethods())
 
 // error-handling

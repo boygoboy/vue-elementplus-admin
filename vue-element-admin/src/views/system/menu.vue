@@ -15,16 +15,17 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="search">查询</el-button>
-        <el-button type="info" @click="reset">重置</el-button>
+        <el-button type="primary" @click="search" :loading="isLoading"
+          >查询</el-button
+        >
+        <el-button type="info" @click="reset" :loading="isLoading"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
   <div class="action-btn">
-    <el-button
-      type="primary"
-      style="margin-right: 10px"
-      @click="addMenu('father')"
+    <el-button type="primary" style="margin-right: 10px" @click="openMenu('1')"
       >新增</el-button
     >
   </div>
@@ -34,7 +35,7 @@
       row-key="_id"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :data="tableData"
-      height="calc(100vh - 310px)"
+      height="calc(100vh - 260px)"
       style="width: 100%; border: none"
       :header-cell-style="setHeaderCellStyle"
       border
@@ -56,7 +57,11 @@
         prop="menuType"
         min-width="100"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          {{ scope.row.menuType == 1 ? "菜单" : "按钮" }}
+        </template>
+      </el-table-column>
       <el-table-column
         label="权限标识"
         prop="menuCode"
@@ -86,14 +91,32 @@
         prop="createTime"
         min-width="100"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          {{
+            moment(new Date(scope.row.createTime).toLocaleString()).format(
+              "yyyy-MM-DD"
+            )
+          }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="160" align="center">
         <template #default="scope">
-          <el-button type="primay" text>新增</el-button>
+          <el-button
+            type="primay"
+            :disabled="scope.row.menuType == 2"
+            text
+            @click="openMenu('2', scope.row)"
+            >新增</el-button
+          >
           <el-divider direction="vertical" />
-          <el-button type="primay" text>编辑</el-button>
+          <el-button type="primay" text @click="openMenu('3', scope.row)"
+            >编辑</el-button
+          >
           <el-divider direction="vertical" />
-          <el-button type="danger" text>删除</el-button>
+          <el-button type="danger" text @click="deleteMenu(scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -117,6 +140,8 @@
       <el-form-item label="父级菜单" prop="parentId">
         <div style="display: flex; align-items: center; width: 100%">
           <el-cascader
+            :disabled="addForm._id != ''"
+            v-model="addForm.parentId"
             style="width: 100%"
             :options="tableData"
             :props="{ checkStrictly: true, label: 'menuName', value: '_id' }"
@@ -134,7 +159,10 @@
         </div>
       </el-form-item>
       <el-form-item label="菜单类型" prop="menuType">
-        <el-radio-group v-model="addForm.menuType">
+        <el-radio-group
+          v-model="addForm.menuType"
+          :disabled="addForm._id != ''"
+        >
           <el-radio :label="1">菜单</el-radio>
           <el-radio :label="2">按钮</el-radio>
         </el-radio-group>
@@ -142,16 +170,31 @@
       <el-form-item label="菜单名称" prop="menuName">
         <el-input v-model="addForm.menuName" placeholder="请输入菜单名称" />
       </el-form-item>
-      <el-form-item label="菜单图标" prop="icon">
+      <el-form-item
+        label="权限标识"
+        prop="menuCode"
+        v-if="addForm.menuType == 2"
+      >
+        <el-input v-model="addForm.menuCode" placeholder="请输入权限标识" />
+      </el-form-item>
+      <el-form-item label="菜单图标" prop="icon" v-if="addForm.menuType == 1">
         <el-input v-model="addForm.icon" placeholder="请输入菜单图标" />
       </el-form-item>
-      <el-form-item label="路由地址" prop="path">
+      <el-form-item label="路由地址" prop="path" v-if="addForm.menuType == 1">
         <el-input v-model="addForm.path" placeholder="请输入路由地址" />
       </el-form-item>
-      <el-form-item label="组件路径" prop="component">
+      <el-form-item
+        label="组件路径"
+        prop="component"
+        v-if="addForm.menuType == 1"
+      >
         <el-input v-model="addForm.component" placeholder="请输入组件路径" />
       </el-form-item>
-      <el-form-item label="菜单状态" prop="menuState">
+      <el-form-item
+        label="菜单状态"
+        prop="menuState"
+        v-if="addForm.menuType == 1"
+      >
         <el-radio-group v-model="addForm.menuState">
           <el-radio label="正常">正常</el-radio>
           <el-radio label="下线">下线</el-radio>
@@ -162,9 +205,10 @@
       <span class="dialog-footer">
         <el-button @click="handleClose" type="info">取消</el-button>
         <el-button
+          :loading="isLoading"
           type="primary"
           style="margin-left: 20px"
-          @click="submitAddUser(addFormRef)"
+          @click="submitMenu(addFormRef)"
         >
           确定
         </el-button>
@@ -175,13 +219,16 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref, getCurrentInstance } from "vue";
+import { reactive, onMounted, ref, getCurrentInstance, computed } from "vue";
+import { useStore } from "vuex";
 import api from "@/api/system/menu.js";
 import moment from "moment";
 import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
 import mockdata from "@/mock/menus/menus.json";
 let { proxy } = getCurrentInstance();
+const store = useStore();
+let isLoading = computed(() => store.getters.isLoading);
 const formatTableData = (data) => {
   data.forEach((item) => {
     if (item.menuType == "1") {
@@ -195,8 +242,8 @@ const formatTableData = (data) => {
   });
 };
 
-onMounted(() => {
-  tableData.value = mockdata;
+onMounted(async () => {
+  await search();
   formatTableData(tableData.value);
 });
 
@@ -214,29 +261,134 @@ const setHeaderCellStyle = ({ row, column, rowIndex, columnIndex }) => {
   };
 };
 
-const search = () => {};
-const reset = () => {};
+const search = async () => {
+  const query = {
+    menuName: searchForm.menuName,
+    menuState: searchForm.menuState,
+  };
+  store.commit("system/SET_ISLOADING", true);
+  tableData.value = await api.getMenuList(query);
+  store.commit("system/SET_ISLOADING", false);
+};
+const reset = () => {
+  searchForm.menuName = "";
+  searchForm.menuState = "";
+  tableData.value = [];
+  search();
+};
 let dialogTitle = ref("");
 
 let dialogFormVisible = ref(false);
 const addForm = reactive({
+  _id: "",
   parentId: [null],
   menuType: 1,
+  menuName: "",
+  menuCode: "",
+  icon: "",
+  path: "",
+  component: "",
+  menuState: "正常",
 });
-const addMenu = (type) => {
+const openMenu = (tag, row) => {
   dialogTitle.value = "新增菜单";
-  if (type == "father") {
-    dialogFormVisible.value = true;
-  } else {
+  dialogFormVisible.value = true;
+  if (tag == "2" && row) {
+    addForm.parentId = [...row.parentId, row._id].filter((item) => item);
+  }
+  if (tag == "3" && row) {
+    dialogTitle.value = "编辑菜单";
+    addForm._id = row._id;
+    if (row.menuType == 1) {
+      addForm.parentId = [...row.parentId].filter(
+        (item) => item == null || item
+      );
+    } else {
+      addForm.parentId = [...row.parentId].filter(
+        (item) => item == null || item
+      );
+    }
+    addForm.menuType = row.menuType;
+    addForm.menuName = row.menuName;
+    addForm.menuCode = row.menuCode;
+    addForm.icon = row.icon;
+    addForm.path = row.path;
+    addForm.component = row.component;
+    addForm.menuState = row.menuState;
   }
 };
-const addFormRules = reactive({});
+const addFormRules = reactive({
+  menuType: [{ required: true, message: "请选择菜单类型", trigger: "change" }],
+  menuName: [
+    { required: true, message: "请输入菜单名称", trigger: "blur" },
+    { min: 2, max: 6, message: "长度在 2 到 6 个字符", trigger: "blur" },
+  ],
+  menuCode: [{ required: true, message: "请输入权限标识", trigger: "blur" }],
+  path: [{ required: true, message: "请输入路由地址", trigger: "blur" }],
+  menuState: [{ required: true, message: "请选择菜单状态", trigger: "change" }],
+});
 
 const handleClose = () => {
   dialogFormVisible.value = false;
+  addForm.parentId = [null];
+  addForm.menuType = 1;
+  addForm.menuName = "";
+  addForm.menuCode = "";
+  addForm.icon = "";
+  addForm.path = "";
+  addForm.component = "";
+  addForm._id = "";
+  isLoading.value = false;
   proxy.$refs.addFormRef.resetFields();
+  store.commit("system/SET_ISLOADING", false);
+  search();
 };
 const addFormRef = ref();
+const submitMenu = (formRef) => {
+  formRef.validate(async (valid) => {
+    if (valid) {
+      const data = {
+        menuType: addForm.menuType,
+        menuName: addForm.menuName,
+        menuCode: addForm.menuCode,
+        icon: addForm.icon,
+        path: addForm.path,
+        component: addForm.component,
+        menuState: addForm.menuState,
+        parentId: addForm.parentId,
+      };
+      if (addForm._id) {
+        data._id = addForm._id;
+        store.commit("system/SET_ISLOADING", true);
+        await api.editMenu(data);
+        ElMessage.success("编辑菜单成功");
+        handleClose();
+      } else {
+        store.commit("system/SET_ISLOADING", true);
+        await api.addMenu(data);
+        ElMessage.success("新增菜单成功");
+        handleClose();
+      }
+    }
+  });
+};
+const deleteMenu = (row) => {
+  ElMessageBox.confirm(
+    `此操作会删除此${row.menuType == 1 ? "菜单" : "按钮"}, 是否继续?`,
+    "提示",
+    {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    }
+  ).then(async () => {
+    await api.deleteMenu(row._id);
+    ElMessage.success({
+      message: "删除菜单成功!",
+    });
+    search();
+  });
+};
 </script>
 
 <style lang="scss" scoped>

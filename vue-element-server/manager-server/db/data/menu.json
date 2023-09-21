@@ -1,0 +1,429 @@
+[{
+  "_id": {
+    "$oid": "650bf39eafbfccd597b9517a"
+  },
+  "menuType": 1,
+  "menuName": "系统管理",
+  "menuCode": "",
+  "path": "/system",
+  "icon": "Setting",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    null
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:41:57.115Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf3b3afbfccd597b9517f"
+  },
+  "menuType": 1,
+  "menuName": "用户管理",
+  "menuCode": "",
+  "path": "/system/user",
+  "icon": "User",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:41:53.589Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf3ddafbfccd597b9518c"
+  },
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "user-create",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:42:28.123Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf3ffafbfccd597b95195"
+  },
+  "menuType": 1,
+  "menuName": "菜单管理",
+  "menuCode": "user-create",
+  "path": "/system/menu",
+  "icon": "Menu",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf419afbfccd597b9519a"
+  },
+  "menuType": 1,
+  "menuName": "角色管理",
+  "menuCode": "",
+  "path": "/system/role",
+  "icon": "Connection",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf42fafbfccd597b9519f"
+  },
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "user-edit",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf43fafbfccd597b951a4"
+  },
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "user-delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf454afbfccd597b951a9"
+  },
+  "menuType": 2,
+  "menuName": "批量删除",
+  "menuCode": "user-patch-delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf466afbfccd597b951ae"
+  },
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "menu_query",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf495afbfccd597b951b3"
+  },
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "menu-create",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf4a5afbfccd597b951b8"
+  },
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "menu-edit",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf4b7afbfccd597b951bd"
+  },
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "menu-delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf4cdafbfccd597b951c2"
+  },
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "role-query",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf4e1afbfccd597b951c7"
+  },
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "role-create",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf4f4afbfccd597b951cc"
+  },
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "role-edit",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf501afbfccd597b951d1"
+  },
+  "menuType": 2,
+  "menuName": "设置权限",
+  "menuCode": "role-setting",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650bf510afbfccd597b951d6"
+  },
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "role-delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "__v": 0
+}]

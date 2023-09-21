@@ -101,6 +101,7 @@ const handleCommand = (val) => {
     height: 100%;
     background-color: #1c0054;
     overflow-y: auto;
+    overflow-x: hidden;
     color: #fff;
     transition: width 0.5s;
     .logo {
