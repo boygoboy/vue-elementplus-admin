@@ -49,13 +49,13 @@
       <el-table-column
         label="图标"
         prop="icon"
-        min-width="100"
+        min-width="80"
         align="center"
       ></el-table-column>
       <el-table-column
         label="菜单类型"
         prop="menuType"
-        min-width="100"
+        width="100"
         align="center"
       >
         <template #default="scope">
@@ -69,8 +69,14 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        label="路由地址"
+        label="菜单地址"
         prop="path"
+        min-width="100"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        label="接口路由"
+        prop="apiPath"
         min-width="100"
         align="center"
       ></el-table-column>
@@ -83,19 +89,19 @@
       <el-table-column
         label="菜单状态"
         prop="menuState"
-        min-width="100"
+        min-width="70"
         align="center"
       ></el-table-column>
       <el-table-column
         label="创建时间"
         prop="createTime"
-        min-width="100"
+        width="200"
         align="center"
       >
         <template #default="scope">
           {{
             moment(new Date(scope.row.createTime).toLocaleString()).format(
-              "yyyy-MM-DD"
+              "yyyy-MM-DD HH:mm:ss"
             )
           }}
         </template>
@@ -160,6 +166,7 @@
       </el-form-item>
       <el-form-item label="菜单类型" prop="menuType">
         <el-radio-group
+          @change="changeMenuType"
           v-model="addForm.menuType"
           :disabled="addForm._id != ''"
         >
@@ -167,8 +174,14 @@
           <el-radio :label="2">按钮</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="菜单名称" prop="menuName">
-        <el-input v-model="addForm.menuName" placeholder="请输入菜单名称" />
+      <el-form-item
+        :label="`${addForm.menuType == 1 ? '菜单' : '按钮'}名称`"
+        prop="menuName"
+      >
+        <el-input
+          v-model="addForm.menuName"
+          :placeholder="`请输入${addForm.menuType == 1 ? '菜单' : '按钮'}名称`"
+        />
       </el-form-item>
       <el-form-item
         label="权限标识"
@@ -182,6 +195,13 @@
       </el-form-item>
       <el-form-item label="路由地址" prop="path" v-if="addForm.menuType == 1">
         <el-input v-model="addForm.path" placeholder="请输入路由地址" />
+      </el-form-item>
+      <el-form-item
+        label="接口路由"
+        prop="apiPath"
+        v-if="addForm.menuType == 2"
+      >
+        <el-input v-model="addForm.apiPath" placeholder="请输入接口路由地址" />
       </el-form-item>
       <el-form-item
         label="组件路径"
@@ -279,7 +299,7 @@ const reset = () => {
 let dialogTitle = ref("");
 
 let dialogFormVisible = ref(false);
-const addForm = reactive({
+let addForm = reactive({
   _id: "",
   parentId: [null],
   menuType: 1,
@@ -287,57 +307,79 @@ const addForm = reactive({
   menuCode: "",
   icon: "",
   path: "",
+  apiPath: "",
   component: "",
   menuState: "正常",
 });
 const openMenu = (tag, row) => {
   dialogTitle.value = "新增菜单";
   dialogFormVisible.value = true;
+  proxy.$nextTick(() => {
+    proxy.$refs.addFormRef.resetFields();
+  });
   if (tag == "2" && row) {
-    addForm.parentId = [...row.parentId, row._id].filter((item) => item);
+    proxy.$nextTick(() => {
+      addForm.parentId = [...row.parentId, row._id].filter((item) => item);
+    });
   }
   if (tag == "3" && row) {
     dialogTitle.value = "编辑菜单";
     addForm._id = row._id;
     if (row.menuType == 1) {
-      addForm.parentId = [...row.parentId].filter(
-        (item) => item == null || item
-      );
+      proxy.$nextTick(() => {
+        addForm.parentId = [...row.parentId].filter(
+          (item) => item == null || item
+        );
+      });
     } else {
-      addForm.parentId = [...row.parentId].filter(
-        (item) => item == null || item
-      );
+      proxy.$nextTick(() => {
+        addForm.parentId = [...row.parentId].filter(
+          (item) => item == null || item
+        );
+      });
     }
-    addForm.menuType = row.menuType;
-    addForm.menuName = row.menuName;
-    addForm.menuCode = row.menuCode;
-    addForm.icon = row.icon;
-    addForm.path = row.path;
-    addForm.component = row.component;
-    addForm.menuState = row.menuState;
+    proxy.$nextTick(() => {
+      addForm.menuType = row.menuType;
+      addForm.menuName = row.menuName;
+      addForm.menuCode = row.menuCode;
+      addForm.icon = row.icon;
+      addForm.path = row.path;
+      addForm.component = row.component;
+      addForm.menuState = row.menuState;
+      addForm.apiPath = row.apiPath;
+    });
   }
 };
 const addFormRules = reactive({
   menuType: [{ required: true, message: "请选择菜单类型", trigger: "change" }],
   menuName: [
-    { required: true, message: "请输入菜单名称", trigger: "blur" },
+    {
+      required: true,
+      message: `请输入名称`,
+      trigger: "blur",
+    },
     { min: 2, max: 6, message: "长度在 2 到 6 个字符", trigger: "blur" },
   ],
   menuCode: [{ required: true, message: "请输入权限标识", trigger: "blur" }],
   path: [{ required: true, message: "请输入路由地址", trigger: "blur" }],
+  apiPath: [{ required: true, message: "请输入接口路由地址", trigger: "blur" }],
   menuState: [{ required: true, message: "请选择菜单状态", trigger: "change" }],
 });
 
 const handleClose = () => {
   dialogFormVisible.value = false;
-  addForm.parentId = [null];
-  addForm.menuType = 1;
-  addForm.menuName = "";
-  addForm.menuCode = "";
-  addForm.icon = "";
-  addForm.path = "";
-  addForm.component = "";
-  addForm._id = "";
+  addForm = reactive({
+    _id: "",
+    parentId: [null],
+    menuType: 1,
+    menuName: "",
+    menuCode: "",
+    icon: "",
+    path: "",
+    apiPath: "",
+    component: "",
+    menuState: "正常",
+  });
   isLoading.value = false;
   proxy.$refs.addFormRef.resetFields();
   store.commit("system/SET_ISLOADING", false);
@@ -353,10 +395,19 @@ const submitMenu = (formRef) => {
         menuCode: addForm.menuCode,
         icon: addForm.icon,
         path: addForm.path,
+        apiPath: addForm.apiPath,
         component: addForm.component,
         menuState: addForm.menuState,
         parentId: addForm.parentId,
       };
+      if (addForm.menuType == 1) {
+        data.apiPath = "";
+        data.menuCode = "";
+      } else {
+        data.path = "";
+        data.icon = "";
+        data.component = "";
+      }
       if (addForm._id) {
         data._id = addForm._id;
         store.commit("system/SET_ISLOADING", true);
@@ -388,6 +439,14 @@ const deleteMenu = (row) => {
     });
     search();
   });
+};
+const changeMenuType = () => {
+  addForm.menuCode = "";
+  addForm.icon = "";
+  addForm.apiPath = "";
+  addForm.path = "";
+  addForm.component = "";
+  addForm.menuName = "";
 };
 </script>
 

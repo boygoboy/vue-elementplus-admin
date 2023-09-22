@@ -75,7 +75,6 @@ const userInfo = reactive(store.state.user.userInfo);
 const { isCollapse } = toRefs(data);
 
 const handleCollapse = (bol) => {
-  console.log(bol);
   data.isCollapse = bol;
 };
 

@@ -52,15 +52,14 @@ const formRules = {
 const refForm = ref();
 
 const loginForm = reactive({
-  username: "",
-  password: "",
+  username: "admin",
+  password: "123456",
 });
 
 const handleLogin = (formRef) => {
   formRef.validate(async (valid) => {
     if (valid) {
       let res = await api.handleLogin(loginForm);
-      console.log(res);
       store.commit("user/saveUserInfo", res);
       router.push("/home");
     }

@@ -1,0 +1,79 @@
+[{
+  "_id": {
+    "$oid": "650d3073c98e64379df8470a"
+  },
+  "roleId": 2,
+  "roleName": "超级管理员",
+  "remark": "管理所有权限（包括系统权限）",
+  "permissionList": {
+    "checkedKeys": [
+      "650bf3ddafbfccd597b9518c",
+      "650bf42fafbfccd597b9519f"
+    ],
+    "halfCheckedKeys": [
+      "650bf39eafbfccd597b9517a",
+      "650bf3b3afbfccd597b9517f"
+    ]
+  },
+  "updateTime": {
+    "$date": "2023-09-22T06:12:50.077Z"
+  },
+  "createTime": {
+    "$date": "2023-09-22T06:12:50.077Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650d3105c98e64379df84713"
+  },
+  "roleId": 3,
+  "roleName": "管理员",
+  "remark": "管理所有权限（系统权限除外）",
+  "permissionList": {
+    "checkedKeys": [],
+    "halfCheckedKeys": []
+  },
+  "updateTime": {
+    "$date": "2023-09-22T06:12:50.077Z"
+  },
+  "createTime": {
+    "$date": "2023-09-22T06:12:50.077Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650d35b239ca8a866ca707d4"
+  },
+  "roleId": 4,
+  "roleName": "开发人员",
+  "remark": "用于开发者",
+  "permissionList": {
+    "checkedKeys": [],
+    "halfCheckedKeys": []
+  },
+  "updateTime": {
+    "$date": "2023-09-22T06:33:47.947Z"
+  },
+  "createTime": {
+    "$date": "2023-09-22T06:33:47.947Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "650d35c039ca8a866ca707dd"
+  },
+  "roleId": 5,
+  "roleName": "测试人员",
+  "remark": "用于测试",
+  "permissionList": {
+    "checkedKeys": [],
+    "halfCheckedKeys": []
+  },
+  "updateTime": {
+    "$date": "2023-09-22T06:33:47.947Z"
+  },
+  "createTime": {
+    "$date": "2023-09-22T06:33:47.947Z"
+  },
+  "__v": 0
+}]

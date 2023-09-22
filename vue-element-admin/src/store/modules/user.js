@@ -6,7 +6,6 @@ const state = {
 const mutations = {
     saveUserInfo(state, userInfo) {
         state.userInfo = userInfo
-        console.log(userInfo)
         storage.setItem("userInfo", userInfo)
     }
 }

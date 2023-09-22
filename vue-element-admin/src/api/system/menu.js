@@ -10,14 +10,14 @@ export default {
     },
     addMenu(data) {
         return request({
-            url: '/menu/operate',
+            url: '/menu/add',
             method: 'post',
             data
         })
     },
     editMenu(data) {
         return request({
-            url: '/menu/operate',
+            url: '/menu/edit',
             method: 'put',
             data
         })

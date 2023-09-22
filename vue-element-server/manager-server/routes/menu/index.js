@@ -1,14 +1,12 @@
 const router = require('koa-router')()
 router.prefix('/menu')
-const util = require('../../utils/util.js')
-const { CODE, fail, success } = util
 const { addMenu, editMenu, deleteMenu, getMenu } = require('../../logic/menu')
 
-router.post('/operate', async (ctx) => {
+router.post('/add', async (ctx) => {
     await addMenu(ctx)
 })
 
-router.put('/operate', async (ctx) => {
+router.put('/edit', async (ctx) => {
     await editMenu(ctx)
 })
 

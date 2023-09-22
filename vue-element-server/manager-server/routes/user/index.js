@@ -1,8 +1,5 @@
 const router = require('koa-router')()
 router.prefix('/users')
-const util = require('../../utils/util.js')
-const { CODE, fail, success } = util
-const User = require('../../db/models/userSchema.js')
 const { handleLogin, getUserList, addUser, editUser, deleteUser, switchState } = require('../../logic/user')
 
 router.post('/login', async (ctx) => {
@@ -13,11 +10,11 @@ router.get('/list', async (ctx) => {
     await getUserList(ctx)
 })
 
-router.post('/operate', async (ctx) => {
+router.post('/add', async (ctx) => {
     await addUser(ctx)
 })
 
-router.put('/operate', async (ctx) => {
+router.put('/edit', async (ctx) => {
     await editUser(ctx)
 })
 

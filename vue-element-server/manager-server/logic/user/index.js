@@ -23,7 +23,7 @@ const handleLogin = async (ctx) => {
       userName: username,
       userPwd: md5(password)
     })
-    if (!res.state) {
+    if (res && !res.state) {
       return ctx.body = fail('账号已被禁用', CODE.AUTH_ERROR);
     }
     if (res) {
@@ -251,7 +251,7 @@ const switchState = async (ctx) => {
       return ctx.body = fail('不能禁用自己', CODE.BUSINESS_ERROR)
     }
     if (userId != 0) {
-      if (!userId || !state) {
+      if (!userId || state === undefined || state === '') {
         return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
       }
     }

@@ -10,19 +10,27 @@ const log4j = require('../../utils/log4j.js')
 
 const addMenu = async (ctx) => {
     try {
-        const { menuType, menuName, menuCode, path, icon, component, menuState, parentId } = ctx.request.body
+        const { menuType, menuName, menuCode, path, icon, component, menuState, parentId, apiPath } = ctx.request.body
         if (menuType == 1) {
+            const filterMenu = await Menu.findOne({ path });
+            if (filterMenu) {
+                return ctx.body = fail('菜单路径已存在', CODE.PARAM_ERROR)
+            }
             if (!menuName || !path || !parentId || !menuState) {
-                ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+                return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
             }
         } else if (menuType == 2) {
-            if (!menuName || !menuCode || !parentId) {
-                ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+            if (!menuName || !menuCode || !parentId || !apiPath) {
+                return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+            }
+            const filterMenu = await Menu.findOne({ $or: [{ apiPath }, { menuCode }] });
+            if (filterMenu) {
+                return ctx.body = fail('接口地址或者菜单编码已存在', CODE.PARAM_ERROR)
             }
         }
 
         await new Menu({
-            menuType, menuName, menuCode, path, icon, component, menuState, parentId
+            menuType, menuName, menuCode, path, icon, component, menuState, parentId, apiPath
         }).save()
         ctx.body = success()
     } catch (error) {
@@ -33,18 +41,26 @@ const addMenu = async (ctx) => {
 
 const editMenu = async (ctx) => {
     try {
-        const { menuType, menuName, menuCode, path, icon, component, menuState, parentId, _id } = ctx.request.body
+        const { menuType, menuName, menuCode, path, icon, component, menuState, parentId, _id, apiPath } = ctx.request.body
         if (menuType == 1) {
+            const filterMenu = await Menu.findOne({ path });
+            if (filterMenu && _id != filterMenu._id) {
+                return ctx.body = fail('菜单路径已存在', CODE.PARAM_ERROR)
+            }
             if (!menuName || !path || !parentId || !menuState || !_id) {
                 ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
             }
         } else if (menuType == 2) {
-            if (!menuName || !menuCode || !parentId || _id) {
+            if (!menuName || !menuCode || !parentId || _id || !apiPath) {
                 ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+            }
+            const filterMenu = await Menu.findOne({ $or: [{ apiPath }, { menuCode }] });
+            if (filterMenu && filterMenu._id != _id) {
+                return ctx.body = fail('接口地址或者菜单编码已存在', CODE.PARAM_ERROR)
             }
         }
         const updateTime = new Date()
-        await Menu.findByIdAndUpdate(_id, { menuType, menuName, menuCode, path, icon, component, menuState, parentId, updateTime })
+        await Menu.findByIdAndUpdate(_id, { menuType, menuName, menuCode, path, apiPath, icon, component, menuState, parentId, updateTime })
         ctx.body = success()
     } catch (error) {
         ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)

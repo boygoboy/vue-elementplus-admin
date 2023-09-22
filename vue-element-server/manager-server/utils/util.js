@@ -13,7 +13,6 @@ const CODE = {
 const getMenuTree = (rootlist, id, list) => {
   rootlist.forEach(item => {
     if (String(item.parentId.slice().pop()) == String(id)) {
-      console.log('111')
       list.push(item._doc)
     }
   })

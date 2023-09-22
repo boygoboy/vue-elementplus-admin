@@ -53,7 +53,11 @@
       @selection-change="handleSelectionChange"
       border
     >
-      <el-table-column type="selection" width="55" />
+      <el-table-column
+        type="selection"
+        width="55"
+        :selectable="rowSelectable"
+      />
       <el-table-column
         label="用户名"
         prop="userName"
@@ -71,7 +75,19 @@
         prop="roleList"
         min-width="100"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          <span v-if="scope.row.role == 0"> 超级管理员 </span>
+          <span v-else>
+            {{
+              roleOptions
+                .filter((item) => scope.row.roleList.includes(item.roleId))
+                .map((item) => item.roleName)
+                .join(",")
+            }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column
         label="用户状态"
         prop="state"
@@ -88,22 +104,30 @@
       <el-table-column
         label="注册时间"
         prop="createTime"
-        min-width="100"
+        width="200"
         align="center"
       ></el-table-column>
       <el-table-column
         label="最后登录时间"
         prop="lastLoginTime"
-        min-width="100"
+        width="200"
         align="center"
       ></el-table-column>
       <el-table-column label="操作" width="160" align="center">
         <template #default="scope">
-          <el-button type="primay" text @click="editUser(scope.row)"
+          <el-button
+            type="primay"
+            text
+            :disabled="scope.row.role == 0"
+            @click="editUser(scope.row)"
             >编辑</el-button
           >
           <el-divider direction="vertical" />
-          <el-button type="danger" text @click="deleteUser([scope.row.userId])"
+          <el-button
+            type="danger"
+            :disabled="scope.row.role == 0"
+            text
+            @click="deleteUser([scope.row.userId])"
             >删除</el-button
           >
         </template>
@@ -156,8 +180,8 @@
           <el-option
             v-for="item in roleOptions"
             :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :label="item.roleName"
+            :value="item.roleId"
           />
         </el-select>
       </el-form-item>
@@ -208,6 +232,7 @@ const store = useStore();
 let isLoading = computed(() => store.getters.isLoading);
 onMounted(() => {
   getUserList();
+  getRoleList();
 });
 
 const searchForm = reactive({
@@ -274,9 +299,11 @@ const getUserList = async () => {
   pageObj.total = page.total;
   tableData.value = list;
   tableData.value.forEach((item) => {
-    item.createTime = moment(new Date(item.createTime)).format("YYYY-MM-DD");
+    item.createTime = moment(new Date(item.createTime)).format(
+      "YYYY-MM-DD HH:mm:ss"
+    );
     item.lastLoginTime = moment(new Date(item.lastLoginTime)).format(
-      "YYYY-MM-DD"
+      "YYYY-MM-DD HH:mm:ss"
     );
   });
 };
@@ -298,7 +325,8 @@ const addUser = () => {
   dialogFormVisible.value = true;
 };
 let dialogFormVisible = ref(false);
-const addForm = reactive({
+let addForm = reactive({
+  userId: "",
   userName: "",
   userEmail: "",
   mobile: "",
@@ -307,7 +335,6 @@ const addForm = reactive({
   roleList: [],
 });
 const checkEmail = (rule, value, callback) => {
-  console.log("test");
   if (!value) {
     callback(new Error("请输入邮箱"));
   } else {
@@ -371,6 +398,15 @@ const addFormRules = reactive({
 let roleOptions = ref([]);
 const handleClose = () => {
   dialogFormVisible.value = false;
+  addForm = reactive({
+    userId: "",
+    userName: "",
+    userEmail: "",
+    mobile: "",
+    userPwd: "",
+    userRepeatPwd: "",
+    roleList: [],
+  });
   proxy.$refs.addFormRef.resetFields();
 };
 const addFormRef = ref();
@@ -423,6 +459,12 @@ const switchState = async (state, userId) => {
   await api.switchState(data);
   ElMessage.success("用户状态切换成功");
   getUserList();
+};
+const getRoleList = async () => {
+  roleOptions.value = await api.getRoleList();
+};
+const rowSelectable = (row, index) => {
+  return row.role != 0;
 };
 </script>
 

@@ -14,11 +14,13 @@ app.use(cors());
 const checkTokenMiddleWare = require('./middlewares/checkToken.js')
 const users = require('./routes/user/index.js')
 const menu = require('./routes/menu/index.js')
+const role = require('./routes/role/index.js')
 const md5 = require('md5')
 const { createFirstUser } = require("./logic/user")
 createFirstUser({
-  userName: process.env.ADMIN_NAME || 'admin',
+  userName: process.env.ADMIN_NAME || '超级管理员',
   userPwd: process.env.ADMIN_PASSWORD ? md5(process.env.ADMIN_PASSWORD) : md5('123456'),
+  userEmail: process.env.ADMIN_EMAIL || 'admin@qq.com',
 })
 
 // error handler
@@ -48,6 +50,7 @@ router.prefix("/api")
 // routes
 router.use(users.routes(), users.allowedMethods())
 router.use(menu.routes(), menu.allowedMethods())
+router.use(role.routes(), role.allowedMethods())
 app.use(router.routes(), router.allowedMethods())
 
 // error-handling

@@ -5,6 +5,7 @@ const menuSchema = mongoose.Schema({
     menuName: String,
     menuCode: String,
     path: String,
+    apiPath: String,
     icon: String,
     component: String,
     menuState: String,

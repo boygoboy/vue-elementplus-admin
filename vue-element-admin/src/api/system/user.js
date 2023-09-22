@@ -11,7 +11,7 @@ export default {
     // 新建用户
     addUser(data) {
         return request({
-            url: '/users/operate',
+            url: '/users/add',
             method: 'post',
             data
         })
@@ -19,14 +19,13 @@ export default {
     // 编辑用户
     editUser(data) {
         return request({
-            url: '/users/operate',
+            url: '/users/edit',
             method: 'put',
             data
         })
     },
     // 删除用户
     deleteUsers(ids) {
-        console.log(ids)
         return request({
             url: `/users/delete/${ids}`,
             method: 'delete'
@@ -39,5 +38,12 @@ export default {
             method: 'put',
             data
         })
-    }
+    },
+    // 获取角色列表
+    getRoleList() {
+        return request({
+            url: '/role/alllist',
+            method: 'get'
+        })
+    },
 }
