@@ -1,322 +1,588 @@
-[
-  {
-    "_id": "650bf39eafbfccd597b9517a",
-    "__v": "0",
-    "apiPath": "[ \"\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "Setting",
-    "menuCode": "",
-    "menuName": "系统管理",
-    "menuState": "正常",
-    "menuType": "1",
-    "parentId": "[ null ]",
-    "path": "/system",
-    "sortNo": "2",
-    "updateTime": "24/9/2023 04:46:29.937"
+[{
+  "_id": {
+    "$oid": "650bf39eafbfccd597b9517a"
   },
-  {
-    "_id": "650bf3b3afbfccd597b9517f",
-    "__v": "0",
-    "apiPath": "[ \"\" ]",
-    "component": "/system/user",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "User",
-    "menuCode": "",
-    "menuName": "用户管理",
-    "menuState": "正常",
-    "menuType": "1",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" } ]",
-    "path": "/system/user",
-    "sortNo": "1",
-    "updateTime": "24/9/2023 10:46:36.31"
+  "menuType": 1,
+  "menuName": "系统管理",
+  "menuCode": "",
+  "path": "/system",
+  "icon": "Setting",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    null
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
   },
-  {
-    "_id": "650bf3ddafbfccd597b9518c",
-    "__v": "0",
-    "apiPath": "[ \"/api/users/add\", \"/api/role/alllist\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "user_create",
-    "menuName": "新增",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3b3afbfccd597b9517f\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 10:02:54.523"
+  "updateTime": {
+    "$date": "2023-09-24T04:46:29.937Z"
   },
-  {
-    "_id": "650bf3ffafbfccd597b95195",
-    "__v": "0",
-    "apiPath": "[ \"\" ]",
-    "component": "/system/menu",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "Menu",
-    "menuCode": "",
-    "menuName": "菜单管理",
-    "menuState": "正常",
-    "menuType": "1",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" } ]",
-    "path": "/system/menu",
-    "sortNo": "2",
-    "updateTime": "24/9/2023 10:46:41.092"
+  "__v": 0,
+  "apiPath": [
+    ""
+  ],
+  "sortNo": 2
+},
+{
+  "_id": {
+    "$oid": "650bf3b3afbfccd597b9517f"
   },
-  {
-    "_id": "650bf419afbfccd597b9519a",
-    "__v": "0",
-    "apiPath": "[ \"\" ]",
-    "component": "/system/role",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "Connection",
-    "menuCode": "",
-    "menuName": "角色管理",
-    "menuState": "正常",
-    "menuType": "1",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" } ]",
-    "path": "/system/role",
-    "sortNo": "3",
-    "updateTime": "24/9/2023 10:46:44.557"
+  "menuType": 1,
+  "menuName": "用户管理",
+  "menuCode": "",
+  "path": "/system/user",
+  "icon": "User",
+  "component": "/system/user",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
   },
-  {
-    "_id": "650bf42fafbfccd597b9519f",
-    "__v": "0",
-    "apiPath": "[ \"/api/users/edit\", \"/api/role/alllist\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "user_edit",
-    "menuName": "编辑",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3b3afbfccd597b9517f\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 10:02:40.255"
+  "updateTime": {
+    "$date": "2023-09-24T10:46:36.310Z"
   },
-  {
-    "_id": "650bf43fafbfccd597b951a4",
-    "__v": "0",
-    "apiPath": "[ \"/api/users/remove/:id\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "user_delete",
-    "menuName": "删除",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3b3afbfccd597b9517f\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:53:07.841"
+  "__v": 0,
+  "apiPath": [
+    ""
+  ],
+  "sortNo": 1
+},
+{
+  "_id": {
+    "$oid": "650bf3ddafbfccd597b9518c"
   },
-  {
-    "_id": "650bf454afbfccd597b951a9",
-    "__v": "0",
-    "apiPath": "[ \"/api/users/remove/:id\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "user-patch_delete",
-    "menuName": "批量删除",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3b3afbfccd597b9517f\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:53:20.201"
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "user_create",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
   },
-  {
-    "_id": "650bf466afbfccd597b951ae",
-    "__v": "0",
-    "apiPath": "[ \"/api/menu/list\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "menu_query",
-    "menuName": "查看",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3ffafbfccd597b95195\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 10:01:06.059"
+  "updateTime": {
+    "$date": "2023-09-23T10:02:54.523Z"
   },
-  {
-    "_id": "650bf495afbfccd597b951b3",
-    "__v": "0",
-    "apiPath": "[ \"/api/menu/add\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "menu_create",
-    "menuName": "新增",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3ffafbfccd597b95195\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:54:43.203"
+  "__v": 0,
+  "apiPath": [
+    "/api/users/add",
+    "/api/role/alllist"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf3ffafbfccd597b95195"
   },
-  {
-    "_id": "650bf4a5afbfccd597b951b8",
-    "__v": "0",
-    "apiPath": "[ \"/api/menu/edit\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "menu_edit",
-    "menuName": "编辑",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3ffafbfccd597b95195\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:54:51.268"
+  "menuType": 1,
+  "menuName": "菜单管理",
+  "menuCode": "",
+  "path": "/system/menu",
+  "icon": "Menu",
+  "component": "/system/menu",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
   },
-  {
-    "_id": "650bf4b7afbfccd597b951bd",
-    "__v": "0",
-    "apiPath": "[ \"/api/menu/remove/:id\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "menu_delete",
-    "menuName": "删除",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3ffafbfccd597b95195\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:55:47.985"
+  "updateTime": {
+    "$date": "2023-09-24T10:46:41.092Z"
   },
-  {
-    "_id": "650bf4cdafbfccd597b951c2",
-    "__v": "0",
-    "apiPath": "[ \"/api/role/list\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "role_query",
-    "menuName": "查看",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf419afbfccd597b9519a\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:55:57.997"
+  "__v": 0,
+  "apiPath": [
+    ""
+  ],
+  "sortNo": 2
+},
+{
+  "_id": {
+    "$oid": "650bf419afbfccd597b9519a"
   },
-  {
-    "_id": "650bf4e1afbfccd597b951c7",
-    "__v": "0",
-    "apiPath": "[ \"/api/role/add\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "role_create",
-    "menuName": "新增",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf419afbfccd597b9519a\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:56:04.172"
+  "menuType": 1,
+  "menuName": "角色管理",
+  "menuCode": "",
+  "path": "/system/role",
+  "icon": "Connection",
+  "component": "/system/role",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
   },
-  {
-    "_id": "650bf4f4afbfccd597b951cc",
-    "__v": "0",
-    "apiPath": "[ \"/api/role/edit\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "role_edit",
-    "menuName": "编辑",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf419afbfccd597b9519a\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:56:11.158"
+  "updateTime": {
+    "$date": "2023-09-24T10:46:44.557Z"
   },
-  {
-    "_id": "650bf501afbfccd597b951d1",
-    "__v": "0",
-    "apiPath": "[ \"/api/role/permissions\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "role_setting",
-    "menuName": "设置权限",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf419afbfccd597b9519a\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:56:17.956"
+  "__v": 0,
+  "apiPath": [
+    ""
+  ],
+  "sortNo": 3
+},
+{
+  "_id": {
+    "$oid": "650bf42fafbfccd597b9519f"
   },
-  {
-    "_id": "650bf510afbfccd597b951d6",
-    "__v": "0",
-    "apiPath": "[ \"/api/role/remove/:id\" ]",
-    "component": "",
-    "createTime": "21/9/2023 07:24:15.895",
-    "icon": "",
-    "menuCode": "role_delete",
-    "menuName": "删除",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf419afbfccd597b9519a\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:56:26.445"
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "user_edit",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
   },
-  {
-    "_id": "650d057b250fa6b68d823a20",
-    "__v": "0",
-    "apiPath": "[ \"/api/users/list\" ]",
-    "component": "",
-    "createTime": "22/9/2023 02:42:17.891",
-    "icon": "",
-    "menuCode": "user_query",
-    "menuName": "查看",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3b3afbfccd597b9517f\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:53:47.451"
+  "updateTime": {
+    "$date": "2023-09-23T10:02:40.255Z"
   },
-  {
-    "_id": "650d08ba250fa6b68d823a5e",
-    "__v": "0",
-    "apiPath": "[ \"/api/users/switchstate\" ]",
-    "component": "",
-    "createTime": "22/9/2023 02:42:17.891",
-    "icon": "",
-    "menuCode": "user_status",
-    "menuName": "用户状态",
-    "menuState": "正常",
-    "menuType": "2",
-    "parentId": "[ { \"$oid\" : \"650bf39eafbfccd597b9517a\" }, { \"$oid\" : \"650bf3b3afbfccd597b9517f\" } ]",
-    "path": "",
-    "sortNo": null,
-    "updateTime": "23/9/2023 09:54:04.076"
+  "__v": 0,
+  "apiPath": [
+    "/api/users/edit",
+    "/api/role/alllist"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf43fafbfccd597b951a4"
   },
-  {
-    "_id": "650f01f709404fd30070870d",
-    "__v": "0",
-    "apiPath": "[ \"\" ]",
-    "component": "/home",
-    "createTime": "23/9/2023 11:34:37.93",
-    "icon": "HomeFilled",
-    "menuCode": "",
-    "menuName": "首页",
-    "menuState": "正常",
-    "menuType": "1",
-    "parentId": "[ null ]",
-    "path": "/home",
-    "sortNo": "1",
-    "updateTime": "24/9/2023 04:46:35.711"
-  }
-]
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "user_delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:53:07.841Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/users/remove/:id"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf454afbfccd597b951a9"
+  },
+  "menuType": 2,
+  "menuName": "批量删除",
+  "menuCode": "user-patch_delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:53:20.201Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/users/remove/:id"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf466afbfccd597b951ae"
+  },
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "menu_query",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T10:01:06.059Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/menu/list"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf495afbfccd597b951b3"
+  },
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "menu_create",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:54:43.203Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/menu/add"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf4a5afbfccd597b951b8"
+  },
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "menu_edit",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:54:51.268Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/menu/edit"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf4b7afbfccd597b951bd"
+  },
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "menu_delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3ffafbfccd597b95195"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:55:47.985Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/menu/remove/:id"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf4cdafbfccd597b951c2"
+  },
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "role_query",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:55:57.997Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/role/list"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf4e1afbfccd597b951c7"
+  },
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "role_create",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:56:04.172Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/role/add"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf4f4afbfccd597b951cc"
+  },
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "role_edit",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:56:11.158Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/role/edit"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf501afbfccd597b951d1"
+  },
+  "menuType": 2,
+  "menuName": "设置权限",
+  "menuCode": "role_setting",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:56:17.956Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/role/permissions"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650bf510afbfccd597b951d6"
+  },
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "role_delete",
+  "path": "",
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf419afbfccd597b9519a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-21T07:24:15.895Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:56:26.445Z"
+  },
+  "__v": 0,
+  "apiPath": [
+    "/api/role/remove/:id"
+  ]
+},
+{
+  "_id": {
+    "$oid": "650d057b250fa6b68d823a20"
+  },
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "user_query",
+  "path": "",
+  "apiPath": [
+    "/api/users/list"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-22T02:42:17.891Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:53:47.451Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "650d08ba250fa6b68d823a5e"
+  },
+  "menuType": 2,
+  "menuName": "用户状态",
+  "menuCode": "user_status",
+  "path": "",
+  "apiPath": [
+    "/api/users/switchstate"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "650bf3b3afbfccd597b9517f"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-22T02:42:17.891Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-23T09:54:04.076Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "650f01f709404fd30070870d"
+  },
+  "menuType": 1,
+  "menuName": "首页",
+  "menuCode": "",
+  "path": "/home",
+  "apiPath": [
+    ""
+  ],
+  "icon": "HomeFilled",
+  "component": "/home",
+  "menuState": "正常",
+  "parentId": [
+    null
+  ],
+  "createTime": {
+    "$date": "2023-09-23T11:34:37.930Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-24T04:46:35.711Z"
+  },
+  "__v": 0,
+  "sortNo": 1
+}]
