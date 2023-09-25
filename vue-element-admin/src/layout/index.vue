@@ -1,8 +1,10 @@
 <template>
   <div class="basic-layout">
     <div :class="['nav-side', isCollapse ? 'fold' : 'expand']">
-      <div class="logo">
-        <img src="./../assets/logo.png" />
+      <div class="logo" style="justify-content: center">
+        <!-- <img
+          src="https://imgurl-1301237494.cos.accelerate.myqcloud.com/imgs/2023/01/20/7b5b3a3f26a9d9a0.jpeg"
+        /> -->
         <span style="white-space: nowrap">baicai-admin</span>
       </div>
       <el-menu
@@ -10,7 +12,7 @@
         background-color="#1c0054"
         text-color="#7875ae"
         active-text-color="#ffffff"
-        default-active="/home"
+        :default-active="route.path"
         router
         collapse-transition
         :collapse="isCollapse"
@@ -35,7 +37,11 @@
         <div class="right-userinfo">
           <el-dropdown @command="handleCommand">
             <span style="border: none">
-              <el-avatar :size="30" :icon="Avatar" />
+              <el-avatar
+                :size="30"
+                src="https://imgurl-1301237494.cos.accelerate.myqcloud.com/imgs/2023/01/20/7b5b3a3f26a9d9a0.jpeg"
+                :icon="Avatar"
+              />
             </span>
             <template #dropdown>
               <el-dropdown-menu>
@@ -56,23 +62,39 @@
 </template>
 
 <script setup>
-import { menuList } from "@/mock/menus";
-import { ref, computed, reactive, toRefs, defineProps, defineEmits } from "vue";
+import {
+  ref,
+  computed,
+  reactive,
+  toRefs,
+  defineProps,
+  defineEmits,
+  onMounted,
+} from "vue";
 import treeMenu from "./treeMenu.vue";
 import breadCrumb from "./BreadCrumb.vue";
 import BreadCrumb from "./BreadCrumb.vue";
 import { Avatar } from "@element-plus/icons-vue";
 import { useStore } from "vuex"; // 引入useStore 方法
 import storage from "../utils/storage.js";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+onMounted(() => {
+  getMenuList();
+});
+
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
 const data = reactive({
   isCollapse: false,
-  menuList,
 });
 const userInfo = reactive(store.state.user.userInfo);
 const { isCollapse } = toRefs(data);
+let menuList = ref([]);
+const getMenuList = async () => {
+  let res = await store.dispatch("menu/getPermissionList");
+  menuList.value = res.menuList;
+};
 
 const handleCollapse = (bol) => {
   data.isCollapse = bol;
@@ -82,9 +104,7 @@ const handleCommand = (val) => {
   if (val == "info") {
   }
   if (val == "logout") {
-    store.commit("user/saveUserInfo", "");
-    storage.clearAll();
-    router.push("/login");
+    store.dispatch("user/handleLogout");
   }
 };
 </script>

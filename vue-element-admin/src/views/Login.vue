@@ -59,9 +59,10 @@ const loginForm = reactive({
 const handleLogin = (formRef) => {
   formRef.validate(async (valid) => {
     if (valid) {
-      let res = await api.handleLogin(loginForm);
-      store.commit("user/saveUserInfo", res);
-      router.push("/home");
+      let res = await store.dispatch("user/handleLogin", loginForm);
+      if (res) {
+        await store.dispatch("user/loadRouterList");
+      }
     }
   });
 };

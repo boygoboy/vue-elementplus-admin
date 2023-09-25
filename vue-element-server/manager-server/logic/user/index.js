@@ -1,10 +1,13 @@
 const User = require('../../db/models/userSchema.js')
+const Menu = require('../../db/models/menuSchema.js')
+const Role = require('../../db/models/roleSchema.js')
 const Counter = require('../../db/models/counterSchema.js')
 const util = require('../../utils/util.js')
 const {
   CODE,
   fail,
-  success
+  success,
+  getMenuTree
 } = util
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
@@ -274,6 +277,70 @@ const switchState = async (ctx) => {
   }
 }
 
+const getPermissionList = async (ctx) => {
+  try {
+    const {
+      role,
+      roleList
+    } = ctx.request.userInfo
+    let menuList = await getMenuList(role, roleList)
+    console.log('roleList', roleList)
+    let actionList = getAction(JSON.parse(JSON.stringify(menuList)))
+    ctx.body = success({
+      menuList,
+      actionList
+    })
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
+}
+
+async function getMenuList(userRole, roleKeys) {
+  let rootList = []
+  if (userRole == 0) {
+    rootList = await Menu.find({}) || []
+  } else {
+    let roleList = await Role.find({
+      roleId: {
+        $in: roleKeys
+      }
+    })
+    let permissionList = []
+    roleList.map(role => {
+      let {
+        checkedKeys,
+        halfCheckedKeys
+      } = role.permissionList
+      permissionList = permissionList.concat([...checkedKeys, ...halfCheckedKeys])
+    })
+    permissionList = [...new Set(permissionList)]
+    rootList = await Menu.find({
+      _id: {
+        $in: permissionList
+      }
+    })
+  }
+  return getMenuTree(rootList, null, [])
+}
+
+function getAction(list) {
+  let actionList = []
+  const deep = (arr) => {
+    while (arr.length) {
+      let item = arr.pop()
+      if (item.action) {
+        item.action.map(action => {
+          actionList.push(action.menuCode)
+        })
+      }
+      if (item.children && !item.action) {
+        deep(item.children)
+      }
+    }
+  }
+  deep(list)
+  return actionList
+}
 
 module.exports = {
   handleLogin,
@@ -282,5 +349,6 @@ module.exports = {
   addUser,
   editUser,
   deleteUser,
-  switchState
+  switchState,
+  getPermissionList
 }

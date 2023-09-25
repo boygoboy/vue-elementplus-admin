@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const menuSchema = mongoose.Schema({
+    sortNo: Number,
     menuType: Number,
     menuName: String,
     menuCode: String,
     path: String,
-    apiPath: String,
+    apiPath: [],
     icon: String,
     component: String,
     menuState: String,

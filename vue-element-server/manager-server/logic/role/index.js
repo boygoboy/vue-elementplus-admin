@@ -57,7 +57,9 @@ const addRole = async (ctx) => {
     if (!roleName) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }
-    const filterRole = await Role.findOne({ roleName })
+    const filterRole = await Role.findOne({
+      roleName
+    })
     if (filterRole) {
       return ctx.body = fail('角色名称已存在', CODE.BUSINESS_ERROR)
     }
@@ -131,7 +133,9 @@ const deleteRole = async (ctx) => {
     if (!roleId) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }
-    await Role.deleteOne({ roleId })
+    await Role.deleteOne({
+      roleId
+    })
     return ctx.body = success()
   } catch (error) {
     ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
@@ -140,7 +144,10 @@ const deleteRole = async (ctx) => {
 
 const setRolePermission = async (ctx) => {
   try {
-    const { roleId, permissionList } = ctx.request.body
+    const {
+      roleId,
+      permissionList
+    } = ctx.request.body
     if (!roleId || !permissionList) {
       return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
     }

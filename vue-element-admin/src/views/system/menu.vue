@@ -41,6 +41,12 @@
       border
     >
       <el-table-column
+        label="序号"
+        prop="sortNo"
+        width="125"
+        align="center"
+      ></el-table-column>
+      <el-table-column
         label="菜单名称"
         prop="menuName"
         min-width="100"
@@ -75,11 +81,16 @@
         align="center"
       ></el-table-column>
       <el-table-column
+        show-overflow-tooltip
         label="接口路由"
         prop="apiPath"
         min-width="100"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          {{ scope.row.apiPath.join(",") }}
+        </template>
+      </el-table-column>
       <el-table-column
         label="组件路径"
         prop="component"
@@ -95,7 +106,7 @@
       <el-table-column
         label="创建时间"
         prop="createTime"
-        width="200"
+        width="190"
         align="center"
       >
         <template #default="scope">
@@ -201,7 +212,24 @@
         prop="apiPath"
         v-if="addForm.menuType == 2"
       >
-        <el-input v-model="addForm.apiPath" placeholder="请输入接口路由地址" />
+        <el-select
+          style="width: 100%"
+          clearable
+          v-model="addForm.apiPath"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          :reserve-keyword="false"
+          placeholder="请输入接口路由地址"
+        >
+          <el-option
+            v-for="item in apiOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item
         label="组件路径"
@@ -219,6 +247,13 @@
           <el-radio label="正常">正常</el-radio>
           <el-radio label="下线">下线</el-radio>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item label="序号" prop="sortNo">
+        <el-input
+          v-model.number="addForm.sortNo"
+          placeholder="请输入序号"
+          oninput="value=value.replace(/[^\-\d]/g, '')"
+        ></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -301,6 +336,7 @@ let dialogTitle = ref("");
 let dialogFormVisible = ref(false);
 let addForm = reactive({
   _id: "",
+  sortNo: null,
   parentId: [null],
   menuType: 1,
   menuName: "",
@@ -339,6 +375,7 @@ const openMenu = (tag, row) => {
       });
     }
     proxy.$nextTick(() => {
+      addForm.sortNo = row.sortNo;
       addForm.menuType = row.menuType;
       addForm.menuName = row.menuName;
       addForm.menuCode = row.menuCode;
@@ -351,6 +388,7 @@ const openMenu = (tag, row) => {
   }
 };
 const addFormRules = reactive({
+  sortNo: [{ required: true, message: "请输入序号", trigger: "blur" }],
   menuType: [{ required: true, message: "请选择菜单类型", trigger: "change" }],
   menuName: [
     {
@@ -370,6 +408,7 @@ const handleClose = () => {
   dialogFormVisible.value = false;
   addForm = reactive({
     _id: "",
+    sortNo: null,
     parentId: [null],
     menuType: 1,
     menuName: "",
@@ -386,10 +425,12 @@ const handleClose = () => {
   search();
 };
 const addFormRef = ref();
+let apiOptions = ref([]);
 const submitMenu = (formRef) => {
   formRef.validate(async (valid) => {
     if (valid) {
       const data = {
+        sortNo: addForm.sortNo,
         menuType: addForm.menuType,
         menuName: addForm.menuName,
         menuCode: addForm.menuCode,

@@ -1,6 +1,14 @@
 const router = require('koa-router')()
 router.prefix('/users')
-const { handleLogin, getUserList, addUser, editUser, deleteUser, switchState } = require('../../logic/user')
+const {
+    handleLogin,
+    getUserList,
+    addUser,
+    editUser,
+    deleteUser,
+    switchState,
+    getPermissionList
+} = require('../../logic/user')
 
 router.post('/login', async (ctx) => {
     await handleLogin(ctx)
@@ -24,6 +32,10 @@ router.delete('/delete/:ids', async (ctx) => {
 
 router.put('/switchstate', async (ctx) => {
     await switchState(ctx)
+})
+
+router.get('/getPermissionList', async (ctx) => {
+    await getPermissionList(ctx)
 })
 
 module.exports = router

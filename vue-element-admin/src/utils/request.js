@@ -1,9 +1,13 @@
 import axios from "axios";
 import config from "../config";
-import { ElMessage } from "element-plus";
+import {
+    ElMessage
+} from "element-plus";
 import router from "../router";
 import storage from './storage.js'
-import { store } from '../store/index.js'
+import {
+    store
+} from '../store/index.js'
 const TOKEN_INVALID = '权限认证失败'
 const NETWORK_ERROR = '网络请求异常，请稍后重试'
 
@@ -14,20 +18,28 @@ const service = axios.create({
 
 service.interceptors.request.use((req) => {
     const headers = req.headers;
-    const { token = "" } = storage.getItem('userInfo') || {}
+    const {
+        token = ""
+    } = storage.getItem('userInfo') || store.state.user.userInfo || {}
     if (!headers.Authorization) headers.Authorization = 'Bearer ' + token
     return req
 })
 
 service.interceptors.response.use((res) => {
-    const { code, msg, data } = res.data
+    const {
+        code,
+        msg,
+        data
+    } = res.data
     if (code == 200) {
         return data
     } else if (code == 401) {
         store.commit('system/SET_ISLOADING', false)
         ElMessage.error(msg || TOKEN_INVALID)
         //跳转登录
-        setTimeout(() => { router.push('/login') }, 1500)
+        setTimeout(() => {
+            router.push('/login')
+        }, 1500)
         return Promise.reject(TOKEN_INVALID)
     } else {
         store.commit('system/SET_ISLOADING', false)

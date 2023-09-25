@@ -46,4 +46,10 @@ export default {
             method: 'get'
         })
     },
+    getPermissionList() {
+        return request({
+            url: '/users/getPermissionList',
+            method: 'get'
+        })
+    }
 }
