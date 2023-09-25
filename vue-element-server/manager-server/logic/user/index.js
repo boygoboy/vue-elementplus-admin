@@ -284,13 +284,13 @@ const getPermissionList = async (ctx) => {
       roleList
     } = ctx.request.userInfo
     let menuList = await getMenuList(role, roleList)
-    console.log('roleList', roleList)
     let actionList = getAction(JSON.parse(JSON.stringify(menuList)))
     ctx.body = success({
       menuList,
       actionList
     })
   } catch (error) {
+    console.log(error)
     ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
   }
 }

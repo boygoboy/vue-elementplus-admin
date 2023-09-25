@@ -32,10 +32,15 @@
     </el-form>
   </div>
   <div class="action-btn">
-    <el-button type="primary" style="margin-right: 10px" @click="addUser"
+    <el-button
+      type="primary"
+      style="margin-right: 10px"
+      @click="addUser"
+      v-has="'user_create'"
       >新增</el-button
     >
     <el-button
+      v-has="'user_patch_delete'"
       :loading="isLoading"
       type="info"
       :disabled="!userIds.length"
@@ -96,6 +101,7 @@
       >
         <template #default="scope">
           <el-switch
+            v-has="'user_status'"
             :value="scope.row.state"
             @change="switchState(scope.row.state, scope.row.userId)"
           />
@@ -116,14 +122,15 @@
       <el-table-column label="操作" width="160" align="center">
         <template #default="scope">
           <el-button
+            v-has="'user_edit'"
             type="primay"
             text
             :disabled="scope.row.role == 0"
             @click="editUser(scope.row)"
             >编辑</el-button
           >
-          <el-divider direction="vertical" />
           <el-button
+            v-has="'user_delete'"
             type="danger"
             :disabled="scope.row.role == 0"
             text

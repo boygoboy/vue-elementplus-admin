@@ -19,7 +19,11 @@
     </el-form>
   </div>
   <div class="action-btn">
-    <el-button type="primary" style="margin-right: 10px" @click="addRole"
+    <el-button
+      type="primary"
+      style="margin-right: 10px"
+      @click="addRole"
+      v-has="'role_create'"
       >创建</el-button
     >
   </div>
@@ -58,15 +62,25 @@
       ></el-table-column>
       <el-table-column label="操作" width="200" align="center">
         <template #default="scope">
-          <el-button type="primay" text @click="editRole(scope.row)"
+          <el-button
+            type="primay"
+            text
+            @click="editRole(scope.row)"
+            v-has="'role_edit'"
             >编辑</el-button
           >
-          <el-divider direction="vertical" />
-          <el-button type="primay" text @click="setPermission(scope.row)"
+          <el-button
+            type="primay"
+            text
+            @click="setPermission(scope.row)"
+            v-has="'role_setting'"
             >设置权限</el-button
           >
-          <el-divider direction="vertical" />
-          <el-button type="danger" text @click="deleteRole(scope.row.roleId)"
+          <el-button
+            type="danger"
+            text
+            @click="deleteRole(scope.row.roleId)"
+            v-has="'role_delete'"
             >删除</el-button
           >
         </template>

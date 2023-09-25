@@ -25,7 +25,11 @@
     </el-form>
   </div>
   <div class="action-btn">
-    <el-button type="primary" style="margin-right: 10px" @click="openMenu('1')"
+    <el-button
+      type="primary"
+      style="margin-right: 10px"
+      @click="openMenu('1')"
+      v-has="'menu_create'"
       >新增</el-button
     >
   </div>
@@ -126,12 +130,18 @@
             @click="openMenu('2', scope.row)"
             >新增</el-button
           >
-          <el-divider direction="vertical" />
-          <el-button type="primay" text @click="openMenu('3', scope.row)"
+          <el-button
+            type="primay"
+            text
+            @click="openMenu('3', scope.row)"
+            v-has="'menu_edit'"
             >编辑</el-button
           >
-          <el-divider direction="vertical" />
-          <el-button type="danger" text @click="deleteMenu(scope.row)"
+          <el-button
+            type="danger"
+            text
+            @click="deleteMenu(scope.row)"
+            v-has="'menu_delete'"
             >删除</el-button
           >
         </template>
