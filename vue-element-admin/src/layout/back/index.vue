@@ -76,7 +76,7 @@ import breadCrumb from "./BreadCrumb.vue";
 import BreadCrumb from "./BreadCrumb.vue";
 import { Avatar } from "@element-plus/icons-vue";
 import { useStore } from "vuex"; // 引入useStore 方法
-import storage from "../utils/storage.js";
+import storage from "../../utils/storage.js";
 import { useRouter, useRoute } from "vue-router";
 onMounted(() => {
   getMenuList();

@@ -2,7 +2,8 @@ import {
     createRouter,
     createWebHashHistory
 } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import BackLayout from '@/layout/back/index.vue'
+import FrontLayout from '@/layout/front/index.vue'
 import storage from '../utils/storage'
 import store from '../store'
 import api from '@/api/system/user.js'
@@ -10,38 +11,55 @@ import utils from '../utils/util.js'
 
 
 const routes = [{
+    name: 'back',
+    path: '/back',
+    meta: {
+        title: '首页'
+    },
+    component: BackLayout,
+    redirect: '/home',
+    children: [{
         name: 'home',
-        path: '/',
+        path: '/home',
         meta: {
             title: '首页'
         },
-        component: Layout,
-        redirect: '/home',
-        children: [{
-            name: 'home',
-            path: '/home',
-            meta: {
-                title: '首页'
-            },
-            component: () => import('@/views/home.vue')
-        }]
+        component: () => import('@/views/home.vue')
+    }]
+},
+{
+    name: 'front',
+    path: '/',
+    meta: {
+        title: '前台'
     },
-    {
-        name: 'login',
-        path: '/login',
+    component: FrontLayout,
+    redirect: '/front',
+    children: [{
+        name: 'front',
+        path: '/front',
         meta: {
-            title: '登录'
+            title: '主页'
         },
-        component: () => import('@/views/Login.vue')
+        component: () => import('@/views/front/home/index.vue')
+    }]
+},
+{
+    name: 'login',
+    path: '/login',
+    meta: {
+        title: '登录'
     },
-    {
-        name: '404',
-        path: '/404',
-        meta: {
-            title: '页面不存在'
-        },
-        component: () => import('@/views/404.vue')
-    }
+    component: () => import('@/views/Login.vue')
+},
+{
+    name: '404',
+    path: '/404',
+    meta: {
+        title: '页面不存在'
+    },
+    component: () => import('@/views/404.vue')
+}
 
 ]
 
@@ -64,13 +82,13 @@ async function loadAsyncRoutes() {
             routes.map(route => {
                 let url = `../views${route.component}.vue`
                 route.component = modules[url]
-                router.addRoute('home', route)
+                router.addRoute('back', route)
                 console.log(router.getRoutes())
             })
         } catch (err) {
             // console.log(err)
         }
-    } else {}
+    } else { }
 }
 router.beforeEach(async (to, from, next) => {
     if (to.name) {

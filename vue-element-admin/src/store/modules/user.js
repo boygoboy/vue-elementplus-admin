@@ -62,7 +62,7 @@ const actions = {
                     routes.map(route => {
                         let url = `../../views${route.component}.vue`
                         route.component = modules[url];
-                        router.addRoute("home", route);
+                        router.addRoute("back", route);
                     })
                     console.log(router.getRoutes())
                     commit('SAVE_ROUTER_LIST', routes)
