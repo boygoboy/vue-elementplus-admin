@@ -1,19 +1,15 @@
-[{
-  "_id": {
-    "$oid": "650d598b8c76e35214e0ceee"
-  },
-  "userId": 0,
-  "userName": "admin",
-  "userPwd": "e10adc3949ba59abbe56e057f20f883e",
-  "userEmail": "admin@qq.com",
-  "state": true,
-  "role": 0,
-  "roleList": [],
-  "createTime": {
-    "$date": "2023-09-22T09:08:27.124Z"
-  },
-  "lastLoginTime": {
-    "$date": "2023-09-22T09:08:27.124Z"
-  },
-  "__v": 0
-}]
+[
+  {
+    "_id": "650d598b8c76e35214e0ceee",
+    "__v": "0",
+    "createTime": "22/9/2023 09:08:27.124",
+    "lastLoginTime": "22/9/2023 09:08:27.124",
+    "role": "0",
+    "roleList": "[ ]",
+    "state": "true",
+    "userEmail": "admin@qq.com",
+    "userId": "0",
+    "userName": "admin",
+    "userPwd": "e10adc3949ba59abbe56e057f20f883e"
+  }
+]

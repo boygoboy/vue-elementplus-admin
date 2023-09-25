@@ -1,8 +1,8 @@
-[{
-  "_id": {
-    "$oid": "650d3073c98e64379df84707"
-  },
-  "id": "roleId",
-  "sequence_value": 22,
-  "__v": 0
-}]
+[
+  {
+    "_id": "650d3073c98e64379df84707",
+    "__v": "0",
+    "id": "roleId",
+    "sequence_value": "22"
+  }
+]
