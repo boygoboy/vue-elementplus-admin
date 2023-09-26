@@ -11,7 +11,10 @@ import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 // import 'element-plus/dist/index.css'
 import './assets/style/elementui.scss'
+import './assets/iconfont/iconfont.js';
+import SvgIcon from './components/SvgIcon.vue'
 const app = createApp(App)
+app.component('SvgIcon', SvgIcon)
 
 app.directive('has', {
   beforeMount: function (el, binding) {

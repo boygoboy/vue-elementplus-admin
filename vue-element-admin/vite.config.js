@@ -6,7 +6,8 @@ export default ({ mode }) => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
   return defineConfig({
-    plugins: [vue()],
+    plugins: [vue()
+    ],
     resolve: {
       alias: {
         '@': resolve(__dirname, './src')
@@ -21,7 +22,7 @@ export default ({ mode }) => {
     // },
     server: {
       host: '0.0.0.0',
-      port: 8080,
+      port: 8081,
       proxy: {
         [env.VITE_BASE_API]: {
           target: env.VITE_NETWORK_API,

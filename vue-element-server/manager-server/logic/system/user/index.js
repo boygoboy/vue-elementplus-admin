@@ -1,8 +1,8 @@
-const User = require('../../db/models/userSchema.js')
-const Menu = require('../../db/models/menuSchema.js')
-const Role = require('../../db/models/roleSchema.js')
-const Counter = require('../../db/models/counterSchema.js')
-const util = require('../../utils/util.js')
+const User = require('../../../db/models/system/userSchema.js')
+const Menu = require('../../../db/models/system/menuSchema.js')
+const Role = require('../../../db/models/system/roleSchema.js')
+const Counter = require('../../../db/models/system/counterSchema.js')
+const util = require('../../../utils/util.js')
 const {
   CODE,
   fail,
@@ -11,7 +11,7 @@ const {
 } = util
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
-const log4j = require('../../utils/log4j.js')
+const log4j = require('../../../utils/log4j.js')
 const handleLogin = async (ctx) => {
   try {
     const {
@@ -85,12 +85,12 @@ const getUserList = async (ctx) => {
       page,
       skipIndex
     } = util.pager(ctx.request.query)
-    const query = User.find(params, {
+    const query = User.find({ ...params, role: { $ne: 99 } }, {
       _id: 0,
       userPwd: 0
     })
     const list = await query.skip(skipIndex).limit(page.pageSize)
-    const total = await User.countDocuments(params)
+    const total = await User.countDocuments({ ...params, role: { $ne: 99 } })
     ctx.body = success({
       page: {
         ...page,

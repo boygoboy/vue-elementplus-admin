@@ -1,6 +1,6 @@
 const router = require('koa-router')()
-router.prefix('/menu')
-const { addMenu, editMenu, deleteMenu, getMenu } = require('../../logic/menu')
+router.prefix('/system/menu')
+const { addMenu, editMenu, deleteMenu, getMenu } = require('../../../logic/system/menu')
 
 router.post('/add', async (ctx) => {
     await addMenu(ctx)

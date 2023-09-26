@@ -1,12 +1,12 @@
-const Role = require('../../db/models/roleSchema.js')
-const Counter = require('../../db/models/counterSchema.js')
-const util = require('../../utils/util.js')
+const Role = require('../../../db/models/system/roleSchema.js')
+const Counter = require('../../../db/models/system/counterSchema.js')
+const util = require('../../../utils/util.js')
 const {
   CODE,
   fail,
   success
 } = util
-const log4j = require('../../utils/log4j.js')
+const log4j = require('../../../utils/log4j.js')
 
 
 

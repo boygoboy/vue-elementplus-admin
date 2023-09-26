@@ -3,28 +3,28 @@ import request from '@/utils/request.js'
 export default {
     getMenuList(query) {
         return request({
-            url: '/menu/list',
+            url: '/system/menu/list',
             method: 'get',
             params: query
         })
     },
     addMenu(data) {
         return request({
-            url: '/menu/add',
+            url: '/system/menu/add',
             method: 'post',
             data
         })
     },
     editMenu(data) {
         return request({
-            url: '/menu/edit',
+            url: '/system/menu/edit',
             method: 'put',
             data
         })
     },
     deleteMenu(id) {
         return request({
-            url: `/menu/remove/${id}`,
+            url: `/system/menu/remove/${id}`,
             method: 'delete'
         })
     }

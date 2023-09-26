@@ -3,7 +3,7 @@ import request from '@/utils/request.js'
 export default {
     getRoleList(query) {
         return request({
-            url: '/role/list',
+            url: '/system/role/list',
             method: 'get',
             params: query
         })
@@ -11,7 +11,7 @@ export default {
     // 新建角色
     addRole(data) {
         return request({
-            url: '/role/add',
+            url: '/system/role/add',
             method: 'post',
             data
         })
@@ -19,7 +19,7 @@ export default {
     // 编辑角色
     editRole(data) {
         return request({
-            url: '/role/edit',
+            url: '/system/role/edit',
             method: 'put',
             data
         })
@@ -27,14 +27,14 @@ export default {
     // 删除角色
     deleteRole(id) {
         return request({
-            url: `/role/delete/${id}`,
+            url: `/system/role/delete/${id}`,
             method: 'delete'
         })
     },
     // 获取菜单
     getMenuList(query) {
         return request({
-            url: '/menu/list',
+            url: '/system/menu/list',
             method: 'get',
             params: query
         })
@@ -42,7 +42,7 @@ export default {
     // 设置权限
     setRolePermission(data) {
         return request({
-            url: '/role/permissions',
+            url: '/system/role/permissions',
             method: 'put',
             data
         })

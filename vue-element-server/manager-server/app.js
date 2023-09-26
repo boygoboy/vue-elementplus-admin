@@ -6,17 +6,16 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const log4j = require('./utils/log4j.js')
-const router = require('koa-router')()
+// const router = require('koa-router')()
 const cors = require('@koa/cors');
+const router = require('./routes/index.js')
 // 使用 CORS 中间件
 app.use(cors());
 
 const checkTokenMiddleWare = require('./middlewares/checkToken.js')
-const users = require('./routes/user/index.js')
-const menu = require('./routes/menu/index.js')
-const role = require('./routes/role/index.js')
+
 const md5 = require('md5')
-const { createFirstUser } = require("./logic/user")
+const { createFirstUser } = require("./logic/system/user")
 createFirstUser({
   userName: process.env.ADMIN_NAME || '超级管理员',
   userPwd: process.env.ADMIN_PASSWORD ? md5(process.env.ADMIN_PASSWORD) : md5('123456'),
@@ -48,9 +47,6 @@ app.use(async (ctx, next) => {
 router.prefix("/api")
 
 // routes
-router.use(users.routes(), users.allowedMethods())
-router.use(menu.routes(), menu.allowedMethods())
-router.use(role.routes(), role.allowedMethods())
 app.use(router.routes(), router.allowedMethods())
 
 // error-handling

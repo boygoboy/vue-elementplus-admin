@@ -12,10 +12,14 @@
         :key="item._id"
       >
         <template #title>
-          <el-icon>
+          <!-- <el-icon>
             <component :is="item.icon"></component>
-          </el-icon>
-          <span>{{ item.menuName }}</span>
+          </el-icon> -->
+          <svg-icon
+            :iconName="`icon-${item.icon}`"
+            :color="item.path == route.path ? '#ffffff' : '#8785b7'"
+          ></svg-icon>
+          <span style="margin-left: 5px">{{ item.menuName }}</span>
         </template>
         <tree-menu :menuList="item.children"></tree-menu>
       </el-sub-menu>
@@ -24,23 +28,30 @@
         v-else-if="item.menuType == 1"
         :key="item._id"
       >
-        <el-icon>
+        <!-- <el-icon>
           <component :is="item.icon"></component>
-        </el-icon>
-        <span>{{ item.menuName }}</span>
+        </el-icon> -->
+        <svg-icon
+          :iconName="`icon-${item.icon}`"
+          :color="item.path == route.path ? '#ffffff' : '#8785b7'"
+        ></svg-icon>
+        <span style="margin-left: 5px">{{ item.menuName }}</span>
       </el-menu-item>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useRoute } from "vue-router";
+import { ref, watch } from "vue";
+const route = useRoute();
+
 const props = defineProps({
   menuList: {
     type: Array,
-    default: () => [1, 1, 1, 1],
+    default: () => [],
   },
 });
 </script>
 
- <style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

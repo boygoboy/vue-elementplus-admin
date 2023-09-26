@@ -1,10 +1,10 @@
 const util = require('../utils/util.js');
 const jwt = require('jsonwebtoken');
-const User = require('../db/models/userSchema.js')
-const Menu = require('../db/models/menuSchema.js')
-const Role = require('../db/models/roleSchema.js')
+const User = require('../db/models/system/userSchema.js')
+const Menu = require('../db/models/system/menuSchema.js')
+const Role = require('../db/models/system/roleSchema.js')
 
-const excludeRoutes = ['/api/users/login'];
+const excludeRoutes = ['/api/system/users/login'];
 
 const getApiPath = async (roleKeys) => {
   let roleList = await Role.find({ roleId: { $in: roleKeys } })

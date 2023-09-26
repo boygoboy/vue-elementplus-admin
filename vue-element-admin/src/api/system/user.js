@@ -3,7 +3,7 @@ import request from '@/utils/request.js'
 export default {
     getUserList(query) {
         return request({
-            url: '/users/list',
+            url: '/system/users/list',
             method: 'get',
             params: query
         })
@@ -11,7 +11,7 @@ export default {
     // 新建用户
     addUser(data) {
         return request({
-            url: '/users/add',
+            url: '/system/users/add',
             method: 'post',
             data
         })
@@ -19,7 +19,7 @@ export default {
     // 编辑用户
     editUser(data) {
         return request({
-            url: '/users/edit',
+            url: '/system/users/edit',
             method: 'put',
             data
         })
@@ -27,14 +27,14 @@ export default {
     // 删除用户
     deleteUsers(ids) {
         return request({
-            url: `/users/delete/${ids}`,
+            url: `/system/users/delete/${ids}`,
             method: 'delete'
         })
     },
     // 修改用户状态
     switchState(data) {
         return request({
-            url: '/users/switchstate',
+            url: '/system/users/switchstate',
             method: 'put',
             data
         })
@@ -42,13 +42,13 @@ export default {
     // 获取角色列表
     getRoleList() {
         return request({
-            url: '/role/alllist',
+            url: '/system/role/alllist',
             method: 'get'
         })
     },
     getPermissionList() {
         return request({
-            url: '/users/getPermissionList',
+            url: '/system/users/getPermissionList',
             method: 'get'
         })
     }

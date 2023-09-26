@@ -1,12 +1,12 @@
-const Menu = require('../../db/models/menuSchema.js')
-const util = require('../../utils/util.js')
+const Menu = require('../../../db/models/system/menuSchema.js')
+const util = require('../../../utils/util.js')
 const {
     CODE,
     fail,
     success,
     getMenuTree
 } = util
-const log4j = require('../../utils/log4j.js')
+const log4j = require('../../../utils/log4j.js')
 
 const addMenu = async (ctx) => {
     try {

@@ -1,7 +1,7 @@
 const router = require('koa-router')()
-router.prefix('/role')
+router.prefix('/system/role')
 const { getRoleList, addRole, editRole, deleteRole,
-    setRolePermission, getAllRoleList } = require('../../logic/role')
+    setRolePermission, getAllRoleList } = require('../../../logic/system/role')
 
 router.get('/list', async (ctx) => {
     await getRoleList(ctx)

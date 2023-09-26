@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-router.prefix('/users')
+router.prefix('/system/users')
 const {
     handleLogin,
     getUserList,
@@ -8,7 +8,7 @@ const {
     deleteUser,
     switchState,
     getPermissionList
-} = require('../../logic/user')
+} = require('../../../logic/system/user')
 
 router.post('/login', async (ctx) => {
     await handleLogin(ctx)
