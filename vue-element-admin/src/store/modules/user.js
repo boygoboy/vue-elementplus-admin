@@ -42,7 +42,7 @@ const actions = {
         })
         console.log("router", router.getRoutes());
         setTimeout(() => {
-            router.push("/login");
+            router.push("/front/login");
         }, 500)
     },
     loadRouterList({

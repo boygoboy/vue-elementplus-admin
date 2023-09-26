@@ -11,55 +11,77 @@ import utils from '../utils/util.js'
 
 
 const routes = [{
-    name: 'back',
-    path: '/back',
-    meta: {
-        title: '首页'
-    },
-    component: BackLayout,
-    redirect: '/home',
-    children: [{
-        name: 'home',
-        path: '/home',
+        name: 'back',
+        path: '/back',
         meta: {
             title: '首页'
         },
-        component: () => import('@/views/home.vue')
-    }]
-},
-{
-    name: 'front',
-    path: '/',
-    meta: {
-        title: '前台'
+        component: BackLayout,
+        redirect: '/home',
+        children: [{
+            name: 'home',
+            path: '/home',
+            meta: {
+                title: '首页'
+            },
+            component: () => import('@/views/home.vue')
+        }]
     },
-    component: FrontLayout,
-    redirect: '/front',
-    children: [{
+    {
         name: 'front',
         path: '/front',
         meta: {
-            title: '主页'
+            title: '前台'
         },
-        component: () => import('@/views/front/home/index.vue')
-    }]
-},
-{
-    name: 'login',
-    path: '/login',
-    meta: {
-        title: '登录'
+        component: FrontLayout,
+        redirect: '/front/home',
+        children: [{
+                name: 'front_home',
+                path: '/front/home',
+                meta: {
+                    title: '主页'
+                },
+                component: () => import('@/views/front/home/index.vue')
+            },
+            {
+                name: 'front_chat',
+                path: '/front/chat',
+                meta: {
+                    title: 'AI聊天'
+                },
+                component: () => import('@/views/front/chat/index.vue')
+            },
+            {
+                name: 'front_paint',
+                path: '/front/paint',
+                meta: {
+                    title: 'AI绘画'
+                },
+                component: () => import('@/views/front/paint/index.vue')
+            },
+            {
+                name: 'front_login',
+                path: '/front/login',
+                meta: {
+                    title: '登录'
+                },
+                component: () => import('@/views/Login.vue')
+            }
+        ]
     },
-    component: () => import('@/views/Login.vue')
-},
-{
-    name: '404',
-    path: '/404',
-    meta: {
-        title: '页面不存在'
+    {
+        name: '',
+        path: '/',
+        redirect: '/front'
     },
-    component: () => import('@/views/404.vue')
-}
+    {
+        name: '404',
+        path: '/404',
+        meta: {
+            title: '页面不存在'
+        },
+        component: () => import('@/views/404.vue')
+    }
 
 ]
 
@@ -88,7 +110,7 @@ async function loadAsyncRoutes() {
         } catch (err) {
             // console.log(err)
         }
-    } else { }
+    } else {}
 }
 router.beforeEach(async (to, from, next) => {
     if (to.name) {
@@ -101,7 +123,7 @@ router.beforeEach(async (to, from, next) => {
                     next('/home')
                 } else {
                     document.title = '登录';
-                    next('/login')
+                    next('/front/login')
                 }
             } else {
                 document.title = to.meta.title;
@@ -122,7 +144,7 @@ router.beforeEach(async (to, from, next) => {
             })
         } else {
             document.title = '登录';
-            next('/login')
+            next('/front/login')
         }
     }
 })

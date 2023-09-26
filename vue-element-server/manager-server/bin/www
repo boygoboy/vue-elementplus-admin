@@ -6,7 +6,8 @@
 const db = require('../db/db');
 const dotenv = require("dotenv")
 dotenv.config()
-const log4j = require('../utils/log4j.js')
+const log4j = require('../utils/log4j.js');
+const serve = require('koa-static');
 db(() => {
   var app = require('../app');
   var debug = require('debug')('demo:server');
@@ -29,7 +30,8 @@ db(() => {
    * Listen on provided port, on all network interfaces.
    */
 
-  server.listen(port, "10.0.0.140");
+  // server.listen(port, "10.0.0.140");
+  server.listen(port, '192.168.2.230')
   server.on('error', onError);
   server.on('listening', onListening);
 
