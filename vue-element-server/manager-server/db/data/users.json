@@ -16,4 +16,27 @@
     "$date": "2023-09-22T09:08:27.124Z"
   },
   "__v": 0
+},{
+  "_id": {
+    "$oid": "6510f61e42010e103614895a"
+  },
+  "userId": 2,
+  "userName": "test",
+  "userPwd": "ff98bdf1d11162c2e1e6b6b7e788af84",
+  "userEmail": "test@qq.com",
+  "mobile": {
+    "$numberLong": "14521012021"
+  },
+  "state": true,
+  "role": 1,
+  "roleList": [
+    5
+  ],
+  "createTime": {
+    "$date": "2023-09-25T02:51:28.167Z"
+  },
+  "lastLoginTime": {
+    "$date": "2023-09-25T02:51:28.167Z"
+  },
+  "__v": 0
 }]
