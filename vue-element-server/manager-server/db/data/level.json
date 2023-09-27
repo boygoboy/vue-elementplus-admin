@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "6513825585102479246ae3c5"
+  },
+  "levelId": 2,
+  "levelName": "free",
+  "packageName": "免费套餐",
+  "packagePrice": 0,
+  "packageDuration": 31,
+  "benefitsList": [
+    "免费体验时长30天",
+    "免费使用gpt3.5大模型畅聊",
+    "丰富的聊天模型配置"
+  ],
+  "linkroleId": 5,
+  "levelIcon": "mianfeitiyan",
+  "packageStatus": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65139e49478fdc632ad74c29"
+  },
+  "levelId": 3,
+  "levelName": "vip",
+  "packageName": "vip套餐",
+  "packagePrice": 24,
+  "packageDuration": 30,
+  "benefitsList": [
+    "享受每个月gpt4大模型聊天600条",
+    "享受本地知识库问答",
+    "享有azure 和openai接口服务"
+  ],
+  "linkroleId": 4,
+  "levelIcon": "VIP",
+  "packageStatus": true,
+  "__v": 0
+}]
