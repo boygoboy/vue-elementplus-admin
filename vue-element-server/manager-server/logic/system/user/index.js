@@ -194,8 +194,8 @@ const editUser = async (ctx) => {
         mobile
       }]
     };
-    const users = await User.find(query);
-    if (users.length > 1) {
+    const users = await User.findOne(query);
+    if (users.userId != userId) {
       return ctx.body = fail('用户名、邮箱或者手机号已存在', CODE.BUSINESS_ERROR)
     }
     const oneUser = await User.findOneAndUpdate({

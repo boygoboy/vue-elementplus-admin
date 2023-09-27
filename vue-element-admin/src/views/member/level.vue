@@ -47,7 +47,11 @@
         prop="levelIcon"
         min-width="100"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          <svg-icon :iconName="`icon-${scope.row.levelIcon}`"></svg-icon>
+        </template>
+      </el-table-column>
       <el-table-column
         label="等级名称"
         prop="levelName"
@@ -78,23 +82,37 @@
         prop="packagePrice"
         width="200"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope"> {{ scope.row.packagePrice }}元 </template>
+      </el-table-column>
       <el-table-column
         label="套餐时长"
         prop="packageDuration"
         width="200"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          {{ scope.row.packageDuration }}天
+        </template>
+      </el-table-column>
       <el-table-column
+        show-overflow-tooltip
         label="权益列表"
-        prop="benefitList"
+        prop="benefitsList"
         width="200"
         align="center"
-      ></el-table-column>
+      >
+        <template #default="scope">
+          <span v-for="(item, index) in scope.row.benefitsList" :key="index">
+            {{ index + 1 }}.{{ item }}。
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column
         label="关联角色"
         prop="linkroleId"
         width="200"
+        :formatter="formatRole"
         align="center"
       ></el-table-column>
       <el-table-column label="操作" width="200" align="center">
@@ -143,28 +161,28 @@
           placeholder="请输入套餐时长/天"
         />
       </el-form-item>
-      <el-form-item label="权益列表" prop="benifitsList">
+      <el-form-item label="权益列表" prop="benefitsList">
         <div
-          v-for="(item, index) in addForm.benifitsList"
+          v-for="(item, index) in addForm.benefitsList"
           :key="index"
           style="width: 100%"
         >
           <div style="display: flex; align-items: center; margin-bottom: 10px">
             <el-input
               style="width: 90%; margin-right: 10px"
-              v-model="addForm.benifitsList[index]"
+              v-model="addForm.benefitsList[index]"
               placeholder="请输入权益项"
             ></el-input>
             <div style="width: 10%; display: flex; jusitiy-content: start">
               <svg-icon
-                v-if="index == addForm.benifitsList.length - 1"
+                v-if="index == addForm.benefitsList.length - 1"
                 className="iconfont"
                 iconName="icon-jia"
                 style="margin-right: 5px"
                 @click="addBenifit"
               ></svg-icon>
               <svg-icon
-                v-if="index !== 0 && index == addForm.benifitsList.length - 1"
+                v-if="index !== 0 && index == addForm.benefitsList.length - 1"
                 className="iconfont"
                 @click="deleteBenifit(index)"
                 iconName="icon-jianqu"
@@ -212,8 +230,12 @@ import { useStore } from "vuex";
 const store = useStore();
 let isLoading = computed(() => store.getters.isLoading);
 onMounted(() => {
-  search();
+  initData();
 });
+const initData = async () => {
+  await getroleList();
+  await search();
+};
 
 let searchForm = reactive({
   packageName: "",
@@ -276,7 +298,7 @@ let addForm = reactive({
   levelIcon: "",
   packagePrice: "",
   packageDuration: "",
-  benifitsList: [""],
+  benefitsList: [""],
   linkroleId: "",
 });
 const getroleList = async () => {
@@ -285,15 +307,24 @@ const getroleList = async () => {
   roleOptions.value = await api.getRoleList();
   store.commit("system/SET_ISLOADING", false);
 };
-const switchState = (state, id) => {
+const formatRole = (row, column, cellValue) => {
+  let findRole = roleOptions.value.find((item) => item.roleId == cellValue);
+  if (findRole) {
+    return findRole.roleName;
+  } else {
+    return "";
+  }
+};
+const switchState = async (state, id) => {
   const data = {
     levelId: id,
-    packageStatus: state,
+    packageStatus: !state,
   };
   store.commit("system/SET_ISLOADING", true);
-  api.switchState(data);
+  await api.changeLevelStatus(data);
   store.commit("system/SET_ISLOADING", false);
   ElMessage.success("套餐状态修改成功");
+  search();
 };
 const openLevelDialog = () => {
   dialogFormVisible.value = true;
@@ -301,12 +332,12 @@ const openLevelDialog = () => {
   getroleList();
 };
 const checkPrice = (rule, value, callback) => {
-  if (!value) {
+  if (!value && value != 0) {
     callback(new Error("套餐价格不能为空"));
   } else {
-    const pattern = /^\+?[1-9][0-9]*$/;
+    const pattern = /^\+?[0-9][0-9]*$/;
     if (!pattern.test(value)) {
-      callback(new Error("套餐价格必须为正整数"));
+      callback(new Error("套餐价格必须为整数且不能为负"));
     } else {
       callback();
     }
@@ -314,11 +345,11 @@ const checkPrice = (rule, value, callback) => {
 };
 
 const addBenifit = () => {
-  addForm.benifitsList.push("");
+  addForm.benefitsList.push("");
 };
 
 const deleteBenifit = (index) => {
-  addForm.benifitsList.splice(index, 1);
+  addForm.benefitsList.splice(index, 1);
 };
 
 const checkDuration = (rule, value, callback) => {
@@ -346,7 +377,7 @@ const addFormRules = reactive({
     { required: true, message: "请输入套餐时长", trigger: "blur" },
     { validator: checkDuration, trigger: "blur" },
   ],
-  benifitsList: [
+  benefitsList: [
     { required: true, message: "请输入权益列表", trigger: "blur" },
   ],
   linkroleId: [
@@ -362,7 +393,7 @@ const handleClose = () => {
     levelIcon: "",
     packagePrice: "",
     packageDuration: "",
-    benifitsList: [""],
+    benefitsList: [""],
     linkroleId: "",
   });
   dialogFormVisible.value = false;
@@ -372,7 +403,7 @@ const addFormRef = ref();
 const submitLevel = (addFormRef) => {
   addFormRef.validate(async (valid) => {
     if (valid) {
-      let findIndex = addForm.benifitsList.findIndex((item) => item == "");
+      let findIndex = addForm.benefitsList.findIndex((item) => item == "");
       if (findIndex != -1) {
         ElMessage.warning("权益列表不能为空");
         return;
@@ -383,7 +414,7 @@ const submitLevel = (addFormRef) => {
         levelIcon: addForm.levelIcon,
         packagePrice: addForm.packagePrice,
         packageDuration: addForm.packageDuration,
-        benifitsList: JSON.stringify(addForm.benifitsList),
+        benefitsList: JSON.stringify(addForm.benefitsList),
         linkroleId: addForm.linkroleId,
       };
       if (addForm.levelId) {
@@ -414,7 +445,7 @@ const editLevel = (row) => {
     levelIcon: row.levelIcon,
     packagePrice: row.packagePrice,
     packageDuration: row.packageDuration,
-    benifitsList: row.benifitsList,
+    benefitsList: row.benefitsList,
     linkroleId: row.linkroleId,
   });
   dialogFormVisible.value = true;
