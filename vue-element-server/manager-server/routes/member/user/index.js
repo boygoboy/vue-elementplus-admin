@@ -3,7 +3,8 @@ router.prefix('/member/users')
 const {
     getUserList,
     switchState,
-    getUserInfo
+    getUserInfo,
+    deleteUser
 } = require('../../../logic/member/user')
 
 router.get('/list', async (ctx) => {
@@ -16,6 +17,10 @@ router.put('/switchstate', async (ctx) => {
 
 router.get('/info', async (ctx) => {
     await getUserInfo(ctx)
+})
+
+router.delete('/user/:id', async (ctx) => {
+    await deleteUser(ctx)
 })
 
 module.exports = router

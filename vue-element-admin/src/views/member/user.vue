@@ -80,7 +80,7 @@
       >
         <template #default="scope">
           <el-switch
-            v-has="'user_status'"
+            v-has="'member_user_update'"
             :value="scope.row.state"
             @change="switchState(scope.row.state, scope.row.userId)"
           />
@@ -100,6 +100,13 @@
       ></el-table-column>
       <el-table-column label="操作" width="160" align="center">
         <template #default="scope">
+          <el-button
+            type="danger"
+            text
+            @click="deleteUser(scope.row.userId)"
+            v-has="'member_user_delete'"
+            >删除</el-button
+          >
           <el-button type="primay" text @click="openDetail(scope.row.userId)"
             >详情</el-button
           >
@@ -313,6 +320,18 @@ const openDetail = async (userId) => {
   });
   dialogFormVisible.value = true;
 };
+
+const deleteUser = async (userId) => {
+  ElMessageBox.confirm("此操作将永久删除该用户, 是否继续?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(async () => {
+    await api.deleteUser(userId);
+    ElMessage.success("用户删除成功");
+    getUserList();
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -326,6 +345,7 @@ const openDetail = async (userId) => {
   padding: 20px;
 }
 .table-box {
+  margin-top: 20px;
   padding: 20px;
   padding-top: 0px;
   .pagination {

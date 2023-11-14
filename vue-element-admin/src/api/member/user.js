@@ -29,5 +29,12 @@ export default {
             url: '/member/level/list',
             method: 'get'
         })
-    }
+    },
+    // 删除用户
+    deleteUser(id) {
+        return request({
+            url: `/member/users/user/${id}`,
+            method: 'delete'
+        })
+    },
 }

@@ -118,8 +118,24 @@ const getUserInfo = async (ctx) => {
     }
 }
 
+const deleteUser = async (ctx) => {
+    try {
+        const userId = ctx.params.id
+        if (!userId && userId != 0) {
+            return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+        }
+        const result = await User.deleteOne({
+            userId
+        })
+        return ctx.body = success('', `成功删除会员`)
+    } catch (error) {
+        ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+    }
+}
+
 module.exports = {
     getUserList,
     switchState,
-    getUserInfo
+    getUserInfo,
+    deleteUser
 }
