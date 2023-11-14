@@ -13,30 +13,36 @@
     "$date": "2023-09-22T09:08:27.124Z"
   },
   "lastLoginTime": {
-    "$date": "2023-09-22T09:08:27.124Z"
+    "$date": "2023-10-07T11:31:53.000Z"
   },
   "__v": 0
-},{
+},
+{
   "_id": {
-    "$oid": "6510f61e42010e103614895a"
+    "$oid": "651be4ec867ad79125b46dec"
   },
-  "userId": 2,
-  "userName": "test",
-  "userPwd": "ff98bdf1d11162c2e1e6b6b7e788af84",
-  "userEmail": "test@qq.com",
+  "userId": 4,
+  "userName": "baicai",
+  "userPwd": "d4d8cb1957930c0c9f1b376e032cf5e3",
+  "userEmail": "goudan2020@gmail.com",
   "mobile": {
-    "$numberLong": "14521012021"
+    "$numberLong": "15234524328"
   },
   "state": true,
-  "role": 1,
+  "role": 99,
   "roleList": [
-    5
+    6
   ],
   "createTime": {
-    "$date": "2023-09-25T02:51:28.167Z"
+    "$date": "2023-10-03T09:52:55.189Z"
   },
   "lastLoginTime": {
-    "$date": "2023-09-25T02:51:28.167Z"
+    "$date": "2023-10-03T11:19:45.000Z"
   },
+  "levelId": 0,
+  "validDate": {
+    "$date": "2023-11-03T09:54:52.000Z"
+  },
+  "remainMoney": 30,
   "__v": 0
 }]

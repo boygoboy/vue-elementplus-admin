@@ -1,13 +1,19 @@
 [{
   "_id": {
-    "$oid": "650d35c039ca8a866ca707dd"
+    "$oid": "65196385e761300303c7518d"
   },
   "roleId": 5,
-  "roleName": "测试人员",
-  "remark": "用于测试",
+  "roleName": "管理员",
+  "remark": "管理所有权限",
   "permissionList": {
     "checkedKeys": [
       "650f01f709404fd30070870d",
+      "651279d79b47a58943ba2533",
+      "65180eb12d253ee7ecc5c4c5",
+      "65180f092d253ee7ecc5c4cb",
+      "65180f472d253ee7ecc5c4d1",
+      "65180f7c2d253ee7ecc5c4d7",
+      "651be2892d56b3370297933b",
       "650bf3ddafbfccd597b9518c",
       "650bf42fafbfccd597b9519f",
       "650bf43fafbfccd597b951a4",
@@ -22,38 +28,50 @@
       "650bf4e1afbfccd597b951c7",
       "650bf4f4afbfccd597b951cc",
       "650bf501afbfccd597b951d1",
-      "650bf510afbfccd597b951d6"
+      "650bf510afbfccd597b951d6",
+      "6518d687c15327004063291b",
+      "65196345e761300303c75174",
+      "65197717d7b2e7cbd0037296",
+      "65197745d7b2e7cbd003729c",
+      "65197776d7b2e7cbd00372a2",
+      "651977aad7b2e7cbd00372ad"
     ],
     "halfCheckedKeys": [
+      "651274b79b47a58943ba2470",
+      "6512757d9b47a58943ba2488",
       "650bf39eafbfccd597b9517a",
       "650bf3b3afbfccd597b9517f",
       "650bf3ffafbfccd597b95195",
-      "650bf419afbfccd597b9519a"
+      "650bf419afbfccd597b9519a",
+      "6518d484c1532700406328c2"
     ]
   },
   "updateTime": {
-    "$date": "2023-09-22T06:33:47.947Z"
+    "$date": "2023-10-01T12:14:29.028Z"
   },
   "createTime": {
-    "$date": "2023-09-22T06:33:47.947Z"
+    "$date": "2023-10-01T12:14:29.028Z"
   },
   "__v": 0
-},{
+},
+{
   "_id": {
-    "$oid": "6511059249df637d01739026"
+    "$oid": "65197865d7b2e7cbd00372ef"
   },
-  "roleId": 4,
-  "roleName": "tt",
-  "remark": "",
+  "roleId": 6,
+  "roleName": "免费用户",
+  "remark": "免费套餐相应角色",
   "permissionList": {
-    "checkedKeys": [],
+    "checkedKeys": [
+      "650f01f709404fd30070870d"
+    ],
     "halfCheckedKeys": []
   },
   "updateTime": {
-    "$date": "2023-09-25T03:57:38.926Z"
+    "$date": "2023-10-01T13:40:28.186Z"
   },
   "createTime": {
-    "$date": "2023-09-25T03:57:38.926Z"
+    "$date": "2023-10-01T13:40:28.186Z"
   },
   "__v": 0
 }]

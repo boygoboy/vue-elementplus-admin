@@ -23,7 +23,8 @@
     ""
   ],
   "sortNo": 3
-},{
+},
+{
   "_id": {
     "$oid": "650bf3b3afbfccd597b9517f"
   },
@@ -50,7 +51,8 @@
     ""
   ],
   "sortNo": 1
-},{
+},
+{
   "_id": {
     "$oid": "650bf3ddafbfccd597b9518c"
   },
@@ -80,7 +82,8 @@
     "/api/system/users/add",
     "/api/system/role/alllist"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf3ffafbfccd597b95195"
   },
@@ -107,7 +110,8 @@
     ""
   ],
   "sortNo": 2
-},{
+},
+{
   "_id": {
     "$oid": "650bf419afbfccd597b9519a"
   },
@@ -134,7 +138,8 @@
     ""
   ],
   "sortNo": 3
-},{
+},
+{
   "_id": {
     "$oid": "650bf42fafbfccd597b9519f"
   },
@@ -164,7 +169,8 @@
     "/api/system/users/edit",
     "/api/system/role/alllist"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf43fafbfccd597b951a4"
   },
@@ -193,7 +199,8 @@
   "apiPath": [
     "/api/system/users/remove/:id"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf454afbfccd597b951a9"
   },
@@ -223,7 +230,8 @@
     "/api/system/users/remove/:id"
   ],
   "sortNo": 1
-},{
+},
+{
   "_id": {
     "$oid": "650bf466afbfccd597b951ae"
   },
@@ -252,7 +260,8 @@
   "apiPath": [
     "/api/system/menu/list"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf495afbfccd597b951b3"
   },
@@ -281,7 +290,8 @@
   "apiPath": [
     "/api/system/menu/add"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf4a5afbfccd597b951b8"
   },
@@ -310,7 +320,8 @@
   "apiPath": [
     "/api/system/menu/edit"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf4b7afbfccd597b951bd"
   },
@@ -339,7 +350,8 @@
   "apiPath": [
     "/api/system/menu/remove/:id"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf4cdafbfccd597b951c2"
   },
@@ -368,7 +380,8 @@
   "apiPath": [
     "/api/system/role/list"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf4e1afbfccd597b951c7"
   },
@@ -397,7 +410,8 @@
   "apiPath": [
     "/api/system/role/add"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf4f4afbfccd597b951cc"
   },
@@ -426,7 +440,8 @@
   "apiPath": [
     "/api/system/role/edit"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf501afbfccd597b951d1"
   },
@@ -455,7 +470,8 @@
   "apiPath": [
     "/api/system/role/permissions"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650bf510afbfccd597b951d6"
   },
@@ -484,7 +500,8 @@
   "apiPath": [
     "/api/system/role/remove/:id"
   ]
-},{
+},
+{
   "_id": {
     "$oid": "650d057b250fa6b68d823a20"
   },
@@ -513,7 +530,8 @@
     "$date": "2023-09-23T09:53:47.451Z"
   },
   "__v": 0
-},{
+},
+{
   "_id": {
     "$oid": "650d08ba250fa6b68d823a5e"
   },
@@ -542,7 +560,8 @@
     "$date": "2023-09-23T09:54:04.076Z"
   },
   "__v": 0
-},{
+},
+{
   "_id": {
     "$oid": "650f01f709404fd30070870d"
   },
@@ -567,7 +586,8 @@
   },
   "__v": 0,
   "sortNo": 1
-},{
+},
+{
   "_id": {
     "$oid": "651274b79b47a58943ba2470"
   },
@@ -592,7 +612,8 @@
     "$date": "2023-09-26T06:54:45.798Z"
   },
   "__v": 0
-},{
+},
+{
   "_id": {
     "$oid": "6512757d9b47a58943ba2488"
   },
@@ -619,7 +640,8 @@
     "$date": "2023-09-26T06:10:51.919Z"
   },
   "__v": 0
-},{
+},
+{
   "_id": {
     "$oid": "651279d79b47a58943ba2533"
   },
@@ -629,7 +651,7 @@
   "menuCode": "members_query",
   "path": "",
   "apiPath": [
-    "/api/system/member/level/list"
+    "/api/member/level/list"
   ],
   "icon": "",
   "component": "",
@@ -646,7 +668,437 @@
     "$date": "2023-09-26T06:03:16.059Z"
   },
   "updateTime": {
-    "$date": "2023-09-26T06:03:16.059Z"
+    "$date": "2023-09-30T12:11:11.662Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65180eb12d253ee7ecc5c4c5"
+  },
+  "sortNo": 2,
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "level_add",
+  "path": "",
+  "apiPath": [
+    "/api/system/role/alllist",
+    "/api/member/level/add"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    },
+    {
+      "$oid": "6512757d9b47a58943ba2488"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65180f092d253ee7ecc5c4cb"
+  },
+  "sortNo": 3,
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "level_edit",
+  "path": "",
+  "apiPath": [
+    "/api/member/level/edit",
+    "/api/system/role/alllist"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    },
+    {
+      "$oid": "6512757d9b47a58943ba2488"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65180f472d253ee7ecc5c4d1"
+  },
+  "sortNo": 4,
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "level_delete",
+  "path": "",
+  "apiPath": [
+    "/api/member/level/remove/:id"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    },
+    {
+      "$oid": "6512757d9b47a58943ba2488"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-30T12:13:31.712Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65180f7c2d253ee7ecc5c4d7"
+  },
+  "sortNo": 5,
+  "menuType": 2,
+  "menuName": "状态",
+  "menuCode": "level_status",
+  "path": "",
+  "apiPath": [
+    "/api/member/level/status"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    },
+    {
+      "$oid": "6512757d9b47a58943ba2488"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "updateTime": {
+    "$date": "2023-09-30T11:59:03.124Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6518d484c1532700406328c2"
+  },
+  "sortNo": 4,
+  "menuType": 1,
+  "menuName": "邮箱管理",
+  "menuCode": "",
+  "path": "/system/mail",
+  "apiPath": [
+    ""
+  ],
+  "icon": "youxiangguanli",
+  "component": "/system/mail",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T01:59:25.769Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T01:59:25.769Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6518d687c15327004063291b"
+  },
+  "sortNo": 1,
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "mail_query",
+  "path": "",
+  "apiPath": [
+    "/api/system/smtpemail/list"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "6518d484c1532700406328c2"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T01:59:25.769Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T12:17:34.302Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65196345e761300303c75174"
+  },
+  "sortNo": 2,
+  "menuType": 2,
+  "menuName": "新增",
+  "menuCode": "mail_create",
+  "path": "",
+  "apiPath": [
+    "/api/system/smtpemail/addsmtp"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "6518d484c1532700406328c2"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T12:14:29.025Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T12:17:44.894Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65197717d7b2e7cbd0037296"
+  },
+  "sortNo": 3,
+  "menuType": 2,
+  "menuName": "编辑",
+  "menuCode": "mail_edit",
+  "path": "",
+  "apiPath": [
+    "/api/system/smtpemail/editsmtp"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "6518d484c1532700406328c2"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65197745d7b2e7cbd003729c"
+  },
+  "sortNo": 4,
+  "menuType": 2,
+  "menuName": "删除",
+  "menuCode": "mail_delete",
+  "path": "",
+  "apiPath": [
+    "/api/system/smtpemail/deletesmtp/:id"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "6518d484c1532700406328c2"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T13:43:34.634Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65197776d7b2e7cbd00372a2"
+  },
+  "sortNo": 5,
+  "menuType": 2,
+  "menuName": "启用",
+  "menuCode": "mail_enable",
+  "path": "",
+  "apiPath": [
+    "/api/system/smtpemail/enablesmtp"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "6518d484c1532700406328c2"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "651977aad7b2e7cbd00372ad"
+  },
+  "sortNo": 6,
+  "menuType": 2,
+  "menuName": "测试邮箱",
+  "menuCode": "mail_test",
+  "path": "",
+  "apiPath": [
+    "/api/system/smtpemail/testsmtp"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "650bf39eafbfccd597b9517a"
+    },
+    {
+      "$oid": "6518d484c1532700406328c2"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-01T13:40:28.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "651be2892d56b3370297933b"
+  },
+  "sortNo": 6,
+  "menuType": 2,
+  "menuName": "分配资源",
+  "menuCode": "level_distrbute",
+  "path": "",
+  "apiPath": [
+    "/api/member/level/resource"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    },
+    {
+      "$oid": "6512757d9b47a58943ba2488"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-02T12:28:52.125Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-02T12:28:52.125Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "651be6dd867ad79125b46e1b"
+  },
+  "sortNo": 2,
+  "menuType": 1,
+  "menuName": "会员信息",
+  "menuCode": "",
+  "path": "/member/user",
+  "apiPath": [
+    ""
+  ],
+  "icon": "01_huiyuanxinxiguanli",
+  "component": "/member/user",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-03T09:52:55.202Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-03T09:52:55.202Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "651be754867ad79125b46e38"
+  },
+  "sortNo": 1,
+  "menuType": 2,
+  "menuName": "查看",
+  "menuCode": "member_user_query",
+  "path": "",
+  "apiPath": [
+    "/api/member/user/list"
+  ],
+  "icon": "",
+  "component": "",
+  "menuState": "正常",
+  "parentId": [
+    {
+      "$oid": "651274b79b47a58943ba2470"
+    },
+    {
+      "$oid": "651be6dd867ad79125b46e1b"
+    }
+  ],
+  "createTime": {
+    "$date": "2023-10-03T09:52:55.202Z"
+  },
+  "updateTime": {
+    "$date": "2023-10-03T09:52:55.202Z"
   },
   "__v": 0
 }]

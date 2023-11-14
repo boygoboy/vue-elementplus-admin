@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "651967045f2b9bb4f84b4578"
+  },
+  "smtpId": 3,
+  "smtpName": "163邮箱",
+  "sendName": "cwj16030301@163.com",
+  "smtpHost": "smtp.163.com",
+  "smtpPort": "465",
+  "enableSSL": true,
+  "userName": "cwj16030301@163.com",
+  "passWord": "ABQANKSBEKORUVMT",
+  "textModel": "` <p>你好！</p>\n <p>您正在注册baicai-gpt账号</p>\n            <p>你的验证码是：<strong style=\"color: #ff4e2a;\">${code}</strong></p>\n            <p>***该验证码2分钟内有效***</p>\n            <p>如果您没有注册baicai-gpt账号，请忽略此邮件。</p>`",
+  "isOnline": true,
+  "__v": 0
+}]
