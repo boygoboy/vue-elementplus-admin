@@ -1,6 +1,13 @@
 const router = require('koa-router')()
 router.prefix('/member/level')
-const { getList, addLevel, editLevel, deleteLevel, changeLevelStatus } = require('../../../logic/member/level/index.js')
+const {
+    getList,
+    addLevel,
+    editLevel,
+    deleteLevel,
+    changeLevelStatus,
+    distrbuteResource
+} = require('../../../logic/member/level/index.js')
 
 router.get('/list', async (ctx) => {
     await getList(ctx)
@@ -20,6 +27,10 @@ router.delete('/remove/:id', async (ctx) => {
 
 router.put('/status', async (ctx) => {
     await changeLevelStatus(ctx)
+})
+
+router.put('/resource', async (ctx) => {
+    await distrbuteResource(ctx)
 })
 
 

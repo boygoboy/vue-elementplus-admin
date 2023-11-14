@@ -7,7 +7,9 @@ const {
     editUser,
     deleteUser,
     switchState,
-    getPermissionList
+    getPermissionList,
+    registerUser,
+    getemailCode
 } = require('../../../logic/system/user')
 
 router.post('/login', async (ctx) => {
@@ -36,6 +38,14 @@ router.put('/switchstate', async (ctx) => {
 
 router.get('/getPermissionList', async (ctx) => {
     await getPermissionList(ctx)
+})
+
+router.post('/register', async (ctx) => {
+    await registerUser(ctx)
+})
+
+router.get('/emailcode', async (ctx) => {
+    await getemailCode(ctx)
 })
 
 module.exports = router

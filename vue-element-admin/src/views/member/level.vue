@@ -61,13 +61,13 @@
       <el-table-column
         label="套餐名称"
         prop="packageName"
-        width="200"
+        width="160"
         align="center"
       ></el-table-column>
       <el-table-column
         label="套餐状态"
         prop="packageStatus"
-        width="200"
+        width="160"
         align="center"
       >
         <template #default="scope">
@@ -80,7 +80,7 @@
       <el-table-column
         label="套餐价格"
         prop="packagePrice"
-        width="200"
+        width="150"
         align="center"
       >
         <template #default="scope"> {{ scope.row.packagePrice }}元 </template>
@@ -88,7 +88,7 @@
       <el-table-column
         label="套餐时长"
         prop="packageDuration"
-        width="200"
+        width="150"
         align="center"
       >
         <template #default="scope">
@@ -99,7 +99,7 @@
         show-overflow-tooltip
         label="权益列表"
         prop="benefitsList"
-        width="200"
+        width="220"
         align="center"
       >
         <template #default="scope">
@@ -111,12 +111,15 @@
       <el-table-column
         label="关联角色"
         prop="linkroleId"
-        width="200"
+        width="150"
         :formatter="formatRole"
         align="center"
       ></el-table-column>
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" width="180" align="center">
         <template #default="scope">
+          <el-button type="primay" text @click="distrbuteResource(scope.row)"
+            >分配资源</el-button
+          >
           <el-button type="primay" text @click="editLevel(scope.row)"
             >编辑</el-button
           >
@@ -173,7 +176,7 @@
               v-model="addForm.benefitsList[index]"
               placeholder="请输入权益项"
             ></el-input>
-            <div style="width: 10%; display: flex; jusitiy-content: start">
+            <div style="width: 10%; display: flex; justify-content: start">
               <svg-icon
                 v-if="index == addForm.benefitsList.length - 1"
                 className="iconfont"
@@ -217,6 +220,124 @@
     </template>
   </el-dialog>
   <!--------------------------等级创建弹窗结束--------------------------------->
+  <!---------------------------分配资源弹窗开始-------------------------------->
+  <el-dialog
+    v-model="dialogresourceFormVisible"
+    :before-close="handleResourceClose"
+    :title="dialogResourceTitle"
+    width="60%"
+    top="20vh"
+  >
+    <el-form
+      :model="resourceForm"
+      ref="resourceFormRef"
+      label-width="100px"
+      label-position="right"
+      style="width: 95%"
+      :rules="resourceFormRules"
+    >
+      <el-form-item label="套餐等级" prop="levelName">
+        <el-input v-model="resourceForm.levelName" disabled />
+      </el-form-item>
+      <el-form-item label="套餐名称" prop="packageName">
+        <el-input v-model="resourceForm.packageName" disabled />
+      </el-form-item>
+      <el-form-item label="充值金额" prop="packageMoney">
+        <el-input
+          v-model.number="resourceForm.packageMoney"
+          placeholder="请输入充值金额"
+        />
+      </el-form-item>
+      <el-form-item label="资费配置" prop="resourceData">
+        <el-table
+          :data="resourceForm.resourceData"
+          max-height="300px"
+          style="width: 100%; border: none"
+          :header-cell-style="setHeaderCellStyle"
+          border
+          @cell-dblclick="handleDbClick"
+        >
+          <el-table-column
+            label="模型名称"
+            prop="modelName"
+            align="center"
+            min-width="150"
+          >
+            <template #default="scope">
+              <el-input
+                class="center-input"
+                v-model="scope.row.modelName.value"
+                v-if="scope.row.modelName.isInput"
+              ></el-input>
+              <span v-else>{{ scope.row.modelName.value }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="访问速率(次/分)"
+            prop="accessRate"
+            align="center"
+            min-width="180"
+          >
+            <template #default="scope">
+              <el-input
+                class="center-input"
+                v-model="scope.row.accessRate.value"
+                v-if="scope.row.accessRate.isInput"
+              ></el-input>
+              <span v-else>{{ scope.row.accessRate.value }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="模型单价(元/1000token)"
+            prop="modelUnitPrice"
+            align="center"
+            min-width="240"
+          >
+            <template #default="scope">
+              <el-input
+                class="center-input"
+                v-model="scope.row.modelUnitPrice.value"
+                v-if="scope.row.modelUnitPrice.isInput"
+              ></el-input>
+              <span v-else>{{ scope.row.modelUnitPrice.value }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column width="120" label="操作" align="center">
+            <template #default="scope">
+              <div style="display: flex; justify-content: center">
+                <svg-icon
+                  @click="addResource(scope.$index)"
+                  className="iconfont-table"
+                  iconName="icon-jia"
+                  style="margin-right: 5px"
+                ></svg-icon>
+                <svg-icon
+                  @click="deleteResource(scope.$index)"
+                  v-if="resourceForm.resourceData.length > 1"
+                  className="iconfont-table"
+                  iconName="icon-jianqu"
+                ></svg-icon>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="info" @click="handleResourceClose">取消</el-button>
+        <el-button
+          @click="submitResource(resourceFormRef)"
+          :loading="isLoading"
+          type="primary"
+          style="margin-left: 20px"
+        >
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+  <!---------------------------分配资源弹窗结束--------------------------------->
 </template>
 
 <script setup>
@@ -417,7 +538,7 @@ const submitLevel = (addFormRef) => {
         benefitsList: JSON.stringify(addForm.benefitsList),
         linkroleId: addForm.linkroleId,
       };
-      if (addForm.levelId) {
+      if (addForm.levelId || addForm.levelId == 0) {
         data.levelId = addForm.levelId;
         store.commit("system/SET_ISLOADING", true);
         await api.editLevel(data);
@@ -452,6 +573,166 @@ const editLevel = (row) => {
   dialogTitle.value = "编辑套餐等级";
   getroleList();
 };
+
+const distrbuteResource = (row) => {
+  let resourceData = [];
+  row.resourceList.resourceData.forEach((item) => {
+    let resourceItem = {};
+    resourceItem.modelName = {
+      value: item.modelName,
+      isInput: false,
+    };
+    resourceItem.accessRate = {
+      value: item.accessRate,
+      isInput: false,
+    };
+    resourceItem.modelUnitPrice = {
+      value: item.modelUnitPrice,
+      isInput: false,
+    };
+    resourceData.push(resourceItem);
+  });
+  resourceForm = reactive({
+    levelId: row.levelId,
+    levelName: row.levelName,
+    packageName: row.packageName,
+    packageMoney: row.resourceList.packageMoney,
+    resourceData:
+      resourceData.length > 0
+        ? resourceData
+        : [
+            {
+              modelName: {
+                value: "gpt3.5",
+                isInput: false,
+              },
+              accessRate: {
+                value: "",
+                isInput: false,
+              },
+              modelUnitPrice: {
+                value: "",
+                isInput: false,
+              },
+            },
+          ],
+  });
+  dialogresourceFormVisible.value = true;
+  dialogResourceTitle.value = "分配套餐资源";
+};
+let dialogResourceTitle = ref("");
+let dialogresourceFormVisible = ref(false);
+let resourceForm = reactive({
+  levelId: "",
+  levelName: "",
+  packageName: "",
+  packageMoney: "",
+  resourceData: [
+    {
+      modelName: {
+        value: "gpt3.5",
+        isInput: false,
+      },
+      accessRate: {
+        value: "",
+        isInput: false,
+      },
+      modelUnitPrice: {
+        value: "",
+        isInput: false,
+      },
+    },
+  ],
+});
+const resourceFormRef = ref();
+const handleResourceClose = () => {
+  dialogresourceFormVisible.value = false;
+  resourceForm = reactive({
+    levelId: "",
+    levelName: "",
+    packageName: "",
+    packageMoney: "",
+    resourceData: [
+      {
+        modelName: {
+          value: "gpt3.5",
+          isInput: false,
+        },
+        accessRate: {
+          value: "",
+          isInput: false,
+        },
+        modelUnitPrice: {
+          value: "",
+          isInput: false,
+        },
+      },
+    ],
+  });
+  proxy.$refs.resourceFormRef.resetFields();
+};
+const resourceFormRules = reactive({
+  packageMoney: [
+    { required: true, message: "请输入充值金额", trigger: "blur" },
+    { pattern: /^[1-9]\d*$/, message: "请输入正整数", trigger: "blur" },
+  ],
+});
+const submitResource = (resourceRef) => {
+  resourceRef.validate(async (valid) => {
+    let resourceList = {};
+    resourceList.levelId = resourceForm.levelId;
+    resourceList.packageMoney = resourceForm.packageMoney;
+    resourceList.resourceData = [];
+    resourceForm.resourceData.forEach((item) => {
+      let resourceItem = {};
+      resourceItem.modelName = item.modelName.value;
+      resourceItem.accessRate = item.accessRate.value;
+      resourceItem.modelUnitPrice = item.modelUnitPrice.value;
+      resourceList.resourceData.push(resourceItem);
+    });
+    if (
+      resourceList.resourceData.some(
+        (item) =>
+          item.modelName == "" ||
+          item.accessRate == "" ||
+          item.modelUnitPrice == ""
+      )
+    ) {
+      ElMessage.warning("模型名称、访问速率、模型单价不能为空");
+      return;
+    }
+
+    store.commit("system/SET_ISLOADING", true);
+    await api.distrbuteResource(resourceList);
+    store.commit("system/SET_ISLOADING", false);
+    ElMessage.success("套餐资源分配成功");
+    getLevelList();
+    handleResourceClose();
+  });
+};
+const addResource = (index) => {
+  resourceForm.resourceData.splice(index + 1, 0, {
+    modelName: {
+      value: "",
+      isInput: false,
+    },
+    accessRate: {
+      value: "",
+      isInput: false,
+    },
+    modelUnitPrice: {
+      value: "",
+      isInput: false,
+    },
+  });
+};
+const deleteResource = (index) => {
+  resourceForm.resourceData.splice(index, 1);
+};
+
+const handleDbClick = (row, column, cell) => {
+  row[column.property].isInput = true;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -479,5 +760,12 @@ const editLevel = (row) => {
   font-size: 1.5em;
   cursor: pointer;
   flex: 1;
+}
+.iconfont-table {
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.center-input /deep/ .el-input__inner {
+  text-align: center;
 }
 </style>

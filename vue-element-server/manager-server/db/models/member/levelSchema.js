@@ -10,6 +10,14 @@ const levelSchema = mongoose.Schema({
     linkroleId: Number, //关联角色id
     levelIcon: String, //等级图标
     packageStatus: Boolean, //套餐状态
+    resourceList: {
+        packageMoney: Number,
+        resourceData: [{
+            modelName: String,
+            accessRate: Number,
+            modelUnitPrice: Number,
+        }]
+    }
 })
 
 module.exports = mongoose.model("level", levelSchema, "level")

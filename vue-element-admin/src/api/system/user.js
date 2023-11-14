@@ -51,5 +51,5 @@ export default {
             url: '/system/users/getPermissionList',
             method: 'get'
         })
-    }
+    },
 }

@@ -6,7 +6,6 @@ const userSchema = mongoose.Schema({
     "userPwd": String,
     "userEmail": String,
     "mobile": Number,
-    "sex": Number,
     "state": Boolean,
     "role": Number,
     "roleList": [],
@@ -17,7 +16,13 @@ const userSchema = mongoose.Schema({
     "lastLoginTime": {
         type: Date,
         default: Date.now()
-    }
+    },
+    "levelId": Number,
+    "validDate": {
+        type: Date,
+        default: Date.now()
+    },
+    "remainMoney": Number,
 })
 
 module.exports = mongoose.model("users", userSchema, "users")

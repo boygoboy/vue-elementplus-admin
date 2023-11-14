@@ -23,8 +23,11 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "md5": "^2.3.0",
+    "moment": "^2.29.4",
     "mongoose": "^7.5.0",
     "mongose": "^0.0.2-security",
+    "nodemailer": "^6.9.5",
+    "nodemailer-smtp-transport": "^2.7.4",
     "pug": "^2.0.3"
   },
   "devDependencies": {

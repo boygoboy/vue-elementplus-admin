@@ -53,18 +53,21 @@
       <el-table-column
         label="菜单名称"
         prop="menuName"
+        show-overflow-tooltip
         min-width="100"
         align="center"
       ></el-table-column>
       <el-table-column
         label="图标"
         prop="icon"
-        min-width="80"
+        show-overflow-tooltip
+        min-width="130"
         align="center"
       ></el-table-column>
       <el-table-column
         label="菜单类型"
         prop="menuType"
+        show-overflow-tooltip
         width="100"
         align="center"
       >
@@ -75,11 +78,13 @@
       <el-table-column
         label="权限标识"
         prop="menuCode"
+        show-overflow-tooltip
         min-width="100"
         align="center"
       ></el-table-column>
       <el-table-column
         label="菜单地址"
+        show-overflow-tooltip
         prop="path"
         min-width="100"
         align="center"
@@ -96,6 +101,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        show-overflow-tooltip
         label="组件路径"
         prop="component"
         min-width="100"
@@ -104,12 +110,13 @@
       <el-table-column
         label="菜单状态"
         prop="menuState"
-        min-width="70"
+        min-width="110"
         align="center"
       ></el-table-column>
       <el-table-column
         label="创建时间"
         prop="createTime"
+        show-overflow-tooltip
         width="190"
         align="center"
       >

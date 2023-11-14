@@ -30,8 +30,9 @@ db(() => {
    * Listen on provided port, on all network interfaces.
    */
 
-  server.listen(port, "10.0.0.140");
+  // server.listen(port, "10.0.0.140");
   // server.listen(port, '192.168.2.230')
+  server.listen(port, '192.168.166.1')
   server.on('error', onError);
   server.on('listening', onListening);
 

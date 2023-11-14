@@ -54,8 +54,10 @@
           </el-dropdown>
         </div>
       </div>
-      <div class="wrapper">
-        <router-view> </router-view>
+      <div class="wrapper-box">
+        <div class="wrapper">
+          <router-view> </router-view>
+        </div>
       </div>
     </div>
   </div>
@@ -166,11 +168,15 @@ const handleCommand = (val) => {
         cursor: pointer;
       }
     }
-
-    .wrapper {
-      margin: 20px;
-      height: calc(100vh - 93px);
-      background: #ffffff;
+    .wrapper-box {
+      overflow: auto;
+      height: calc(100vh - 35px);
+      padding-bottom: 15px;
+      .wrapper {
+        margin: 20px;
+        background: #ffffff;
+        min-height: calc(89vh - 5px);
+      }
     }
     &.expand {
       margin-left: 49px;
@@ -179,5 +185,27 @@ const handleCommand = (val) => {
       margin-left: 200px;
     }
   }
+}
+</style>
+<style scoped>
+/* Webkit浏览器 */
+::-webkit-scrollbar {
+  width: 5px; /* 设置垂直滚动条的宽度 */
+  height: 5px; /* 设置水平滚动条的高度 */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* 轨道的背景颜色 */
+  border-radius: 10px; /* 可以设置轨道的圆角 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* 滑块的背景颜色 */
+  border-radius: 10px; /* 可以设置滑块的圆角 */
+}
+
+/* 鼠标悬停时的滑块样式 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 </style>

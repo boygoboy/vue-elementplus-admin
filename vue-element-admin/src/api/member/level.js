@@ -45,6 +45,14 @@ export default {
             method: 'put',
             data
         })
+    },
+    // 分配资源
+    distrbuteResource(data) {
+        return request({
+            url: '/member/level/resource',
+            method: 'put',
+            data
+        })
     }
 
 }
