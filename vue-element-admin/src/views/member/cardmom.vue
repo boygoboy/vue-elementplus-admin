@@ -60,7 +60,13 @@
       @click="openBatchCreate"
       >批量创建</el-button
     >
-    <el-button :loading="isLoading" type="info">批量删除</el-button>
+    <el-button
+      :loading="isLoading"
+      type="info"
+      :disabled="cardIds.length == 0"
+      @click="deleteCard(cardIds)"
+      >批量删除</el-button
+    >
   </div>
   <div class="table-box">
     <el-table
@@ -69,6 +75,7 @@
       height="calc(100vh - 310px)"
       style="width: 100%; border: none"
       :header-cell-style="setHeaderCellStyle"
+      @selection-change="handleSelectionChange"
       border
     >
       <el-table-column type="selection" width="55" />
@@ -85,15 +92,32 @@
         align="center"
       >
         <template #default="scope">
-          <span>
-            {{
-              levelOptions.find(
-                (item) => item.levelId == scope.row.cardLevel
-              ) &&
-              levelOptions.find((item) => item.levelId == scope.row.cardLevel)
-                .levelName
-            }}
-          </span>
+          <div
+            style="display: flex; align-items: center; justify-content: center"
+          >
+            <span>
+              <svg-icon
+                className="icon-level"
+                :iconName="`icon-${
+                  levelOptions.find(
+                    (item) => item.levelId == scope.row.cardLevel
+                  ) &&
+                  levelOptions.find(
+                    (item) => item.levelId == scope.row.cardLevel
+                  ).levelIcon
+                }`"
+              ></svg-icon>
+            </span>
+            <span style="margin-left: 3px">
+              {{
+                levelOptions.find(
+                  (item) => item.levelId == scope.row.cardLevel
+                ) &&
+                levelOptions.find((item) => item.levelId == scope.row.cardLevel)
+                  .levelName
+              }}
+            </span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
@@ -109,6 +133,32 @@
         min-width="100"
         align="center"
       >
+        <template #default="scope">
+          <el-tag
+            v-if="scope.row.cardState == '未使用'"
+            type="success"
+            size="small"
+            effect="dark"
+          >
+            {{ scope.row.cardState }}
+          </el-tag>
+          <el-tag
+            v-if="scope.row.cardState == '已使用'"
+            type="warning"
+            size="small"
+            effect="dark"
+          >
+            {{ scope.row.cardState }}
+          </el-tag>
+          <el-tag
+            v-if="scope.row.cardState == '已过期'"
+            type="danger"
+            size="small"
+            effect="dark"
+          >
+            {{ scope.row.cardState }}
+          </el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         label="失效日期"
@@ -121,7 +171,7 @@
           <el-button
             type="danger"
             text
-            @click="deleteUser(scope.row.userId)"
+            @click="deleteCard(scope.row.cardId)"
             v-has="'member_user_delete'"
             >删除</el-button
           >
@@ -149,10 +199,11 @@
   >
     <el-form
       :model="addForm"
-      ref="viewFormRef"
+      ref="addFormRef"
       label-width="100px"
       label-position="right"
       style="width: 95%"
+      :rules="addFormRules"
     >
       <el-form-item label="卡密编号">
         <el-input v-model="addForm.cardNo" disabled></el-input>
@@ -181,6 +232,7 @@
           v-model="addForm.expirationDate"
           type="date"
           placeholder="请选择日期"
+          :disabled-date="disabledDateFuns"
         />
       </el-form-item>
     </el-form>
@@ -191,6 +243,7 @@
           :loading="isLoading"
           type="primary"
           style="margin-left: 20px"
+          @click="addOneCard"
         >
           确定
         </el-button>
@@ -208,10 +261,11 @@
   >
     <el-form
       :model="addBatchForm"
-      ref="viewFormRef"
+      ref="addBatchFormRef"
       label-width="100px"
       label-position="right"
       style="width: 95%"
+      :rules="addBatchFormRules"
     >
       <el-form-item label="卡密数量" prop="cardNum">
         <el-input-number
@@ -246,6 +300,7 @@
           v-model="addBatchForm.expirationDate"
           type="date"
           placeholder="请选择日期"
+          :disabled-date="disabledDateFuns"
         />
       </el-form-item>
     </el-form>
@@ -256,6 +311,7 @@
           :loading="isLoading"
           type="primary"
           style="margin-left: 20px"
+          @click="submitBatchCreate"
         >
           确定
         </el-button>
@@ -275,15 +331,20 @@ import { useStore } from "vuex";
 const store = useStore();
 let isLoading = computed(() => store.getters.isLoading);
 onMounted(() => {
-  getUserList();
+  getCardList();
   getLevelList();
 });
 
+const disabledDateFuns = (time) => {
+  return time.getTime() < Date.now() - 8.64e7;
+};
+
 const searchForm = reactive({
-  levelId: "",
-  userEmail: "",
-  levelId: "",
-  state: "",
+  cardNo: "",
+  cardLevel: "",
+  cardType: "",
+  cardState: "",
+  expirationDate: "",
 });
 let tableData = ref([]);
 
@@ -304,30 +365,29 @@ const pageObj = reactive({
 });
 const handleSizeChange = (val) => {
   pageObj.pageSize = val;
-  getUserList();
+  getCardList();
 };
 const handleCurrentChange = (val) => {
   pageObj.currentPage = val;
-  getUserList();
+  getCardList();
 };
-const getUserList = async () => {
+const getCardList = async () => {
   const query = {
-    levelId: searchForm.levelId,
-    userEmail: searchForm.userEmail,
-    state: searchForm.state,
+    cardNo: searchForm.cardNo,
+    cardLevel: searchForm.cardLevel,
+    cardType: searchForm.cardType,
+    cardState: searchForm.cardState,
+    expirationDate: searchForm.expirationDate,
     currentPage: pageObj.currentPage,
     pageSize: pageObj.pageSize,
   };
   store.commit("system/SET_ISLOADING", true);
-  let { list, page } = await api.getUserList(query);
+  let { list, page } = await api.getCardList(query);
   store.commit("system/SET_ISLOADING", false);
   pageObj.total = page.total;
   tableData.value = list;
   tableData.value.forEach((item) => {
-    item.createTime = moment(new Date(item.createTime)).format(
-      "YYYY-MM-DD HH:mm:ss"
-    );
-    item.lastLoginTime = moment(new Date(item.lastLoginTime)).format(
+    item.expirationDate = moment(new Date(item.expirationDate)).format(
       "YYYY-MM-DD HH:mm:ss"
     );
   });
@@ -336,7 +396,7 @@ const search = () => {
   pageObj.currentPage = 1;
   pageObj.pageSize = 10;
   pageObj.total = 0;
-  getUserList();
+  getCardList();
 };
 const reset = () => {
   searchForm.levelId = "";
@@ -352,10 +412,93 @@ let addForm = reactive({
   expirationDate: "",
 });
 
+const addFormRules = reactive({
+  cardNo: [{ required: true, message: "请生成卡密", trigger: "blur" }],
+  cardLevel: [{ required: true, message: "请选择卡密等级", trigger: "change" }],
+  cardType: [{ required: true, message: "请选择卡密类型", trigger: "change" }],
+  expirationDate: [
+    { required: true, message: "请选择失效日期", trigger: "change" },
+  ],
+});
+
 const openCreate = () => {
+  //生成卡密函数
+  const randomWord = (length) => {
+    let str = "",
+      arr = [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+      ];
+    //每位随机字符
+    for (let i = 0; i < length; i++) {
+      let pos = Math.round(Math.random() * (arr.length - 1));
+      str += arr[pos];
+    }
+    return str;
+  };
   dialogFormVisible.value = true;
   addForm = reactive({
-    cardNo: "",
+    cardNo: randomWord(16),
     cardLevel: "",
     cardType: "",
     expirationDate: "",
@@ -371,6 +514,8 @@ const handleClose = () => {
     cardType: "",
     expirationDate: "",
   });
+  store.commit("system/SET_ISLOADING", false);
+  proxy.$refs["addFormRef"].resetFields();
 };
 
 let dialogBatchFormVisible = ref(false);
@@ -379,6 +524,15 @@ let addBatchForm = reactive({
   cardLevel: "",
   cardType: "",
   expirationDate: "",
+});
+
+const addBatchFormRules = reactive({
+  cardNum: [{ required: true, message: "请输入卡密数量", trigger: "blur" }],
+  cardLevel: [{ required: true, message: "请选择卡密等级", trigger: "change" }],
+  cardType: [{ required: true, message: "请选择卡密类型", trigger: "change" }],
+  expirationDate: [
+    { required: true, message: "请选择失效日期", trigger: "change" },
+  ],
 });
 const openBatchCreate = () => {
   dialogBatchFormVisible.value = true;
@@ -397,30 +551,55 @@ const handleBatchClose = () => {
     cardType: "",
     expirationDate: "",
   });
+  store.commit("system/SET_ISLOADING", false);
+  proxy.$refs["addBatchFormRef"].resetFields();
 };
 
-const switchState = async (state, userId) => {
-  const data = {
-    userId,
-    state: !state,
-  };
-  await api.switchState(data);
-  ElMessage.success("用户状态切换成功");
-  getUserList();
+const submitBatchCreate = async () => {
+  proxy.$refs["addBatchFormRef"].validate(async (valid) => {
+    if (valid) {
+      store.commit("system/SET_ISLOADING", true);
+      await api.barchCard(addBatchForm);
+      store.commit("system/SET_ISLOADING", false);
+      ElMessage.success("卡密批量创建成功");
+      handleBatchClose();
+      getCardList();
+    }
+  });
 };
+
+const addOneCard = async () => {
+  proxy.$refs["addFormRef"].validate(async (valid) => {
+    if (valid) {
+      store.commit("system/SET_ISLOADING", true);
+      await api.addOneCard(addForm);
+      store.commit("system/SET_ISLOADING", false);
+      ElMessage.success("卡密创建成功");
+      handleClose();
+      getCardList();
+    }
+  });
+};
+
 const getLevelList = async () => {
   levelOptions.value = await api.getLevelList();
 };
 
-const deleteUser = async (userId) => {
-  ElMessageBox.confirm("此操作将永久删除该用户, 是否继续?", "提示", {
+let cardIds = ref([]);
+const handleSelectionChange = (rows) => {
+  cardIds.value = [];
+  cardIds.value = rows.map((item) => item.cardId);
+};
+
+const deleteCard = async (cardIds) => {
+  ElMessageBox.confirm("此操作将永久删除该卡密, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",
   }).then(async () => {
-    await api.deleteUser(userId);
-    ElMessage.success("用户删除成功");
-    getUserList();
+    await api.deleteCard(Array.isArray(cardIds) ? cardIds.join(",") : cardIds);
+    ElMessage.success("卡密删除成功");
+    getCardList();
   });
 };
 </script>
@@ -443,5 +622,12 @@ const deleteUser = async (userId) => {
     margin-top: 20px;
     margin-right: 20px;
   }
+}
+</style>
+<style scoped>
+.icon-level {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -6px;
 }
 </style>
