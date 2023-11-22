@@ -52,4 +52,12 @@ export default {
             method: 'get'
         })
     },
+    // 兑换会员
+    exchangeMember(data) {
+        return request({
+            url: '/system/users/exchangemember',
+            method: 'post',
+            data
+        })
+    },
 }

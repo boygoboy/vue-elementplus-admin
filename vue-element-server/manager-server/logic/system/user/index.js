@@ -4,6 +4,7 @@ const Role = require('../../../db/models/system/roleSchema.js')
 const Counter = require('../../../db/models/system/counterSchema.js')
 const emailCode = require('../../../db/models/system/emailSchema.js')
 const Level = require('../../../db/models/member/levelSchema.js')
+const Card = require('../../../db/models/member/cardSchema.js')
 const Smtp = require('../../../db/models/system/smtpSchema.js')
 const util = require('../../../utils/util.js')
 const nodemailer = require("nodemailer"); // 邮件发送模块
@@ -420,7 +421,7 @@ const registerUser = async (ctx) => {
     })
 
     const filterLevel = await Level.findOne({
-      levelId: 0
+      levelName: 'free'
     })
     if (!filterLevel) {
       return ctx.body = fail('系统维护已停止注册', CODE.BUSINESS_ERROR)
@@ -435,6 +436,8 @@ const registerUser = async (ctx) => {
       role: 99,
       state: true,
       levelId: filterLevel.levelId,
+      levelWeight: filterLevel.levelWeight,
+      packagePrice: filterLevel.packagePrice,
       validDate: moment().add(filterLevel.packageDuration, 'days').format('YYYY-MM-DD HH:mm:ss'),
       remainMoney: filterLevel.resourceList.packageMoney
     })
@@ -542,6 +545,144 @@ const getemailCode = async (ctx) => {
   }
 }
 
+const exchangeMember = async (ctx) => {
+  try {
+    const { redeemCode } = ctx.request.body
+    const { userInfo } = ctx.request
+    if (!redeemCode) {
+      return ctx.body = fail('请求参数错误', CODE.PARAM_ERROR)
+    }
+    //1. 如果是管理员为全权限无需兑换
+    if (userInfo.role != 99) {
+      return ctx.body = fail('管理员不允许兑换', CODE.BUSINESS_ERROR)
+    }
+    //2. 查询兑换码是否存在
+    const filterCard = await Card.findOne({
+      cardNo: redeemCode
+    })
+    if (!filterCard) {
+      return ctx.body = fail('兑换码不存在', CODE.BUSINESS_ERROR)
+    }
+    //3. 查询兑换码是否过期
+    if (moment(filterCard.expirationDate).isBefore(moment())) {
+      //兑换码过期更新该兑换码状态
+      await Card.findOneAndUpdate({
+        cardNo: redeemCode
+      }, {
+        cardState: '已过期'
+      })
+      return ctx.body = fail('兑换码已过期', CODE.BUSINESS_ERROR)
+    }
+    //4. 查询兑换码是否已使用
+    if (filterCard.cardState != '未使用') {
+      return ctx.body = fail('兑换码已使用', CODE.BUSINESS_ERROR)
+    }
+    //6.开始执行兑换操作
+    const filterLevel = await Level.findOne({
+      levelId: filterCard.cardLevel
+    })
+    if (!filterLevel) {
+      return ctx.body = fail('套餐已下架请联系客服', CODE.BUSINESS_ERROR)
+    }
+    //如果是充值卡充值则不需要判断用户等级
+    if (filterCard.cardType == '充值卡') {
+      await User.findOneAndUpdate({
+        userId: userInfo.userId
+      },
+        { remainMoney: userInfo.remainMoney + filterLevel.resourceList.packageMoney })
+      //更新兑换码状态
+      await Card.findOneAndUpdate({
+        cardNo: redeemCode
+      }, {
+        cardState: '已使用'
+      })
+      return ctx.body = success({
+        cardType: filterCard.cardType,
+        packageName: filterLevel.packageName,
+        rechargeamount: filterLevel.resourceList.packageMoney,
+        remainMoney: userInfo.remainMoney
+      }, '余额充值成功')
+    }
+    /*6.1 判断要兑换的套餐等级是否大于当前等级，如果大于等于当前套餐等级则进行兑换
+    并且剩余的天数折合成金额添加到用户余额中同时更新用户等级、用户角色、套餐有效期、套餐剩余金额，
+    兑换成功后将兑换码状态更新为已使用。
+    如果小于当前等级则提示用户不能兑换低于当前等级的套餐。
+    */
+    if (filterLevel.levelWeight < userInfo.levelId) {
+      return ctx.body = fail('不能兑换低于当前等级的套餐', CODE.BUSINESS_ERROR)
+    }
+    if (filterLevel.levelWeight == userInfo.levelWeight) {
+      //更新当前用户信息
+      await User.findOneAndUpdate({
+        userId: userInfo.userId
+      }, {
+        levelId: filterLevel.levelId,
+        validDate: moment(userInfo.validDate).add(filterLevel.packageDuration, 'days').format('YYYY-MM-DD HH:mm:ss'),
+        remainMoney: userInfo.remainMoney + filterLevel.resourceList.packageMoney,
+        roleList: [filterLevel.linkroleId],
+        levelWeight: filterLevel.levelWeight,
+        packagePrice: filterLevel.packagePrice
+      })
+    } else if (filterLevel.levelWeight > userInfo.levelWeight) {
+      //更新当前用户信息
+      // 有效期日期
+      const expiryDate = moment(userInfo.validDate);
+      // 现在时间
+      const now = moment();
+      // 计算相差的天数
+      const diffDays = expiryDate.diff(now, 'days');
+      await User.findOneAndUpdate({
+        userId: userInfo.userId
+      }, {
+        levelId: filterLevel.levelId,
+        validDate: moment().add(filterLevel.packageDuration + (parseInt((userInfo.packagePrice / filterLevel.packagePrice) * diffDays)), 'days').format('YYYY-MM-DD HH:mm:ss'),
+        remainMoney: filterLevel.resourceList.packageMoney + userInfo.remainMoney,
+        roleList: [filterLevel.linkroleId],
+        levelWeight: filterLevel.levelWeight,
+        packagePrice: filterLevel.packagePrice
+      })
+    }
+    //更新兑换码状态
+    await Card.findOneAndUpdate({
+      cardNo: redeemCode
+    }, {
+      cardState: '已使用'
+    })
+    //重新写入token,返回给前端
+    const returnUser = await User.findOne({
+      userId: userInfo.userId
+    })
+    let retryUserInfo = returnUser._doc
+    token = jwt.sign({
+      data: retryUserInfo
+    }, process.env.TOKEN_SECRET, {
+      expiresIn: 60 * 60 * 24
+    });
+    retryUserInfo.token = token
+
+
+    const expiryDate = moment(userInfo.validDate);
+    // 现在时间
+    const now = moment();
+    // 计算相差的天数
+    const diffDays = expiryDate.diff(now, 'days');
+
+    ctx.body = success({
+      cardType: filterCard.cardType,
+      packageName: filterLevel.packageName,
+      levelName: filterLevel.levelName,
+      validDate: moment(userInfo.validDate).add(filterLevel.packageDuration, 'days').format('YYYY-MM-DD HH:mm:ss'),
+      remainMoney: userInfo.remainMoney,
+      rechargeamount: filterLevel.resourceList.packageMoney,
+      validDate: moment().add(filterLevel.packageDuration + (parseInt((userInfo.packagePrice / filterLevel.packagePrice) * diffDays)), 'days').format('YYYY-MM-DD HH:mm:ss'),
+      carryDays: parseInt((userInfo.packagePrice / filterLevel.packagePrice) * diffDays),
+      userInfo: retryUserInfo
+    }, '会员兑换成功')
+  } catch (error) {
+    ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
+  }
+}
+
 
 
 module.exports = {
@@ -554,5 +695,6 @@ module.exports = {
   switchState,
   getPermissionList,
   registerUser,
-  getemailCode
+  getemailCode,
+  exchangeMember
 }

@@ -8,6 +8,7 @@ const CODE = {
   BUSINESS_ERROR: 40001, // 业务请求失败
   AUTH_ERROR: 401, //认证失败或TOKEN过期
   SERVICE_ERROR: 500, //服务器内部错误
+  LEVEL_ERROR: 60001, //用户等级错误
 }
 
 const handleTreeSort = (data) => {

@@ -35,13 +35,38 @@
           <bread-crumb style="margin-left: 15px"></bread-crumb>
         </div>
         <div class="right-userinfo">
+          <div
+            style="margin-right: 5px; display: flex; align-items: center"
+            @click="showExangeDialog"
+          >
+            <svg-icon
+              iconName="icon-jifenduihuan"
+              className="icon-jifen"
+            ></svg-icon>
+            <span
+              style="
+                margin-right: 10px;
+                margin-left: 2px;
+                color: rgb(249 246 246);
+                font-size: 12px;
+              "
+              >兑换</span
+            >
+          </div>
           <el-dropdown @command="handleCommand">
-            <span style="border: none">
-              <el-avatar
-                :size="30"
-                src="https://imgurl-1301237494.cos.accelerate.myqcloud.com/imgs/2023/01/20/7b5b3a3f26a9d9a0.jpeg"
-                :icon="Avatar"
-              />
+            <span style="border: none; display: flex; align-items: center">
+              <svg-icon
+                iconName="icon-gerenzhongxin"
+                className="icon-zhongxin"
+              ></svg-icon>
+              <span
+                style="
+                  margin-left: 2px;
+                  font-size: 12px;
+                  color: rgb(249 246 246);
+                "
+                >用户</span
+              >
             </span>
             <template #dropdown>
               <el-dropdown-menu>
@@ -60,6 +85,13 @@
         </div>
       </div>
     </div>
+
+    <!-----------------------------------积分兑换弹窗开始----------------------->
+    <exchange-dialog
+      :dialogFormVisible="isShowDialog"
+      @closeDialog="closeExchangeDialog"
+    ></exchange-dialog>
+    <!-----------------------------------积分兑换弹窗结束----------------------->
   </div>
 </template>
 
@@ -80,6 +112,7 @@ import { Avatar } from "@element-plus/icons-vue";
 import { useStore } from "vuex"; // 引入useStore 方法
 import storage from "../../utils/storage.js";
 import { useRouter, useRoute } from "vue-router";
+import ExchangeDialog from "./components/ExchangeDialog.vue";
 onMounted(() => {
   getMenuList();
 });
@@ -108,6 +141,15 @@ const handleCommand = (val) => {
   if (val == "logout") {
     store.dispatch("user/handleLogout");
   }
+};
+
+let isShowDialog = ref(false);
+const showExangeDialog = () => {
+  isShowDialog.value = true;
+};
+
+const closeExchangeDialog = (bol) => {
+  isShowDialog.value = bol;
 };
 </script>
 
@@ -207,5 +249,13 @@ const handleCommand = (val) => {
 /* 鼠标悬停时的滑块样式 */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
+}
+.icon-jifen {
+  width: 1.6em !important;
+  height: 1.6em !important;
+}
+.icon-zhongxin {
+  width: 1.7em !important;
+  height: 1.7em !important;
 }
 </style>

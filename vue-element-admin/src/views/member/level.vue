@@ -59,6 +59,12 @@
         align="center"
       ></el-table-column>
       <el-table-column
+        label="等级权重"
+        prop="levelWeight"
+        min-width="100"
+        align="center"
+      ></el-table-column>
+      <el-table-column
         label="套餐名称"
         prop="packageName"
         width="160"
@@ -148,6 +154,15 @@
     >
       <el-form-item label="等级名称" prop="levelName">
         <el-input v-model="addForm.levelName" placeholder="请输入等级名称" />
+      </el-form-item>
+      <el-form-item label="卡密数量" prop="levelWeight">
+        <el-input-number
+          :min="1"
+          style="width: 100%"
+          v-model="addForm.levelWeight"
+          :step="1"
+          step-strictly
+        />
       </el-form-item>
       <el-form-item label="套餐名称" prop="packageName">
         <el-input v-model="addForm.packageName" placeholder="请输入套餐名称" />
@@ -415,6 +430,7 @@ let dialogFormVisible = ref(false);
 let addForm = reactive({
   levelId: "",
   levelName: "",
+  levelWeight: 1,
   packageName: "",
   levelIcon: "",
   packagePrice: "",
@@ -488,6 +504,7 @@ const checkDuration = (rule, value, callback) => {
 
 const addFormRules = reactive({
   levelName: [{ required: true, message: "请输入等级名称", trigger: "blur" }],
+  levelWeight: [{ required: true, message: "请输入等级权重", trigger: "blur" }],
   packageName: [{ required: true, message: "请输入套餐名称", trigger: "blur" }],
   levelIcon: [{ required: true, message: "请输入等级图标", trigger: "blur" }],
   packagePrice: [
@@ -510,6 +527,7 @@ const handleClose = () => {
   addForm = reactive({
     levelId: "",
     levelName: "",
+    levelWeight: 1,
     packageName: "",
     levelIcon: "",
     packagePrice: "",
@@ -531,6 +549,7 @@ const submitLevel = (addFormRef) => {
       }
       const data = {
         levelName: addForm.levelName,
+        levelWeight: addForm.levelWeight,
         packageName: addForm.packageName,
         levelIcon: addForm.levelIcon,
         packagePrice: addForm.packagePrice,
@@ -538,7 +557,7 @@ const submitLevel = (addFormRef) => {
         benefitsList: JSON.stringify(addForm.benefitsList),
         linkroleId: addForm.linkroleId,
       };
-      if (addForm.levelId || addForm.levelId == 0) {
+      if (addForm.levelId !== "" || addForm.levelId === 0) {
         data.levelId = addForm.levelId;
         store.commit("system/SET_ISLOADING", true);
         await api.editLevel(data);
@@ -562,6 +581,7 @@ const editLevel = (row) => {
   addForm = reactive({
     levelId: row.levelId,
     levelName: row.levelName,
+    levelWeight: row.levelWeight,
     packageName: row.packageName,
     levelIcon: row.levelIcon,
     packagePrice: row.packagePrice,

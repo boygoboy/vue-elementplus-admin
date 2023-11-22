@@ -23,6 +23,9 @@ const getList = async (ctx) => {
             params.packageName = packageName
         }
         const list = await Level.find(params) || []
+        list.sort((a, b) => {
+            return a.levelWeight - b.levelWeight
+        })
         ctx.body = success(list)
     } catch (error) {
         ctx.body = fail('服务器内部错误', CODE.SERVICE_ERROR)
@@ -33,6 +36,7 @@ const addLevel = async (ctx) => {
     try {
         const {
             levelName,
+            levelWeight,
             packageName,
             packagePrice,
             packageDuration,
@@ -40,7 +44,7 @@ const addLevel = async (ctx) => {
             levelIcon,
             linkroleId
         } = ctx.request.body
-        if (!levelName || !packageName || (!packagePrice && packagePrice != 0) || !packageDuration || !benefitsList || !levelIcon || !linkroleId) {
+        if (!levelName || !packageName || (!packagePrice && packagePrice != 0) || !packageDuration || !benefitsList || !levelIcon || !linkroleId || !levelWeight) {
             ctx.body = fail('缺少必要参数', CODE.PARAM_ERROR)
             return
         }
@@ -70,6 +74,7 @@ const addLevel = async (ctx) => {
         })
         const level = await new Level({
             levelId: count.sequence_value,
+            levelWeight,
             levelName,
             packageName,
             packagePrice,
@@ -89,6 +94,7 @@ const editLevel = async (ctx) => {
     try {
         const {
             levelId,
+            levelWeight,
             levelName,
             packageName,
             packagePrice,
@@ -98,7 +104,7 @@ const editLevel = async (ctx) => {
             linkroleId,
             packageStatus
         } = ctx.request.body
-        if (!levelId && levelId != 0 || !levelName || !packageName || (!packagePrice && packagePrice != 0) || !packageDuration || !benefitsList || !levelIcon || !linkroleId) {
+        if (!levelId && levelId != 0 || !levelName || !packageName || (!packagePrice && packagePrice != 0) || !packageDuration || !benefitsList || !levelIcon || !linkroleId || !levelWeight) {
             ctx.body = fail('缺少必要参数', CODE.PARAM_ERROR)
             return
         }
@@ -112,12 +118,13 @@ const editLevel = async (ctx) => {
         const level = await Level.findOne({
             levelName
         });
-        if (level.levelId != levelId) {
+        if (level && level.levelId != levelId) {
             return ctx.body = fail('等级名称已存在', CODE.BUSINESS_ERROR)
         }
         const oneLevel = await Level.findOneAndUpdate({
             levelId
         }, {
+            levelWeight,
             levelName,
             packageName,
             packagePrice,

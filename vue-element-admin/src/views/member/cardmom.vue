@@ -20,10 +20,8 @@
       </el-form-item>
       <el-form-item label="卡密类型：" prop="cardType">
         <el-select v-model="searchForm.cardRange" style="width: 130px">
-          <el-option value="week" label="周卡"></el-option>
-          <el-option value="month" label="月卡"></el-option>
-          <el-option value="quarter" label="季卡"></el-option>
-          <el-option value="year" label="年卡"></el-option>
+          <el-option value="充值卡" label="充值卡"></el-option>
+          <el-option value="会员卡" label="会员卡"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="卡密状态：" prop="cardState">
@@ -220,10 +218,8 @@
       </el-form-item>
       <el-form-item label="卡密类型" prop="cardType">
         <el-select v-model="addForm.cardType" style="width: 100%">
-          <el-option value="week" label="周卡"></el-option>
-          <el-option value="month" label="月卡"></el-option>
-          <el-option value="quarter" label="季卡"></el-option>
-          <el-option value="year" label="年卡"></el-option>
+          <el-option value="充值卡" label="充值卡"></el-option>
+          <el-option value="会员卡" label="会员卡"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="失效日期" prop="expirationDate">
@@ -288,10 +284,8 @@
       </el-form-item>
       <el-form-item label="卡密类型" prop="cardType">
         <el-select v-model="addBatchForm.cardType" style="width: 100%">
-          <el-option value="week" label="周卡"></el-option>
-          <el-option value="month" label="月卡"></el-option>
-          <el-option value="quarter" label="季卡"></el-option>
-          <el-option value="year" label="年卡"></el-option>
+          <el-option value="充值卡" label="充值卡"></el-option>
+          <el-option value="会员卡" label="会员卡"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="失效日期" prop="expirationDate">

@@ -162,7 +162,7 @@
         <span>{{ viewForm.validDate }}</span>
       </el-form-item>
       <el-form-item label="账户余额">
-        <span>{{ viewForm.remainMoney }}</span>
+        <span>{{ viewForm.remainMoney }}$</span>
       </el-form-item>
       <el-form-item label="注册时间">
         <span>{{ viewForm.createTime }}</span>

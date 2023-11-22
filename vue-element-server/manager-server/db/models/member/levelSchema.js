@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const levelSchema = mongoose.Schema({
     levelId: Number, //等级id
+    levelWeight: Number, //等级权重
     levelName: String, //等级名称 vip1 vip2 vip3
     packageName: String, //套餐名称
     packagePrice: Number, //套餐价格

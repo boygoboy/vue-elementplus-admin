@@ -18,6 +18,8 @@ const userSchema = mongoose.Schema({
         default: Date.now()
     },
     "levelId": Number,
+    "levelWeight": Number,
+    "packagePrice": Number,
     "validDate": {
         type: Date,
         default: Date.now()

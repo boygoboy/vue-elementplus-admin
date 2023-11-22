@@ -9,7 +9,8 @@ const {
     switchState,
     getPermissionList,
     registerUser,
-    getemailCode
+    getemailCode,
+    exchangeMember
 } = require('../../../logic/system/user')
 
 router.post('/login', async (ctx) => {
@@ -46,6 +47,10 @@ router.post('/register', async (ctx) => {
 
 router.get('/emailcode', async (ctx) => {
     await getemailCode(ctx)
+})
+
+router.post('/exchangemember', async (ctx) => {
+    await exchangeMember(ctx)
 })
 
 module.exports = router

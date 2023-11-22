@@ -1,15 +1,17 @@
 import axios from "axios";
 import config from "../config";
 import {
-    ElMessage
+    ElMessage, ElMessageBox
 } from "element-plus";
 import router from "../router";
 import storage from './storage.js'
 import {
     store
 } from '../store/index.js'
+import user from "../store/modules/user.js";
 const TOKEN_INVALID = '权限认证失败'
 const NETWORK_ERROR = '网络请求异常，请稍后重试'
+const LEVEL_ERROR = '套餐已失效'
 
 const service = axios.create({
     baseURL: config.baseApi,
@@ -29,7 +31,8 @@ service.interceptors.response.use((res) => {
     const {
         code,
         msg,
-        data
+        data,
+        userInfo
     } = res.data
     if (code == 200) {
         return data
@@ -40,7 +43,28 @@ service.interceptors.response.use((res) => {
         setTimeout(() => {
             router.push('/login')
         }, 1500)
+        setTimeout(() => {
+            location.reload()
+        }, 1800)
         return Promise.reject(TOKEN_INVALID)
+    } else if (code == 60001) {
+        //套餐被降级重新更新userInfo
+        store.commit("user/SAVE_USER_INFO", userInfo);
+        ElMessageBox.alert(
+            `<div>${msg}</div>`,
+            '套餐失效',
+            {
+                dangerouslyUseHTMLString: true,
+                'show-close': false,
+                center: true,
+                'show-cancel-button': false,
+                callback: async () => {
+                    await store.dispatch("user/loadRouterList");
+                    location.reload()
+                }
+            }
+        )
+        return Promise.reject(LEVEL_ERROR)
     } else {
         store.commit('system/SET_ISLOADING', false)
         ElMessage.error(msg || NETWORK_ERROR)
